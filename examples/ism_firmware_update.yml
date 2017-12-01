@@ -1,0 +1,59 @@
+#######
+# Copyright FUJITSU LIMITED 2017
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#######
+
+ - name: Firmware update
+   hosts: servers
+   connection: local
+   
+   tasks:
+#   - name: shutdown
+#     command: /sbin/shutdown -h now
+#     when: ansible_os_family == "RedHat"
+#     delegate_to: {{ inventory_hostname }}
+
+   - name: Set Maintenance Mode
+     ism_maintenance_mode_setting:
+       config: "/etc/ansible/ism-ansible/ism_config.json"
+       hostname: "{{ inventory_hostname }}"
+       mode: "On"
+     register: ism_maintenance_mode_setting_result
+   - debug: var=ism_maintenance_mode_setting_result
+   
+   - name: Execution of ism_firmware_update
+     ism_firmware_update:
+       config: "/etc/ansible/ism-ansible/ism_config.json"
+       hostname: "{{ inventory_hostname }}"
+       firmware_update_list:
+        - firmware_name: "RX300 S8_iRMC"
+          repository_name: "Individual Repository Administrator"
+          firmware_version: "8.13F&3.71"
+          operation_mode: "Online"
+        - firmware_name: "RX300 S8_BIOS"
+          repository_name: "Individual Repository Administrator"
+          firmware_version: "R1.11.0"
+          operation_mode: "Online"
+     register: ism_firmware_update_result
+   - debug: var=ism_firmware_update_result
+   
+   - name: Cancel maintenance mode
+     ism_maintenance_mode_setting:
+       config: "/etc/ansible/ism-ansible/ism_config.json"
+       hostname: "{{ inventory_hostname }}"
+       mode: "Off"
+     register: ism_maintenance_mode_setting_result
+   - debug: var=ism_maintenance_mode_setting_result
+
