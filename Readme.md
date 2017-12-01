@@ -279,4 +279,4 @@ API
 ---
 
 - FUJITSU Software ServerView Infrastructure Manager V2.2 REST API Reference Manual
-[https://partners.ts.fujitsu.com/s/primeweb/services/software/ServerView/ism/Pages/default.aspx](https://partners.ts.fujitsu.com/s/primeweb/services/software/ServerView/ism/Pages/default.aspx)
+[http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/](http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/)
