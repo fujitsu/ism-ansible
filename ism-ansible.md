@@ -54,11 +54,11 @@ specify IP address of IPv4 or host name (FQDN) that can do the name resolution o
   register: ism_firmware_list_result
 - debug: var=ism_firmware_list_result
 ```
-
+ 
 ### Return Values (Normal)
 
 |Name|Type|Returned|Description|
-|:--|:--|:--|:--|:--|
+|:--|:--|:--|:--|
 |ism_firmware_list|dict|Always.|Firmware list acquisition result|
 |IsmBody|dict|Always, but can be null.|API processing results|
 |FirmwareList|dict-list|Always, but can be null.|List of Firmware|
@@ -123,7 +123,7 @@ Commences updating process firmware registered to ServerView Infrastructure Mana
 ### Options
 
 |Parameter|Required|Default|Choices|Comments|
-|:--|:--|:--|:--|
+|:--|:--|:--|:--|:--|
 |config|〇|None|None|The full path of the configuration file that describes the connection information of ServerView Infrastructure Manager is specified.|
 |hostname|〇|None|None|IP address and Host name of Operation node are specified.<br>[[Note1]](#note-2-1) [[Note2]](#note-2-2)|
 |firmware_update_list|〇|None|None|Array data of dictionary type that specifies updated firmware.<br>Firmware_name, repository_name, firmware_version, and operation_mode are specified for an element of this dictionary type.
