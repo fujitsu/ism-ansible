@@ -194,7 +194,7 @@ Example:
 Timeout period of firmware update: `14400` (second) (= 4hours)  
 Timeout period of application of profile: `18000` (second) (= 5hours)
   
-```
+```python
   +---------------------------------------------------
   | #!/usr/bin/python
   | #coding: UTF-8
@@ -274,9 +274,12 @@ License
 
 This project is licensed under the GPL v3 license. Please see the [LICENSE](LICENSE) for more information.
 
+Copyright
+---------
+Copyright FUJITSU LIMITED 2017
 
 API
 ---
 
 - FUJITSU Software ServerView Infrastructure Manager V2.2 REST API Reference Manual
-[http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/](http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/)
+[https://partners.ts.fujitsu.com/s/primeweb/services/software/ServerView/ism/Pages/default.aspx](https://partners.ts.fujitsu.com/s/primeweb/services/software/ServerView/ism/Pages/default.aspx)
