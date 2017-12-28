@@ -18,7 +18,7 @@ List Retrieval for Firmware.
 ### Synopsis
 
 Retrieve the summary of the firmware registered to ServerView Infrastructure Manager.
-The list information is specified for the parameter of firmware update module (`ism_firmware_update.py`).
+The list of retrieved information is specified for the parameter of firmware update module (`ism_firmware_update.py`).
 
 ### Requirements
 
@@ -30,18 +30,18 @@ The list information is specified for the parameter of firmware update module (`
 
 |Parameter|Required|Default|Choices|Comments|
 |:--|:--|:--|:--|:--|
-|config|〇|None|None|The full path of the configuration file that describes the connection information of ServerView Infrastructure Manager is specified.|
-|hostname|〇|None|None|IP address and Host name of Operation node are specified.<br> [[Note1]](#note-1-1) [[Note2]](#note-1-2)|
-|firmware_type|-|None|<ul><li>BIOS</li><li>iRMC</li><li>FC</li><li>CNA</li><li>ETERNUS DX</li><li>LAN Switch</li></ul>|When the firmware type is specified, the list of the specified firmware type is output. The list of all firmwares is output when omitting it.|
+|config|〇|None|None|Specifies the full path for the described setting file of the connection information of ServerView Infrastructure Manager.|
+|hostname|〇|None|None|Specifies the IP address and Host name of the oOperation node are specified.<br> [[Note1]](#note-1-1) [[Note2]](#note-1-2)|
+|firmware_type|-|None|<ul><li>BIOS</li><li>iRMC</li><li>FC</li><li>CNA</li><li>ETERNUS DX</li><li>LAN Switch</li></ul>|When specifies the firmware type is specified, the list of the specified firmware type is output. The list of all firmwares is output when omitting it.|
 
 
 <a name="note-1-1">[Note1]  
-Host name (FQDN) to IP address or the IP address of Operation node registered in ServerView Infrastructure Manager is specified.  
-When OS information on Operation node is registered in ServerView Infrastructure Manager, host name (FQDN) to IP address of OS information or the IP address can be specified.  
+Specify the IP address of the operation node registered in ServerView Infrastructure Manager or the host name (FQDN) for its IP address.
+When OS information of the operation node that is registered in ServerView Infrastructure Manager, the host name (FQDN) for the IP address of OS information or the IP address can be specified.
 
 <a name="note-1-2">[Note2]  
 Presently IPv6 is not supported. To the connection with ServerView Infrastructure Manager,   
-specify IP address of IPv4 or host name (FQDN) that can do the name resolution of IPv4.  
+specify the IP address of IPv4 or host name (FQDN) that are available for name resolution of IPv4.
 
 ### Examples
 
@@ -59,7 +59,7 @@ specify IP address of IPv4 or host name (FQDN) that can do the name resolution o
 
 |Name|Type|Returned|Description|
 |:--|:--|:--|:--|:--|
-|ism_firmware_list|dict|Always.|Firmware list acquisition result|
+|ism_firmware_list|dict|Always.|Acquisition result of the firmware list|
 |IsmBody|dict|Always, but can be null.|API processing results|
 |FirmwareList|dict-list|Always, but can be null.|List of Firmware|
 |DiskUsage|string|Always, but can be null.|Disk capacity used by firmware (MB)|
@@ -72,8 +72,8 @@ specify IP address of IPv4 or host name (FQDN) that can do the name resolution o
 |OperationMode|string|Always, but can be null.|Supported modes|
 |RegisterDate|string|Always, but can be null.|Time/date of firmware registration|
 |RepositoryName|string|Always, but can be null.|Repository name|
-|MessageInfo|list|Always, but can be null.|Message informationErrors, warnings, and notification messages regarding API processing are returned.If there is no information available, only the key names are returned.|
-|SchemaType|string|Always, but can be null.|The file name containing the JSON schema (JSON schema file name) that displays the entire HTTP body structure is returned.|
+|MessageInfo|list|Always, but can be null.|Message information Errors, warnings, and notification messages regarding API processing are output.If there is no information available, only the key names are output.|
+|SchemaType|string|Always, but can be null.|The file name containing the JSON schema (JSON schema file name) that displays the entire HTTP body structure is output.|
 
 ### Return Values (Abnormal)
 
@@ -82,13 +82,13 @@ When the REST-API response of ServerView Infrastructure Manager is an error.
 |Name|Type|Returned|Description|
 |:--|:--|:--|:--|
 |msg|dict|Always, but can be null.|MessageInfo, IsmBody, and SchemaType|
-|MessageInfo|dict-list|Always, but can be null.|Message information<br>Errors, warnings, and notification messages regarding API processing are returned.<br>If there is no information available, only the key names are returned|
-|Timestamp|string|Always, but can be null.|Date & time information<br>Information on the date and time when the corresponding message was produced is returned|
-|MessageId|string|Always, but can be null.|Message ID<br>A unique ID is returned for each message|
-|API|string|Always, but can be null.|API type<br>The API type is returned in the format "Method name URI"|
-|Message|string|Always, but can be null.|API processing results<br>API processing results are returned as response parameters|
+|MessageInfo|dict-list|Always, but can be null.|Message information<br>Errors, warnings, and notification messages regarding API processing are output.<br>If there is no information available, only the key names are returned|
+|Timestamp|string|Always, but can be null.|Date & time information<br>Information of the date and time when the corresponding message was produced is output.|
+|MessageId|string|Always, but can be null.|Message ID<br>A unique ID is output for each message|
+|API|string|Always, but can be null.|API type<br>The API type is output in the format "Method name URI"|
+|Message|string|Always, but can be null.|API processing results<br>API processing results are output as response parameters|
 |IsmBody|dict|Always, but can be null.|API processing results|
-|SchemaType|string|Always, but can be null.|The file name containing the JSON schema (JSON schema file name) that displays the entire HTTP body structure is returned|
+|SchemaType|string|Always, but can be null.|The file name containing the JSON schema (JSON schema file name) that displays the entire HTTP body structure is output.|
 
 Case except the above.
 
@@ -124,8 +124,8 @@ Commences updating process firmware registered to ServerView Infrastructure Mana
 
 |Parameter|Required|Default|Choices|Comments|
 |:--|:--|:--|:--|
-|config|〇|None|None|The full path of the configuration file that describes the connection information of ServerView Infrastructure Manager is specified.|
-|hostname|〇|None|None|IP address and Host name of Operation node are specified.<br>[[Note1]](#note-2-1) [[Note2]](#note-2-2)|
+|config|〇|None|None|Specifies the full path for the described setting file of the connection information of ServerView Infrastructure Manager.|
+|hostname|〇|None|None|Specifies the IP address and host name of the operation.<br>[[Note1]](#note-2-1) [[Note2]](#note-2-2)|
 |firmware_update_list|〇|None|None|Array data of dictionary type that specifies updated firmware.<br>Firmware_name, repository_name, firmware_version, and operation_mode are specified for an element of this dictionary type.
 |firmware_name|〇|None|None|Firmware name<br>[[Note3]](#note-2-3)|
 |repository_name|〇|None|None|Repository name<br>[[Note3]](#note-2-3)|
@@ -133,16 +133,16 @@ Commences updating process firmware registered to ServerView Infrastructure Mana
 |operation_mode|〇|None|Online<br>Offline|Supported modes<br>Online: Online update<br>Offline: Offline update <br>[[Note3]](#note-2-3)|
 
 <a name="note-2-1">[Note1]  
-Host name (FQDN) to IP address or the IP address of Operation node registered in ServerView Infrastructure Manager is specified.
-When OS information on Operation node is registered in ServerView Infrastructure Manager, host name (FQDN) to IP address of OS information or the IP address can be specified.
+Specify the host name (FQDN) for the IP address or the IP address of Operation node registered in ServerView Infrastructure Manager.
+When OS information of the operation node is registered in ServerView Infrastructure Manager, the host name (FQDN) for the IP address of OS information or the IP address can be specified.
 
 <a name="note-2-2">[Note2]  
 Presently IPv6 is not supported. To the connection with ServerView Infrastructure Manager, 
-specify IP address of IPv4 or host name (FQDN) that can do the name resolution of IPv4.
+specify the IP address of IPv4 or host name (FQDN) that is available for name resolution of IPv4.
 
 <a name="note-2-3">[Note3]  
-Two or more firmwares can be updated at the same time by specifying plurals.
-In that case, operation_mode specifies all the same values (either of Online or Offline).
+Multiple firmware can be updated at the same time by specifying multiple firmware.
+In that case, specifies all the same values (either of Online or Offline).
 The format is as follows.
 
 ```yaml
@@ -212,15 +212,15 @@ When the REST-API response of ServerView Infrastructure Manager is an error.
 |Name|Type|Returned|Description|
 |:--|:--|:--|:--|
 |msg|dict|Always, but can be null.|MessageInfo, IsmBody, and SchemaType
-|MessageInfo|dict-list|Always, but can be null.|Message information<br>Errors, warnings, and notification messages regarding API processing are returned.<br>If there is no information available, only the key names are returned.|
-|Timestamp|string|Always, but can be null.|Date & time information<br>Information on the date and time when the corresponding message was produced is returned.|
-|MessageId|string|Always, but can be null.|Message ID<br>A unique ID is returned for each message.|
-|API|string|Always, but can be null.|API type<br>The API type is returned in the format "Method name URI".|
-|Message|string|Always, but can be null.|API processing results<br>API processing results are returned as response parameters.|
+|MessageInfo|dict-list|Always, but can be null.|Message information<br>Errors, warnings, and notification messages regarding API processing are output.<br>If there is no information available, only the key names are output.|
+|Timestamp|string|Always, but can be null.|Date & time information<br>Information on the date and time when the corresponding message was produced is output.|
+|MessageId|string|Always, but can be null.|Message ID<br>A unique ID is output for each message.|
+|API|string|Always, but can be null.|API type<br>The API type is output in the format "Method name URI".|
+|Message|string|Always, but can be null.|API processing results<br>API processing results are output as response parameters.|
 |IsmBody|dict|Always, but can be null.|The processing result of REST-API is output.|
-|SchemaType|string|Always, but can be null.|The file name where the JSON schema that shows the globular conformation of the HTTP body is described is output.|
+|SchemaType|string|Always, but can be null.|The file name where the JSON schema that shows the globular conformation of the HTTP body described is output.|
 
-Case except the above.
+Case other than the above.
 
 |Name|Type|Returned|Description|
 |:--|:--|:--|:--|
@@ -255,17 +255,17 @@ A node with its maintenance mode is "Maintenance" cannot perform retrieval of no
 
 |Parameter|Required|Default|Choices|Comments|
 |:--|:--|:--|:--|:--|
-|config|〇|None|None|The full path of the configuration file that describes the connection information of ServerView Infrastructure Manager is specified.|
-|hostname|〇|None|None|IP address and Host name of Operation node are specified. <br>[[Note1]](#note-3-1) [[Note2]](#note-3-2)|
+|config|〇|None|None|Specifies the full path for the described setting file of the connection information of ServerView Infrastructure Manager.|
+|hostname|〇|None|None|Specifies the IP address and host name of the operation. <br>[[Note1]](#note-3-1) [[Note2]](#note-3-2)|
 |mode|〇|None|On<br>Off|Maintenance mode<br>"On": Setting<br>"Off": Release|
 
 <a name="note-3-1">[Note1]  
-Host name (FQDN) to IP address or the IP address of Operation node registered in ServerView Infrastructure Manager is specified. 
-When OS information on Operation node is registered in ServerView Infrastructure Manager, host name (FQDN) to IP address of OS information or the IP address can be specified.
+Specify the host name (FQDN) for the IP address or the IP address of Operation node registered in ServerView Infrastructure Manager is specified. 
+When OS information of the operation node is registered in ServerView Infrastructure Manager, the host name (FQDN) for the IP address of OS information or the IP address can be specified.
 
 <a name="note-3-2">[Note2]  
 Presently IPv6 is not supported. To the connection with ServerView Infrastructure Manager,   
-specify IP address of IPv4 or host name (FQDN) that can do the name resolution of IPv4.
+specify the IP address of IPv4 or host name (FQDN) that is available for name resolution of IPv4.
 
 ### Examples
 
@@ -292,13 +292,13 @@ When the REST-API response of ServerView Infrastructure Manager is an error.
 |Name|Type|Returned|Description|
 |:--|:--|:--|:--|
 |msg|dict|Always, but can be null.|MessageInfo, IsmBody, and SchemaType|
-|MessageInfo|dict-list|Always, but can be null.|Message information<br>Errors, warnings, and notification messages regarding API processing are returned.<br>If there is no information available, only the key names are returned.|
-|Timestamp|string|Always, but can be null.|Date & time information<br>Information on the date and time when the corresponding message was produced is returned.|
-|MessageId|string|Always, but can be null.|Message ID<br>A unique ID is returned for each message.|
-|API|string|Always, but can be null.|API type<br>The API type is returned in the format "Method name URI".|
-|Message|string|Always, but can be null.|API processing results<br>API processing results are returned as response parameters.|
+|MessageInfo|dict-list|Always, but can be null.|Message information<br>Errors, warnings, and notification messages regarding API processing are output.<br>If there is no information available, only the key names are output.|
+|Timestamp|string|Always, but can be null.|Date & time information<br>Information on the date and time when the corresponding message produced is output.|
+|MessageId|string|Always, but can be null.|Message ID<br>A unique ID is output for each message.|
+|API|string|Always, but can be null.|API type<br>The API type is output in the format "Method name URI".|
+|Message|string|Always, but can be null.|API processing results<br>API processing results are output as response parameters.|
 |IsmBody|dict|Always, but can be null.|API processing results.|
-|SchemaType|string|Always, but can be null.|The file name containing the JSON schema<br>(JSON schema file name) that displays the entire HTTP body structure is returned.|
+|SchemaType|string|Always, but can be null.|The file name containing the JSON schema<br>(JSON schema file name) that displays the entire HTTP body structure is output.|
 
 Case except the above.
 
@@ -319,11 +319,11 @@ Case except the above.
 <a name="ism_profile_assignment">ism_profile_assignment
 ----------------------
 
-Assigning Profiles to Nodes
+Assigning Profiles for Nodes
 
 ### Synopsis
 
-Assign specified profiles to specified nodes managed by ServerView Infrastructure Manager.
+Assign specified profiles for the specified nodes managed by ServerView Infrastructure Manager.
 
 ### Requirements
 
@@ -335,38 +335,38 @@ Assign specified profiles to specified nodes managed by ServerView Infrastructur
 
 |Parameter|Required|Default|Choices|Comments|
 |:--|:--|:--|:--|:--|
-|config|〇|None|None|The full path of the configuration file that describes the connection information of ServerView Infrastructure Manager is specified.|
-|hostname|〇|None|None|IP address and Host name of Operation node are specified.<br>[[Note1]](#note-4-1) [[Note2]](#note-4-2)|
+|config|〇|None|None|Specifies the full path for the described setting file of the connection information of ServerView Infrastructure Manager.|
+|hostname|〇|None|None|Specifies the IP address and host name of the operation.<br>[[Note1]](#note-4-1) [[Note2]](#note-4-2)|
 |ism_profile_name|〇|None|None|Profile name.|
-|assign_mode|-|None|<ul><li>Normal</li><li>Advanced</li></ul>|Specifies mode of application.<br> Normal: Normal application<br>Advanced: Advanced application When this setting is omitted or null, operations will be carried out as Normal.<br>[[Note3]](#note-4-3)|
-|advanced_kind|-|None|<ul><li>ForcedAssign</li><li>WithoutHardwareAccess</li><li>OnlineAssign</li></ul>|The profile name applied to Operation node is specified. Refer to [[Table 1]](#table-4-1) for the combination that can be specified. Specifies type of advanced application.<br>To be specified when the AssignMode is 'Advanced'.<br>ForcedAssign: Forced assignment<br>WithoutHardwareAccess: The application intended to be applied<br>OnlineAssign: Online application<br>ForcedAssign cannot be used in first-time application.<br>When IOVirtualization or OSInstallation is included in the AssignRange, Online Assign cannot be used.|
+|assign_mode|-|None|<ul><li>Normal</li><li>Advanced</li></ul>|Specifies assign node.<br> Normal: Normal assign<br>Advanced: Advanced assign When this setting is omitted or null, operations will be carried out as Normal.<br>[[Note3]](#note-4-3)|
+|advanced_kind|-|None|<ul><li>ForcedAssign</li><li>WithoutHardwareAccess</li><li>OnlineAssign</li></ul>|Specifies the profile name for operation node. Refer to [[Table 1]](#table-4-1) for the combination that can be specified. Specifies type of advanced application.<br>To be specified when the AssignMode is 'Advanced'.<br>ForcedAssign: Forced assignment<br>WithoutHardwareAccess: The application intended to be applied<br>OnlineAssign: Online application<br>ForcedAssign cannot be used in first-time application.<br>When IOVirtualization or OSInstallation is included in the AssignRange, Online Assign cannot be used.|
 |assign_range|-|None|<ul><li>BIOS</li><li>iRMC</li><li>MMB</li><li>IOVirtualization</li><li>OSInstallation</li></ul>|Records types of Profile for assignment. If the AssignMode is Advanced,<br>"BIOS," "iRMC," "MMB,"<br>"IOVirtualization" and/or <br>"OSInstallation" can be specified either individually or together.<br>E.g.) ["BIOS","iRMC"] When this setting is omitted or null, all types of profile in ProfileData are assigned. Refer to [[Table 1]](#table-4-1) for the combination that can be specified.|
 
 <a name="note-4-1">[Note1]  
-Host name (FQDN) to IP address or the IP address of Operation node registered in ServerView Infrastructure Manager is specified.  
-When OS information on Operation node is registered in ServerView Infrastructure Manager, host name (FQDN) to IP address of OS information or the IP address can be specified.
+Specify the host name (FQDN) for the IP address or the IP address of Operation node registered in ServerView Infrastructure Manager.  
+When OS information of the operation node is registered in ServerView Infrastructure Manager, the host name (FQDN) for the IP address of OS information or the IP address can be specified.
 
-<a name="note-4-2">[Note2]
+<a name="note-4-2">[Note2]  
 Presently IPv6 is not supported. To the connection with ServerView Infrastructure Manager,   
-specify IP address of IPv4 or host name (FQDN) that can do the name resolution of IPv4.
+specify the IP address of IPv4 or host name (FQDN) that is available for name resolution of IPv4.
 
-<a name="note-4-3">[Note3]
-Normal is specified at usual application.
-Advanced is specified at advanced application.
-For usual application and advanced application, refer to "2.2.3 Profile Management" in "FUJITSU Software ServerView Infrastructure Manager V2.2 User's Manual".  
+<a name="note-4-3">[Note3]  
+Specify the Normal for the usual assignment.
+Specify the Advanced for the advanced assignment.
+For the usual assignment and advanced assignment, refer to "2.2.3 Profile Management" in "FUJITSU Software ServerView Infrastructure Manager V2.2 User's Manual".  
 [http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/index.html](http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/index.html)
 
 <a name="table-4-1">[Table 1]
 
 |assign_mode|advanced_kind|assign_range|
 |:--|:--|:--|
-|Normal|Can't be designated<br>(It is disregarded even if it specifies it.)|Can't be designated<br>(It is disregarded even if it specifies it.)|
-|Advanced|ForcedAssign<br>(Only when the profile has been applied, it is possible to specify it.)<br> (*2)|<ul><li>BIOS</li><li>iRMC</li><li>MMB</li><li>IOVirtualization</li></ul>|
+|Normal|Cannot be specified<br>(Even if specified, it will be disregarded.)|Cannot be specified<br>(Even if specified, it will be disregarded.)|
+|Advanced|ForcedAssign<br>(It can be specified, only when the profile has been applied.)<br> (*2)|<ul><li>BIOS</li><li>iRMC</li><li>MMB</li><li>IOVirtualization</li></ul>|
 |Advanced|WithoutHardwareAccess|<ul><li>BIOS</li><li>iRMC</li><li>MMB</li><li>IOVirtualization</li><li>OSInstallation</li></ul>|
 |Advanced|OnlineAssign|<ul><li>BIOS</li><li>iRMC</li><li>MMB</li>|
 
 (*2)  
-When ForcedAssign is specified at the profile unapplication, REST-API returns the error.
+When the profile is unassigned and if you specify the ForcedAssign, REST-API returns the error.
 
 
 #### Usage example 1
@@ -383,7 +383,7 @@ When ForcedAssign is specified at the profile unapplication, REST-API returns th
 
 #### Usage example 2
 
-A specified value of assign_range is one cases.
+A specified value of the assign_range is one cases.
 
 ```yaml
 - name: Execution of ism_profile_assignment
@@ -401,7 +401,7 @@ A specified value of assign_range is one cases.
 
 #### Usage example 3
 
-A specified value of assign_range is two or more cases.
+A specified value of the assign_range is two or more cases.
 
 ```yaml
 - name: Execution of ism_profile_assignment
@@ -431,13 +431,13 @@ When the REST-API response of ServerView Infrastructure Manager is an error.
 |Name|Type|Returned|Description|
 |:--|:--|:--|:--|
 |msg|dict|Always, but can be null.|MessageInfo, IsmBody, and SchemaType|
-|MessageInfo|dict-list|Always, but can be null.|Message information<br>Errors, warnings, and notification messages regarding API processing are returned.<br>If there is no information available, only the key names are returned
-|Timestamp|string|Always, but can be null.|Date & time information<br>Information on the date and time when the corresponding message was produced is returned.|
-|MessageId|string|Always, but can be null.|Message ID<br>A unique ID is returned for each message.|
-|API|string|Always, but can be null.|API type<br>The API type is returned in the format "Method name URI".|
-|Message|string|Always, but can be null.|API processing results <br>API processing results are returned as response parameters.|
+|MessageInfo|dict-list|Always, but can be null.|Message information<br>Errors, warnings, and notification messages regarding API processing are output.<br>If there is no information available, only the key names are output.|
+|Timestamp|string|Always, but can be null.|Date & time information<br>Information of the date and time when the corresponding message displayed is output.|
+|MessageId|string|Always, but can be null.|Message ID<br>A unique ID is output for each message.|
+|API|string|Always, but can be null.|API type<br>The API type is output in the format "Method name URI".|
+|Message|string|Always, but can be null.|API processing results <br>API processing results are output as response parameters.|
 |IsmBody|dict|Always, but can be null.|API processing results|
-|SchemaType|string|-|The file name containing the JSON schema (JSON schema file name) that displays the entire HTTP body structure is returned.|
+|SchemaType|string|-|The file name containing the JSON schema (JSON schema file name) that displays the entire HTTP body structure is output.|
 
 Case except the above.
 
@@ -457,11 +457,11 @@ Case except the above.
 ism_power_on
 ------------
 
-Instruction to Power-on.
+Instruction for Power-on.
 
 ### Synopsis
 
-Instruction to Power-on specified nodes managed by ServerView Infrastructure Manager.
+Instruction for Power-on of the specified nodes managed by ServerView Infrastructure Manager.
 
 ### Requirements
 
@@ -473,16 +473,16 @@ Instruction to Power-on specified nodes managed by ServerView Infrastructure Man
 
 |Parameter|Required|Default|Choices|Comments|
 |:--|:--|:--|:--|:--|
-|config|〇|None|None|The full path of the configuration file that describes the connection information of ServerView Infrastructure Manager is specified.|
-|hostname|〇|None|None|IP address and Host name of Operation node are specified.<br>[[Note1]](#note-5-1) [[Note2]](#note-5-2)|
+|config|〇|None|None|Specifies the full path for the described setting file of the connection information of ServerView Infrastructure Manager.|
+|hostname|〇|None|None|Specifies the IP address and host name of the operation.<br>[[Note1]](#note-5-1) [[Note2]](#note-5-2)|
 
 <a name="note-5-1">[Note1]  
-Host name (FQDN) to IP address or the IP address of Operation node registered in ServerView Infrastructure Manager is specified.  
-When OS information on Operation node is registered in ServerView Infrastructure Manager, host name (FQDN) to IP address of OS information or the IP address can be specified.
+Specify the host name (FQDN) for the IP address or the IP address of Operation node registered in ServerView Infrastructure Manager is specified.  
+When OS information of the operation node is registered in ServerView Infrastructure Manager, the host name (FQDN) for the IP address of OS information or the IP address can be specified.
 
 <a name="note-5-2">[Note2]  
 Presently IPv6 is not supported. To the connection with ServerView Infrastructure Manager,   
-specify IP address of IPv4 or host name (FQDN) that can do the name resolution of IPv4.
+specify the IP address of IPv4 or host name (FQDN) that is available for the name resolution of IPv4.
 
 ### Examples
 
@@ -508,13 +508,13 @@ When the REST-API response of ServerView Infrastructure Manager is an error.
 |Name|Type|Returned|Description|
 |:--|:--|:--|:--|
 |msg|dict|Always, but can be null.|MessageInfo, IsmBody, and SchemaType|
-|MessageInfo|dict-list|Always, but can be null.|Message information <br>Errors, warnings, and notification messages regarding API processing are returned. <br>If there is no information available, only the key names are returned|
-|Timestamp|string|Always, but can be null.|Date & time information<br>Information on the date and time when the corresponding message was produced is returned.|
-|MessageId|string|Always, but can be null.|Message ID<br>A unique ID is returned for each message.|
-|API|string|Always, but can be null.|API type<br>The API type is returned in the format "Method name URI".|
-|Message|string|Always, but can be null.|API processing results<br>API processing results are returned as response parameters.|
+|MessageInfo|dict-list|Always, but can be null.|Message information <br>Errors, warnings, and notification messages regarding API processing are output. <br>If there is no information available, only the key names are output.|
+|Timestamp|string|Always, but can be null.|Date & time information<br>Information of the date and time when the corresponding message displayed is output.|
+|MessageId|string|Always, but can be null.|Message ID<br>A unique ID is output for each message.|
+|API|string|Always, but can be null.|API type<br>The API type is output in the format "Method name URI".|
+|Message|string|Always, but can be null.|API processing results<br>API processing results are output as response parameters.|
 |IsmBody|dict|Always, but can be null.|API processing results|
-|SchemaType|string|Always, but can be null.|The file name containing the JSON schema (JSON schema file name) that displays the entire HTTP body structure is returned.|
+|SchemaType|string|Always, but can be null.|The file name containing the JSON schema (JSON schema file name) that displays the entire HTTP body structure is output.|
 
 Case except the above.
 
