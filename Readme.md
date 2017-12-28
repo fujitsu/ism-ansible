@@ -43,11 +43,11 @@ $ export ANSIBLE_MODULE_UTILS=/etc/ansible/ism-ansible/library/module_utils/
 $ export PYTHONPATH=$PYTHONPATH:$ANSIBLE_LIBRARY
 ```
 
-### 3. Certificate arrangement of ServerView Infrastructure Manager
+### 3. Certificate assignment for ServerView Infrastructure Manager
 
-In order to carry out https communication, the certificate is arranged in Ansible server. 
+Acquire the certificate used for https communication and assign in the Ansible server. 
 
-For information on how to arrange certificates, refer to "3.1.1 Preparation" in
+For information on how to assign certificates, refer to "3.1.1 Preparation" in
 "FUJITSU Software ServerView Infrastructure Manager V2.2 REST API Reference Manual".
 
 ### 4. Setting of config file
