@@ -1,7 +1,8 @@
 #!/usr/bin/python
 #coding: UTF-8
+
 #######
-# Copyright FUJITSU LIMITED 2017
+# Copyright FUJITSU LIMITED 2017-2018
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,10 +19,13 @@
 #######
 
 # user_settings_value
+class IsmUserSettingsValue:
 
-'''
-Set time confirmation for task confirmation
-'''
-FIRMWARE_UPDATE_TIME_OUT = 10800
-
-PROFILE_ASSIGNMENT_TIME_OUT = 10800
+    '''
+    Set time confirmation for task confirmation
+    '''
+    FIRMWARE_UPDATE_TIME_OUT = 10800
+    
+    PROFILE_ASSIGNMENT_TIME_OUT = 10800
+    
+    REFRESH_NODE_INFO_TIME_OUT = 1800

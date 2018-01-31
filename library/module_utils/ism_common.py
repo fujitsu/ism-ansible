@@ -1,7 +1,8 @@
 #!/usr/bin/python
 #coding: UTF-8
+
 #######
-# Copyright FUJITSU LIMITED 2017
+# Copyright FUJITSU LIMITED 2017-2018
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,8 +21,10 @@
 # import
 import json
 import re
+import socket
+import traceback
 from os import path
-from ansible.module_utils.ism_user_settings import *
+from ansible.module_utils.ism_user_settings import IsmUserSettingsValue
 
 # common class
 class IsmCommon:
@@ -37,11 +40,19 @@ class IsmCommon:
     CERTIFICATE = " --cacert "
     UNICODE_STRING = "utf-8"
     
+    ISM_REFRESH_NODE_INFO_SLEEP_SECOND = 10
+    ADD_HEADER = " -H 'X-Ism-Authorization: " 
+    RESPONSE_CODE_200 = "200"
+    RESPONSE_CODE_201 = "201"
+    
     # rest url
     LOGIN_REST_URL = "/ism/api/v2/users/login"
     GET_NODE_OS_REST_URL = "/ism/api/v2/nodes/os"
     LOGOUT_REST_URL = "/ism/api/v2/users/logout"
     NODE_LIST_REST_URL = "/ism/api/v2/nodes"
+    
+    NODES_REST_URL = "/ism/api/v2/nodes/"
+    EVENT_LOG_LIST_REST_URL = "/ism/api/v2/event/history/event/show"
     
     def __init__(self, module):
         self.ism_ip = ""
@@ -186,11 +197,135 @@ class IsmCommon:
             if "firmware_version" in param_hash:
                 param_hash['firmware_version'] = self.covert_unicode(param_hash['firmware_version'])
                 
+    """
+    @Description Convert from null to blank
+    @param       dict params
+    @return      dict params
+    """
+    def convertNull(self, params):
+        
+        for key, value in params.items():
+            if value is None:
+                params[key] = ""
+                
+        return params
+        
 #   ***** param check method *****
 
 
 #   ***** common function *****
 
+    """
+    @Description Function pre-process
+    @param       dict params 
+    """
+    def preProcess(self, params):
+        try :
+            # Convert from null to blank
+            params = self.convertNull(params)
+            
+            # Convert from parameters to unicode string
+            for key, value in params.items():
+                value = self.covert_unicode(value)
+            
+            # Config file open
+            try :
+                config_path = path.abspath(params['config'])
+                f = open(config_path)
+            except Exception as e:
+                self.module.log("file open error: " + config_path + ", e=" + str(e))
+                self.module.log(traceback.format_exc())
+                self.module.fail_json(msg="file open error: " + config_path)
+                
+            # Config file loads
+            try :
+                json_data = json.load(f)
+            except Exception as e:
+                f.close()
+                self.module.log("Not json format data: " + config_path + ", e=" + str(e))
+                self.module.log(traceback.format_exc())
+                self.module.fail_json(msg="It is not json format data: " + config_path)
+            f.close()
+            
+            # Ip transformation
+            match = re.match(r'^\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}$', params['hostname'])
+            if match is None:
+                try :
+                    params['hostname'] = socket.gethostbyname(params['hostname'])
+                    self.module.debug("Host name is converted to IP address: " + params['hostname'])
+                except Exception as e:
+                    self.module.log("ip transformation error: Hostname=" + params['hostname'] + ", e=" + str(e))
+                    self.module.log(traceback.format_exc())
+                    self.module.fail_json(msg="Host name could not be converted to IP address: " + params['hostname'])
+                    
+            # ISM login
+            self.ismLogin(json_data)
+            
+            # Get node ID of OS
+            self.getNodeOS()
+            
+            # Get node ID of hardware
+            if self.getNodeId() == "":
+                self.getNodeHard()
+                
+            # Check node ID
+            if self.getNodeId() == "":
+                self.module.log("The target host name was not found.: " + params['hostname'])
+                self.module.fail_json(msg="The target host name was not found.: " + params['hostname'])
+            
+        except Exception as e:
+            self.module.log(str(e))
+            self.module.log(traceback.format_exc())
+            self.module.fail_json(msg=str(e))
+            
+    """
+    @Description REST API execution
+    @param       string rest_url
+    @param       string method (GET, POST, PATCH)
+    @param       string response_code
+    @param       string body
+    @return      dict json_data
+    """
+    def execRest(self, rest_url, method, response_code, body = ""):
+        try :
+            # Adding a response header
+            add_header = IsmCommon.ADD_HEADER + self.getSessionId() + "' "
+            
+            # Command execution
+            exec_command = self.COMMAND + rest_url + self.HEADER + add_header + method + body + \
+                           self.HTTP_RESPONSE_CODE + self.CERTIFICATE + "'" + self.singleEscape(self.getIsmCertificate()) + "'"
+                
+            # REST execution
+            (rc, stdout, stderr) = self.run_command_unicode(exec_command)
+            
+            if rc != 0:
+                self.module.log("curl communication error: stdout=" + stdout + ". stderr=" + stderr + ". exec_command=" + exec_command)
+                self.module.fail_json(msg="curl communication error: " + stderr)
+            
+            result = re.search(r'(.+)ISM_HTTP_RESPONSE_CODE=(\d+)', stdout.replace('\n', ''))
+            
+            if result is None:
+                self.module.log("REST result is fault: stdout=" + stdout + ", stderr=" + stderr + ", exec_command=" + exec_command)
+                self.module.fail_json(msg="REST result is fault: " + stderr)
+            else:
+                if result.group(2) == response_code:
+                    try :
+                        json_data = json.loads(result.group(1))
+                    except Exception as e:
+                        self.module.log("Not json format data: e=" + str(e) + ", stdout=" + stdout + ", stderr=" + stderr + ", exec_command=" + exec_command)
+                        self.module.log(traceback.format_exc())
+                        self.module.fail_json(msg="Not json format data: " + result.group(1))
+                else:
+                    self.module.log("Response Code=" + result.group(2) + ", stdout=" + stdout + ", stderr=" + stderr + ", exec_command=" + exec_command)
+                    self.module.fail_json(msg=result.group(1))
+                    
+            return json_data
+            
+        except Exception as e:
+            self.module.log(str(e))
+            self.module.log(traceback.format_exc())
+            self.module.fail_json(msg=str(e))
+        
     # ism login
     def ismLogin(self, data):
         try :
@@ -230,6 +365,7 @@ class IsmCommon:
                         json_data = json.loads(ism_login_result.group(1))
                     except Exception as e:
                         self.module.log("Not json format data: e=" + str(e) + ", stdout=" + stdout + ", stderr=" + stderr + ", exec_command=" + exec_command)
+                        self.module.log(traceback.format_exc())
                         self.module.fail_json(msg="Not json format data: " + ism_login_result.group(1))
                     
                     # set session id
@@ -241,6 +377,7 @@ class IsmCommon:
             self.module.debug("***** ismLogin End *****")
         except Exception as e:
             self.module.log(str(e))
+            self.module.log(traceback.format_exc())
             self.module.fail_json(msg=str(e))
             
     # ism logout
@@ -279,6 +416,7 @@ class IsmCommon:
             self.module.debug("***** ismLogout End *****")
         except Exception as e:
             self.module.log(str(e))
+            self.module.log(traceback.format_exc())
             self.module.fail_json(msg=str(e))
             
     # get node OS
@@ -315,6 +453,7 @@ class IsmCommon:
                         json_data = json.loads(get_node_os_result.group(1))
                     except Exception as e:
                         self.module.log("REST result is fault: stdout=" + stdout + ", stderr=" + stderr + ", exec_command=" + exec_command)
+                        self.module.log(traceback.format_exc())
                         self.module.fail_json(msg="REST result is fault: " + stderr)
                     
                     for list in json_data["IsmBody"]["Hosts"]:
@@ -329,6 +468,7 @@ class IsmCommon:
             
         except Exception as e:
             self.module.log(str(e))
+            self.module.log(traceback.format_exc())
             self.module.fail_json(msg=str(e))
             
     # get node Hard
@@ -365,6 +505,7 @@ class IsmCommon:
                         json_data = json.loads(get_node_hard_result.group(1))
                     except Exception as e:
                         self.module.log("Not json format data: e=" + str(e) + ", stdout=" + stdout + ", stderr=" + stderr + ", exec_command=" + exec_command)
+                        self.module.log(traceback.format_exc())
                         self.module.fail_json(msg="Not json format data: " + get_node_hard_result.group(1))
                     if json_data["IsmBody"]["Nodes"]:
                         self.setNodeId(json_data["IsmBody"]["Nodes"][0]["NodeId"])
@@ -375,6 +516,7 @@ class IsmCommon:
             self.module.debug("***** getNodeHard End *****")
         except Exception as e:
             self.module.log(str(e))
+            self.module.log(traceback.format_exc())
             self.module.fail_json(msg=str(e))
             
 #   ***** common function *****
