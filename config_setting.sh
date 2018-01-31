@@ -1,7 +1,8 @@
 #!/usr/bin/sh
 #coding: UTF-8
+
 #######
-# Copyright FUJITSU LIMITED 2017
+# Copyright FUJITSU LIMITED 2017-2018
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
