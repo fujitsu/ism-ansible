@@ -1,5 +1,5 @@
 #######
-# Copyright FUJITSU LIMITED 2017-2018
+# Copyright FUJITSU LIMITED 2018
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,20 +15,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #######
 
- - name: Profile Assignment
+ - name: Refresh node info
    hosts: servers
    connection: local
    
    tasks:
-#   - name: shutdown
-#     command: /sbin/shutdown -h now
-#     when: ansible_os_family == "RedHat"
-#     delegate_to: {{ inventory_hostname }}
-     
-   - name: Execution of ism_profile_assignment
-     ism_profile_assignment:
+   - name: Execution of ism_refresh_node_info
+     ism_refresh_node_info:
        config: "/etc/ansible/ism-ansible/ism_config.json"
        hostname: "{{ inventory_hostname }}"
-       ism_profile_name: "{{ ism_profile_name }}"
-     register: ism_profile_assignment_result
-   - debug: var=ism_profile_assignment_result
+     register: ism_refresh_node_info_result
+   - debug: var=ism_refresh_node_info_result

@@ -1,5 +1,5 @@
 #######
-# Copyright FUJITSU LIMITED 2017-2018
+# Copyright FUJITSU LIMITED 2018
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,12 +15,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #######
 
- - name: Firmware update
+ - name: Firmware offline update
    hosts: servers
    connection: local
    
    tasks:
-#  Use following task when shutdown the target node
+#  To execute offline firmware update, please shutdown the target server.
+#  For example, use the following task.
 #   - name: shutdown
 #     command: /sbin/shutdown -h now
 #     when: ansible_os_family == "RedHat"
@@ -33,7 +34,7 @@
        mode: "On"
      register: ism_maintenance_mode_setting_result
    - debug: var=ism_maintenance_mode_setting_result
-   
+
    - name: Execution of ism_firmware_update
      ism_firmware_update:
        config: "/etc/ansible/ism-ansible/ism_config.json"
@@ -42,25 +43,13 @@
         - firmware_name: "RX300 S8_iRMC"
           repository_name: "Individual Repository Administrator"
           firmware_version: "8.13F&3.71"
-          operation_mode: "Online"
+          operation_mode: "Offline"
         - firmware_name: "RX300 S8_BIOS"
           repository_name: "Individual Repository Administrator"
           firmware_version: "R1.11.0"
-          operation_mode: "Online"
+          operation_mode: "Offline"
      register: ism_firmware_update_result
    - debug: var=ism_firmware_update_result
-   
-#  Use following tasks when the target node is PRIMERGY(iRMC), ETERNUS, SWITCH
-#  and operation_mode is Online.
-#   - name: sleep for 1800 seconds and continue with play
-#     wait_for: timeout=1800
-#
-#   - name: Execution of ism_refresh_node_info
-#     ism_refresh_node_info:
-#       config: "/etc/ansible/ism-ansible/ism_config.json"
-#       hostname: "{{ inventory_hostname }}"
-#     register: ism_refresh_node_info_result
-#   - debug: var=ism_refresh_node_info_result
 
    - name: Cancel maintenance mode
      ism_maintenance_mode_setting:
