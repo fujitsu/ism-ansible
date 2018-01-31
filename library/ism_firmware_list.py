@@ -1,7 +1,8 @@
 #!/usr/bin/python
 #coding: UTF-8
+
 #######
-# Copyright FUJITSU LIMITED 2017
+# Copyright FUJITSU LIMITED 2017-2018
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,9 +24,9 @@ import re
 import copy
 import socket
 from os import path
-from ansible.module_utils.basic import *
+from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.ism_common import IsmCommon
-from ansible.module_utils.ism_user_settings import *
+from ansible.module_utils.ism_user_settings import IsmUserSettingsValue
 
 class IsmFirmwareList():
     

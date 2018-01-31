@@ -1,7 +1,8 @@
 #!/usr/bin/python
 #coding: UTF-8
+
 #######
-# Copyright FUJITSU LIMITED 2017
+# Copyright FUJITSU LIMITED 2017-2018
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,9 +25,9 @@ import time
 import datetime
 import socket
 from os import path
-from ansible.module_utils.basic import *
+from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.ism_common import IsmCommon
-from ansible.module_utils.ism_user_settings import *
+from ansible.module_utils.ism_user_settings import IsmUserSettingsValue
 
 class IsmFirmwareUpdate():
 
@@ -341,7 +342,7 @@ class IsmFirmwareUpdate():
             
             now = datetime.datetime.now()
             unix_time = long(time.mktime(now.timetuple()))
-            time_out = long(unix_time) + long(FIRMWARE_UPDATE_TIME_OUT)
+            time_out = long(unix_time) + long(IsmUserSettingsValue.FIRMWARE_UPDATE_TIME_OUT)
             
             # get rest url
             rest_url = common.getRestUrl(IsmFirmwareUpdate.TASK_INFO_REST_URL, id)
@@ -393,8 +394,8 @@ class IsmFirmwareUpdate():
                         self.module.debug("***** waiting for task End *****")
                         break
                 else:
-                    self.module.log("waiting for task timeout: " + str(FIRMWARE_UPDATE_TIME_OUT) + "s")
-                    self.module.fail_json(msg="waiting for task timeout: " + str(FIRMWARE_UPDATE_TIME_OUT) + "s")
+                    self.module.log("waiting for task timeout: " + str(IsmUserSettingsValue.FIRMWARE_UPDATE_TIME_OUT) + "s")
+                    self.module.fail_json(msg="waiting for task timeout: " + str(IsmUserSettingsValue.FIRMWARE_UPDATE_TIME_OUT) + "s")
                     break
                     
                 # execute sleep
