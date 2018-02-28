@@ -294,9 +294,12 @@ class IsmCommon:
             # Command execution
             exec_command = self.COMMAND + rest_url + self.HEADER + add_header + method + body + \
                            self.HTTP_RESPONSE_CODE + self.CERTIFICATE + "'" + self.singleEscape(self.getIsmCertificate()) + "'"
-                
+            self.module.debug("exec_command = " + exec_command)
+            
             # REST execution
             (rc, stdout, stderr) = self.run_command_unicode(exec_command)
+            self.module.debug("rc = " + str(rc))
+            self.module.debug("stdout = " + stdout)
             
             if rc != 0:
                 self.module.log("curl communication error: stdout=" + stdout + ". stderr=" + stderr + ". exec_command=" + exec_command)
@@ -326,6 +329,26 @@ class IsmCommon:
             self.module.log(traceback.format_exc())
             self.module.fail_json(msg=str(e))
         
+    """
+    @Description Function getQueryParam
+    @param       dict dict_param
+    @return      string param
+    """
+    def getQueryParam(self, dict_param):
+        try :
+            param = ""
+            for key, value in dict_param.items():
+                if value != "" and param == "":
+                    param = "?" + key + "=" + value
+                elif value != "" and param != "":
+                    param = param + "\&" + key + "=" + value
+            return param
+            
+        except Exception as e:
+            self.module.log(str(e))
+            self.module.log(traceback.format_exc())
+            self.module.fail_json(msg=str(e))
+            
     # ism login
     def ismLogin(self, data):
         try :
