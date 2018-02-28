@@ -1,0 +1,132 @@
+#######
+# Copyright FUJITSU LIMITED 2018
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#######
+
+ - name: Firmware easy update
+   hosts: servers
+   connection: local
+   vars:
+     config: "/etc/ansible/ism-ansible/ism_config.json"
+     
+   tasks:
+   - name: List Retrieval for Firmware of iRMC
+     ism_firmware_list:
+       config: "{{ config }}"
+       hostname: "{{ inventory_hostname }}"
+       firmware_type: "iRMC"
+     register: result
+   - set_fact:
+       iRMC_data:
+         firmware_name: "{{ result.ism_firmware_list.IsmBody.FirmwareList[0]['FirmwareName'] }}"
+         repository_name: "{{ result.ism_firmware_list.IsmBody.FirmwareList[0]['RepositoryName'] }}"
+         firmware_version: "{{ result.ism_firmware_list.IsmBody.FirmwareList[0]['FirmwareVersion'] }}"
+     when: result.ism_firmware_list.IsmBody.FirmwareList[0] is defined
+     
+#   - name: List Retrieval for Firmware of BIOS
+#     ism_firmware_list:
+#       config: "{{ config }}"
+#       hostname: "{{ inventory_hostname }}"
+#       firmware_type: "BIOS"
+#     register: result
+#   - set_fact:
+#       BIOS_data:
+#         firmware_name: "{{ result.ism_firmware_list.IsmBody.FirmwareList[0]['FirmwareName'] }}"
+#         repository_name: "{{ result.ism_firmware_list.IsmBody.FirmwareList[0]['RepositoryName'] }}"
+#         firmware_version: "{{ result.ism_firmware_list.IsmBody.FirmwareList[0]['FirmwareVersion'] }}"
+#     when: result.ism_firmware_list.IsmBody.FirmwareList[0] is defined
+     
+   - name: Changing to Maintenance Mode
+     ism_maintenance_mode_setting:
+       config: "{{ config }}"
+       hostname: "{{ inventory_hostname }}"
+       mode: "On"
+     register: ism_maintenance_mode_setting_result
+     when: iRMC_data is defined or BIOS_data is defined
+   - debug: var=ism_maintenance_mode_setting_result
+   
+   - name: Firmware Updates of iRMC and BIOS
+     ism_firmware_update:
+       config: "{{ config }}"
+       hostname: "{{ inventory_hostname }}"
+       firmware_update_list:
+        - firmware_name: "{{ iRMC_data.firmware_name }}"
+          repository_name: "{{ iRMC_data.repository_name }}"
+          firmware_version: "{{ iRMC_data.firmware_version }}"
+          operation_mode: "Online"
+        - firmware_name: "{{ BIOS_data.firmware_name }}"
+          repository_name: "{{ BIOS_data.repository_name }}"
+          firmware_version: "{{ BIOS_data.firmware_version }}"
+          operation_mode: "Online"
+     register: ism_firmware_update_result
+     when: iRMC_data is defined and BIOS_data is defined
+   - debug: var=ism_firmware_update_result
+   
+   - name: Firmware Update of iRMC
+     ism_firmware_update:
+       config: "{{ config }}"
+       hostname: "{{ inventory_hostname }}"
+       firmware_update_list:
+        - firmware_name: "{{ iRMC_data.firmware_name }}"
+          repository_name: "{{ iRMC_data.repository_name }}"
+          firmware_version: "{{ iRMC_data.firmware_version }}"
+          operation_mode: "Online"
+     register: ism_firmware_update_result
+     when: iRMC_data is defined and BIOS_data is undefined
+   - debug: var=ism_firmware_update_result
+   
+   - name: Firmware Update of BIOS
+     ism_firmware_update:
+       config: "{{ config }}"
+       hostname: "{{ inventory_hostname }}"
+       firmware_update_list:
+        - firmware_name: "{{ BIOS_data.firmware_name }}"
+          repository_name: "{{ BIOS_data.repository_name }}"
+          firmware_version: "{{ BIOS_data.firmware_version }}"
+          operation_mode: "Online"
+     register: ism_firmware_update_result
+     when: iRMC_data is undefined and BIOS_data is defined
+   - debug: var=ism_firmware_update_result
+   
+   - name: Sleep for 1800 seconds and continue with play
+     wait_for: timeout=1800
+     when: iRMC_data is defined or BIOS_data is defined
+     
+   - name: Refreshing Node Information
+     ism_refresh_node_info:
+       config: "{{ config }}"
+       hostname: "{{ inventory_hostname }}"
+     register: ism_refresh_node_info_result
+     when: iRMC_data is defined or BIOS_data is defined
+   - debug: var=ism_refresh_node_info_result
+   
+   - name: Changing From Maintenance Mode
+     ism_maintenance_mode_setting:
+       config: "{{ config }}"
+       hostname: "{{ inventory_hostname }}"
+       mode: "Off"
+     register: ism_maintenance_mode_setting_result
+     when: iRMC_data is defined or BIOS_data is defined
+   - debug: var=ism_maintenance_mode_setting_result
+   
+   - name: Getting Inventory Information
+     ism_get_inventory_info:
+       config: "{{ config }}"
+       hostname: "{{ inventory_hostname }}"
+       level: "All"
+       target: "Firmware"
+     register: ism_get_inventory_info_result
+   - debug: var=ism_get_inventory_info_result
+
