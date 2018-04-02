@@ -984,6 +984,11 @@ When the REST-API response of ServerView Infrastructure Manager is an error.
 |IsmBody|dict|Always, but can be null.|API processing results|
 |SchemaType|string|Always, but can be null.|The file name containing the JSON schema (JSON schema file name) that displays the entire HTTP body structure is output.|
 
+Case other than the above.
+
+|Name|Type|Returned|Description|
+|:--|:--|:--|:--|
+|msg|string|Always, but can be null.|Message except API processing results|
 
 #### Notes
 
