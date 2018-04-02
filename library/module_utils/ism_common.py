@@ -53,6 +53,7 @@ class IsmCommon:
     
     NODES_REST_URL = "/ism/api/v2/nodes/"
     EVENT_LOG_LIST_REST_URL = "/ism/api/v2/event/history/event/show"
+    PROFILE_LIST_REST_URL = "/ism/api/v2/profiles/profiles"
     
     def __init__(self, module):
         self.ism_ip = ""
