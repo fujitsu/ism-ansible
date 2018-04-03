@@ -63,7 +63,7 @@ Presently IPv6 is not supported. To the connection with ServerView Infrastructur
 #### Return Values (Normal)
 
 |Name|Type|Returned|Description|
-|:--
+|:--|:--|:--|:--|:--|
 |ism_firmware_list|dict|Always.|Retrieval result of the firmware list|
 |IsmBody|dict|Always, but can be null.|API processing results|
 |FirmwareList|dict-list|Always, but can be null.|List of Firmware|
@@ -132,12 +132,12 @@ Commences updating process firmware registered to ServerView Infrastructure Mana
 |Parameter|Required|Default|Choices|Comments|
 |:--|:-:|:--|:--|:--|
 |config|〇|None|None|Specifies the full path for the described setting file of the connection information of ServerView Infrastructure Manager.|
-|hostname|〇|None|None|Specifies the IP address and host name of the operation. [[Note1]](#note2-1) [[Note2]](#note2-2)|
+|hostname|〇|None|None|Specifies the IP address and host name of the operation. [[Note1]](#note-2-1) [[Note2]](#note-2-2)|
 |firmware_update_list|〇|None|None|Array data of dictionary type that specifies updated firmware.<br>Firmware_name, repository_name, firmware_version, and operation_mode are specified for an element of this dictionary type.|
-|firmware_name|〇|None|None|Firmware name<br>[[Note3]](#note2-3)|
-|repository_name|〇|None|None|Repository name<br>[[Note3]](#note2-3)|
-|firmware_version|-|None|None|Firmware version<br>[[Note3]](#note2-3)|
-|operation_mode|〇|None|・Online<br>・Offline|Supported modes<br>- Online: Online update<br>- Offline: Offline update<br>[[Note3]](#note2-3)|
+|firmware_name|〇|None|None|Firmware name<br>[[Note3]](#note-2-3)|
+|repository_name|〇|None|None|Repository name<br>[[Note3]](#note-2-3)|
+|firmware_version|-|None|None|Firmware version<br>[[Note3]](#note-2-3)|
+|operation_mode|〇|None|・Online<br>・Offline|Supported modes<br>- Online: Online update<br>- Offline: Offline update<br>[[Note3]](#note-2-3)|
 
 <a name="note-2-1">[Note1]  
 Specify the host name (FQDN) for the IP address or the IP address of operation node registered in ServerView Infrastructure Manager.  
@@ -311,7 +311,7 @@ When the REST-API response of ServerView Infrastructure Manager is an error.
 |Name|Type|Returned|Description|
 |:--|:--|:--|:--|
 |msg|dict|Always, but can be null.|MessageInfo, IsmBody, and SchemaType|
-|MessageInfo|dict-list|Always, but can be null.|Message information<br>Errors, warnings, and notification messages regarding API processing are output.<br>If there is no information available, only the key names are output |
+|MessageInfo|dict-list|Always, but can be null.|Message information<br>Errors, warnings, and notification messages regarding API processing are output.<br>If there is no information available, only the key names are output|
 |Timestamp|string|Always, but can be null.|Date & time information<br>Information of the date and time when the corresponding message displayed is output.|
 |MessageId|string|Always, but can be null.|Message ID<br>A unique ID is output for each message.|
 |API|string|Always, but can be null.|API type<br>The API type is output in the format "Method name URI".|
@@ -555,9 +555,9 @@ Case except the above.
 - Refer to the following URL for the information regarding parameter setting in config file and inventory file<br>[https://github.com/fujitsu/ism-ansible/blob/master/Readme.md](https://github.com/fujitsu/ism-ansible/blob/master/Readme.md)
 - Refer to the following URL for the information regarding sample playbook using ism_power_on<br>[https://github.com/fujitsu/ism-ansible/blob/master/examples/ism_power_controls.yml](https://github.com/fujitsu/ism-ansible/blob/master/examples/ism_power_controls.yml)
  
-
-### ism_refresh_node_info
-
+---
+<a name="#ism_refresh_node_info">ism_refresh_node_info
+------------------
 Refreshing Node Information
 
 
@@ -787,8 +787,8 @@ Case other than the above.
 - Refer to the following URL for the information regarding the parameter setting in config file and inventory file.  
 [https://github.com/fujitsu/ism-ansible/blob/master/Readme.md](https://github.com/fujitsu/ism-ansible/blob/master/Readme.md)
 - Refer to the following URL for the information regarding sample playbook using ism_get_inventory_info.  
-[https://github.com/fujitsu/ism-ansible/blob/master/examples/ism_get_inventory_info.yml](https://github.com/fujitsu/ism-ansible/examples/blob/master/ism_get_inventory_info.yml)
-
+[https://github.com/fujitsu/ism-ansible/blob/master/examples/ism_get_inventory_info.yml](https://github.com/fujitsu/ism-ansible/blob/master/examples/ism_get_inventory_info.yml)
+                                                                                         
 ---
 
 <a name="ism_get_profile_info">ism_get_profile_info
