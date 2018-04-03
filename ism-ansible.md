@@ -63,7 +63,7 @@ Presently IPv6 is not supported. To the connection with ServerView Infrastructur
 #### Return Values (Normal)
 
 |Name|Type|Returned|Description|
-|:--|:--|:--|:--|:--|
+|:--|:--|:--|:--|
 |ism_firmware_list|dict|Always.|Retrieval result of the firmware list|
 |IsmBody|dict|Always, but can be null.|API processing results|
 |FirmwareList|dict-list|Always, but can be null.|List of Firmware|
