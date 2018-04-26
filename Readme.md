@@ -92,7 +92,7 @@ $ cat ./ism_config.json
 Describe the path of the config file in playbook.  
 Refer to [[Note7]](#note-7) and [[Note8]](#note-8).
 
-Example：
+Example:
 
 ```yaml
 - name: Firmware update
@@ -172,9 +172,9 @@ The following commands are executed with Ansible server.
 $ ansible-playbook <playbook file path> -i <inventory file path>
 ```
 
-Example：  
-playbook file path ：/etc/ansible/ism-ansible/examples/ism_firmware_list.yml  
-inventory file path：/etc/ansible/hosts
+Example:  
+playbook file path: ` /etc/ansible/ism-ansible/examples/ism_firmware_list.yml`  
+inventory file path: `/etc/ansible/hosts`  
 
 ```shell    
 $ ansible-playbook /etc/ansible/ism-ansible/examples/ism_firmware_list.yml -i /etc/ansible/hosts
@@ -186,7 +186,7 @@ In the module of Update Firmware or Profile Assignment, waiting to complete the 
 The timeout period for the process of waiting to complete the task can be changed with the following ism_user_settings file.  
 Refer to [[Note11]](#note-11).
 
-ism_user_settings file path： /etc/ansible/ism-ansible/module_utils/ism_user_settings.py
+ism_user_settings file path: `/etc/ansible/ism-ansible/module_utils/ism_user_settings.py`  
 
 Example:
 Timeout period of firmware update: `14400` (second) (= 4hours)
