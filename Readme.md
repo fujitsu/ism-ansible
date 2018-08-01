@@ -1,7 +1,7 @@
-Ansible Modules for ServerView Infrastructure Manager
+Ansible Modules for Infrastructure Manager
 =====================================================
 
-This is the modules to manage ServerView Infrastructure Manager using Ansible playbooks.
+This is the modules to manage Infrastructure Manager using Ansible playbooks.
 
 
 Requirements
@@ -10,8 +10,8 @@ Requirements
 - Ansible Server
   - Ansible 2.4 or later
   - Python  2.6 or later
-- Fujitsu Software ServerView Infrastructure Manager
-  - 2.2.0
+- FUJITSU Software Infrastructure Manager
+  - 2.2.0 or later
 
 ### Examples
 
@@ -43,15 +43,15 @@ $ export ANSIBLE_MODULE_UTILS=/etc/ansible/ism-ansible/library/module_utils/
 $ export PYTHONPATH=$PYTHONPATH:$ANSIBLE_LIBRARY
 ```
 
-### 3. Certificate assignment for ServerView Infrastructure Manager
+### 3. Certificate assignment for Infrastructure Manager
 
 Acquire the certificate used for https communication and assign in the Ansible server.
 For information on how to assign certificates, refer to "3.1.1 Preparation" in
-"FUJITSU Software ServerView Infrastructure Manager V2.2 REST API Reference Manual".
+"FUJITSU Software Infrastructure Manager V2.2 REST API Reference Manual".
 
 ### 4. Setting config file
 
-Set the account information of ServerView Infrastructure Manager for the confg file (`ism_config.json`).
+Set the account information of Infrastructure Manager for the confg file (`ism_config.json`).
 Execute `config_setting.sh` with Ansible server as follows.The config file is created in the current directory when executing it.  
 Refer from [[Note1]](#note-1) to [[Note5]](#note-5).
 
@@ -75,7 +75,7 @@ $ ./config_setting.sh
 > completed
 ```
 
-In each example in the above < >, specify the information of ServerView Infrastructure Manager.  
+In each example in the above < >, specify the information of Infrastructure Manager.  
 Refer to [[Note6]](#note-6).
 
 Confirm the config file was created.
@@ -130,8 +130,8 @@ In Ansible, the playbook can be executed for the host group unit.
 
 #### <Operation node>
 
-Specify the IP address of the operation node registered in ServerView Infrastructure Manager or the host name (FQDN) for its IP address.
-When the OS information of the operation node is registered in ServerView Infrastructure Manager, the host name (FQDN) for the IP address of the OS information or the IP address can be specified.  
+Specify the IP address of the operation node registered in Infrastructure Manager or the host name (FQDN) for its IP address.
+When the OS information of the operation node is registered in Infrastructure Manager, the host name (FQDN) for the IP address of the OS information or the IP address can be specified.  
 Refer to [[Note9]](#note-9) and [[Note10]](#note-10).
 
 #### <Profile name>
@@ -220,13 +220,13 @@ Specify the input values in single-byte upper-case, lower-case alphabetic letter
 When re-setting by changing the input information, make sure that the playbook and module are stopped, and that the proper procedure is executed again.
 
 <a name="note-4">[Note4]  
-When FQDN is used for the connection with ServerView Infrastructure Manager, confirm beforehand whether FQDN of ServerView Infrastructure Manager is available for name resolution on the Ansible server.
+When FQDN is used for the connection with Infrastructure Manager, confirm beforehand whether FQDN of Infrastructure Manager is available for name resolution on the Ansible server.
 
 <a name="note-5">[Note5]  
-Presently IPv6 is not supported. For the connection with ServerView Infrastructure Manager, specify the IP address of IPv4 or host name (FQDN) that are available for name resolution of IPv4.
+Presently IPv6 is not supported. For the connection with Infrastructure Manager, specify the IP address of IPv4 or host name (FQDN) that are available for name resolution of IPv4.
 
 <a name="note-6">[Note6]  
-If the following error occurs when FQDN of ServerView Infrastructure Manager is specified with `config_setting.sh`, name resolution of FQDN of ServerView Infrastructure Manager has failed on the Ansible server. Ensure the action for name resolution and re-execute.
+If the following error occurs when FQDN of Infrastructure Manager is specified with `config_setting.sh`, name resolution of FQDN of Infrastructure Manager has failed on the Ansible server. Ensure the action for name resolution and re-execute.
 
 Example(For FQDN ism.test.local):
 
@@ -242,7 +242,7 @@ $ ./ism-ansible/config_setting.sh
 Specify the config path in single-byte upper-case, lower-case alphabetic letters, numbers and symbols.
 
 <a name="note-8">[Note8]  
-Ansible Modules for ServerView Infrastructure Manager is executed on the Ansible server. Therefore, the specification for "Connection: local" of the playbook is mandatory.
+Ansible Modules for Infrastructure Manager is executed on the Ansible server. Therefore, the specification for "Connection: local" of the playbook is mandatory.
 
 <a name="note-9">[Note9]  
 Presently IPv6 is not supported. Specify the IP address of IPv4 or host name (FQDN) that are available for name resolution of IPv4.
@@ -269,5 +269,5 @@ Copyright FUJITSU LIMITED 2017-2018
 API
 ---
 
-- FUJITSU Software ServerView Infrastructure Manager V2.2 REST API Reference Manual
+- FUJITSU Software Infrastructure Manager REST API Reference Manual
 [http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/](http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/)
