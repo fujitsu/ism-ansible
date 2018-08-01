@@ -24,10 +24,10 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 
 DOCUMENTATION = '''
 ---
-module: ism_get_inventory_info
-short_description: Get the inventory information of Infrastructure Manager.
+module: ism_retrieve_download_firmware_info
+short_description: Get the retrieve download firmware infomation of Infrastructure Manager.
 description:
-    - "Provides an interface for get the inventory information of Infrastructure Manager."
+    - "Provides an interface for get the retrieve download firmware infomation of Infrastructure Manager."
 version_added: "2.4" 
 author: "Nakamura Takayuki (@nakamura-taka)"
 options:
@@ -42,43 +42,26 @@ options:
           the host name (FQDN) for the IP address of OS information or the IP address can be specified.
           IPv6 is not supported. Specify a host name that can be resolved by IPv4 or IPv4.
       required: true
-    level:
-      description:
-        - Specify whether to get detailed information.
-          If there is no specification, it will work with All.
-          C(Top) not get detailed information.
-          C(All) get detailed information.
-      choices: ['Top', 'All']
-      required: false
-    target:
-      description:
-        - Specify the type of detailed information.
-          We will only retrieve information of the specified type.
-          If there is no specification, All information is got.
-          Please specify All whether to get detailed information
-      required: false
 requirements:
     - "python >= 2.6"
-    - "ISM >= 2.2.0"
+    - "ISM >= 2.3.0"
 notes:
     - "The setting method of the setting file specified in the config parameter is in the following location:
        U(https://github.com/fujitsu/ism-ansible/blob/master/Readme.md)"
 '''
 
 EXAMPLES = '''
-- name: Execution of ism_get_inventory_info
-  ism_get_inventory_info:
+- name: Retrieving Download Firmware Info
+  ism_retrieve_download_firmware_info_:
     config: "/etc/ansible/ism-ansible/ism_config.json"
-    hostname: "192.168.1.22"
-    level: "All"
-    target: "Firmware"
-  register: ism_get_inventory_info_result
-- debug: var=ism_get_inventory_info_result
+    hostname: "192.168.1.10"
+  register: ism_retrieve_download_firmware_info_result
+- debug: var=ism_retrieve_download_firmware_info_result
 '''
 
 RETURN = '''
-ism_get_inventory_info:
-    description: The execution result of get inventory information is returned.
+ism_retrieve_download_firmware_info:
+    description: The execution result of Retrievive Download Firmware Info acquisition is returned.
     returned: Always
     type: dict
 '''
@@ -89,15 +72,13 @@ from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.ism_common import IsmCommon
 from ansible.module_utils.ism_user_settings import IsmUserSettingsValue
 
-class IsmGetInventoryInfo():
-
+class IsmRetrieveDownloadFirmwareInfo():
+    
     # Receiving args
     module = AnsibleModule(
         argument_spec=dict(
             config=dict(required=True),
-            hostname=dict(required=True),
-            level=dict(required=False),
-            target=dict(required=False)
+            hostname=dict(required=True)
         )
     )
     
@@ -106,25 +87,25 @@ class IsmGetInventoryInfo():
        
     def __present(self):
         try :
-            self.module.log("argument_spec with config=" + str(self.module.params['config']) + " hostname=" + str(self.module.params['hostname']) + \
-                            " level=" + str(self.module.params['level']) + " target=" + str(self.module.params['target']))
+            self.module.log("argument_spec with config=" + str(self.module.params['config']) + " hostname=" + str(self.module.params['hostname']))
+
             
             # Instance of common class
             common = IsmCommon(self.module)
-            
+
             # Pre-process
-            common.preProcess(self.module.params)
-            
-            # Get inventory info execution
-            result = self.getInventoryInfo(common)
-            
+            common.preProcess(self.module.params,NodeCheck = False)
+
+            # Get retrieve download firmware info execution
+            result = self.retrieveDownloadFirmwareInfo(common)
+
             # ISM logout
             common.ismLogout()
             
             # Return json
             changed_result = False
-            self.module.log("ism_get_inventory_info successful completion")
-            self.module.exit_json(changed=changed_result, ism_get_inventory_info=result)
+            self.module.log("ism_retrieve_download_firmware_info successful completion")
+            self.module.exit_json(changed=changed_result, ism_retrieve_download_firmware_info=result)
             
         except Exception as e:
             self.module.log(str(e))
@@ -132,29 +113,22 @@ class IsmGetInventoryInfo():
             self.module.fail_json(msg=str(e))
             
     """
-    @Description Function to get inventory infomation
+    @Description Function to retrieve download firmware info
     @param       class common
     @return      dict json_data
     """
-    def getInventoryInfo(self, common):
+    def retrieveDownloadFirmwareInfo(self, common):
         try :
-            self.module.debug("***** getInventoryInfo Start *****")
-            
-            # Create query param
-            dict_param = dict()
-            dict_param['level'] = self.module.params['level']
-            dict_param['target'] = self.module.params['target']
-            
-            param = common.getQueryParam(dict_param)
+            self.module.debug("***** retrieveDownloadFirmwareInfo Start *****")
             
             # Get REST URL
-            rest_url = common.getRestUrl(common.NODES_REST_URL, common.getNodeId() + "/inventory" + param)
-            
+            rest_url = common.getRestUrl(common.FIRMWARE_URL, "ftsfirmwarelist/download")
+
             # REST API execution
-            json_data = common.execRest(rest_url, common.GET, common.RESPONSE_CODE_200)
-            
-            self.module.log("getInventoryInfo success")
-            self.module.debug("***** getInventoryInfo End *****")
+            json_data = common.execRest(rest_url, common.POST, common.RESPONSE_CODE_201, " '' ", timeout = "180")
+
+            self.module.log("retrieveDownloadFirmwareInfo success")
+            self.module.debug("***** retrieveDownloadFirmwareInfo End *****")
             
             return json_data
             
@@ -162,5 +136,4 @@ class IsmGetInventoryInfo():
             self.module.log(str(e))
             self.module.log(traceback.format_exc())
             self.module.fail_json(msg=str(e))
-            
-IsmGetInventoryInfo()
+IsmRetrieveDownloadFirmwareInfo()

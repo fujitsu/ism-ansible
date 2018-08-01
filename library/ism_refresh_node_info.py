@@ -25,20 +25,20 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 DOCUMENTATION = '''
 ---
 module: ism_refresh_node_info
-short_description: Update the node information of ServerView Infrastructure Manager.
+short_description: Update the node information of Infrastructure Manager.
 description:
-    - "Provides an interface for update the node information of ServerView Infrastructure Manager."
+    - "Provides an interface for update the node information of Infrastructure Manager."
 version_added: "2.4" 
 author: "Nakamura Takayuki (@nakamura-taka)"
 options:
     config:
       description:
-        - Specifies the full path for the described setting file of the connection information of ServerView Infrastructure Manager.
+        - Specifies the full path for the described setting file of the connection information of Infrastructure Manager.
       required: true
     hostname:
       description:
-        - Specify the host name (FQDN) for the IP address or the IP address of Operation node registered in ServerView Infrastructure Manager is specified.
-          When OS information of the operation node is registered in ServerView Infrastructure Manager,
+        - Specify the host name (FQDN) for the IP address or the IP address of Operation node registered in Infrastructure Manager is specified.
+          When OS information of the operation node is registered in Infrastructure Manager,
           the host name (FQDN) for the IP address of OS information or the IP address can be specified.
           IPv6 is not supported. Specify a host name that can be resolved by IPv4 or IPv4.
       required: true
