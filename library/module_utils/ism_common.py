@@ -32,6 +32,7 @@ class IsmCommon:
     # constant
     TIME_OUT_SECOND = "60"
     COMMAND = "curl -S -s -m " + TIME_OUT_SECOND + " "
+    COMMAND_TIMEOUT_FREE = "curl -S -s -m "
     GET = " -X GET "
     POST = " -X POST -d "
     PATCH = " --request PATCH -d "
@@ -39,6 +40,7 @@ class IsmCommon:
     HTTP_RESPONSE_CODE = " -w 'ISM_HTTP_RESPONSE_CODE=%{http_code}' "
     CERTIFICATE = " --cacert "
     UNICODE_STRING = "utf-8"
+    SLEEP_SECOND = 30
     
     ISM_REFRESH_NODE_INFO_SLEEP_SECOND = 10
     ADD_HEADER = " -H 'X-Ism-Authorization: " 
@@ -54,6 +56,9 @@ class IsmCommon:
     NODES_REST_URL = "/ism/api/v2/nodes/"
     EVENT_LOG_LIST_REST_URL = "/ism/api/v2/event/history/event/show"
     PROFILE_LIST_REST_URL = "/ism/api/v2/profiles/profiles"
+    FIRMWARE_URL = "/ism/api/v2/system/settings/firmware/"
+    FIRMWARE_INVENTORY_REST_URL = "/ism/api/v2/nodes/inventory/"
+    TASK_INFO_REST_URL = "/ism/api/v2/tasks/"
     
     def __init__(self, module):
         self.ism_ip = ""
@@ -157,12 +162,31 @@ class IsmCommon:
 
     # convert to unicode string
     def covert_unicode(self, str_var):
+
+    # list 
+        if isinstance(str_var ,list):
+            return str_var
+
         if str_var is not None:
             convert_str = unicode(str_var, IsmCommon.UNICODE_STRING)
             return convert_str
         else:
             return str_var
         
+    def covert_unicode_hash_list(self, str_var,required_keys):
+        self.module.log("***** covert_unicode_hash_list Start *****")
+        for param_hash in str_var:
+            for key in required_keys:
+                if key not in param_hash:
+                    self.module.log("missing required arguments: " + key)
+                    self.module.fail_json(msg="missing required arguments: " + key)
+                if param_hash[key] is None:
+                    self.module.log("no value key: " + key)
+                    self.module.fail_json(msg="no value key: " + key)
+                param_hash[key] = self.covert_unicode(param_hash[key])
+
+        self.module.log("***** covert_unicode_hash_list End *****")
+
 #   ***** unicode method *****
 
 
@@ -220,7 +244,7 @@ class IsmCommon:
     @Description Function pre-process
     @param       dict params 
     """
-    def preProcess(self, params):
+    def preProcess(self, params, NodeCheck = True):
         try :
             # Convert from null to blank
             params = self.convertNull(params)
@@ -262,18 +286,19 @@ class IsmCommon:
             # ISM login
             self.ismLogin(json_data)
             
-            # Get node ID of OS
-            self.getNodeOS()
-            
-            # Get node ID of hardware
-            if self.getNodeId() == "":
-                self.getNodeHard()
+            if NodeCheck:
+                # Get node ID of OS
+                self.getNodeOS()
                 
-            # Check node ID
-            if self.getNodeId() == "":
-                self.module.log("The target host name was not found.: " + params['hostname'])
-                self.module.fail_json(msg="The target host name was not found.: " + params['hostname'])
-            
+                # Get node ID of hardware
+                if self.getNodeId() == "":
+                    self.getNodeHard()
+                    
+                # Check node ID
+                if self.getNodeId() == "":
+                    self.module.log("The target host name was not found.: " + params['hostname'])
+                    self.module.fail_json(msg="The target host name was not found.: " + params['hostname'])
+                
         except Exception as e:
             self.module.log(str(e))
             self.module.log(traceback.format_exc())
@@ -287,14 +312,19 @@ class IsmCommon:
     @param       string body
     @return      dict json_data
     """
-    def execRest(self, rest_url, method, response_code, body = ""):
+    def execRest(self, rest_url, method, response_code, body = "",timeout = "60"):
         try :
             # Adding a response header
             add_header = IsmCommon.ADD_HEADER + self.getSessionId() + "' "
             
+            if timeout == "60":
+                exec_command = self.COMMAND + rest_url + self.HEADER + add_header + method + body + \
+                   self.HTTP_RESPONSE_CODE + self.CERTIFICATE + "'" + self.singleEscape(self.getIsmCertificate()) + "'"
+            else:
+                exec_command = self.COMMAND_TIMEOUT_FREE + timeout + " " + rest_url + self.HEADER + add_header + method + body + \
+                   self.HTTP_RESPONSE_CODE + self.CERTIFICATE + "'" + self.singleEscape(self.getIsmCertificate()) + "'"
+            
             # Command execution
-            exec_command = self.COMMAND + rest_url + self.HEADER + add_header + method + body + \
-                           self.HTTP_RESPONSE_CODE + self.CERTIFICATE + "'" + self.singleEscape(self.getIsmCertificate()) + "'"
             self.module.debug("exec_command = " + exec_command)
             
             # REST execution
