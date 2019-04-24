@@ -163,13 +163,16 @@ Example: Host group name: servers
   +---------------------------------------------------
 ```
 ### 6. Modules and license check  
-The following is a list of modules available and unavailable in Essential.
+The following is a list of modules available and unavailable in Essential.  
+<br>
+Operation Mode [[note12]](#note-12)<br>
+Operation Mode other than Essential [[note13]](#note-13)  
 
 <table>
 <tr>
   <th>Module name</th>
-  <th>Operation Mode [[note12]](#note-12) Other than Essential [[note13]](#note-13)</th>
-  <th>Operation Mode [[note12]](#note-12) Essential</th>
+  <th>Operation Mode other than Essential</th>
+  <th>Operation Mode Essential</th>
 </tr>
 
 <tr> 
