@@ -47,6 +47,9 @@ class IsmCommon:
     RESPONSE_CODE_200 = "200"
     RESPONSE_CODE_201 = "201"
     
+    # Parameter check flag of ism monitoring setting module
+    ISM_REGISTER_MONITORING_SETTING_PARAMETER_CHECK = True
+    
     # rest url
     LOGIN_REST_URL = "/ism/api/v2/users/login"
     GET_NODE_OS_REST_URL = "/ism/api/v2/nodes/os"
@@ -59,6 +62,32 @@ class IsmCommon:
     FIRMWARE_URL = "/ism/api/v2/system/settings/firmware/"
     FIRMWARE_INVENTORY_REST_URL = "/ism/api/v2/nodes/inventory/"
     TASK_INFO_REST_URL = "/ism/api/v2/tasks/"
+    SYSTEM_URL = "/ism/api/v2/system/"
+    
+    # message
+    MSG_NO_VALUE_KEY = 'no value key: '
+    MSG_MISSING_REQUIRED_ARGUMENTS = 'missing required arguments: '
+    MSG_VALUE_OF = 'value of '
+    MSG_MUST_BE_ONE_OF = ' must be one of: ' 
+    MSG_GOT = ' got: ' 
+    MSG_VALID_INPUT_RANGE = 'The valid input range is '
+    MSG_NOT_SUPPORT_PARAMETER = 'not support parameter: '
+    MSG_SUPPORT_PARAMETER_DICT = 'Specify the value as a dictionary type. :'
+    MSG_SUPPORT_PARAMETER_STR = 'Specify the value as a string type. :'
+    
+    # monitoring setting add message
+    MSG_ENTER_VALUES_IN_THE_RIGHT_FORMAT = 'Enter values in the right format. :'
+    MSG_VALUE_SMALLER_UPPER_WARNING  = 'Enter a value smaller than upper_critical. : upper_warning'
+    MSG_VALUE_SMALLER_LOWER_WARNING  = 'Enter a value smaller than upper_critical, upper_warning. : lower_warning'
+    MSG_VALUE_SMALLER_LOWER_CRITICAL = 'Enter a value smaller than upper_critical, upper_warning, lower_warning. : lower_critical'
+    MSG_THERE_ARE_NO_REGISTERABLE_MONITORING_ITEMS = 'There are no registerable monitoring items. :'
+    MSG_NO_THRESHOLD_CAN_BE_SET = 'No threshold can be set for this monitoring item. :'
+    MSG_IN_ORDER_TO_ENABLE_THRESHOLD_VALUE_MONITORING = 'In order to enable threshold value monitoring, performance monitoring (is_active) should be enabled.'
+    MSG_SPECIFIABLE_RANGE_OF_THRESHOLD_VALUE = 'The threshold value can be specified in the range of [-1000000000000~1000000000000].'
+    MSG_THE_SIXTH_DECIMAL_PLACE = 'The threshold can be specified up to 6 decimal places.'
+    MSG_THRESHOLD_VALUE_MONITORING_IS_DISABLED = 'If the status of Threshold monitoring (is_threshold_monitoring_active) is disabled, the information of the threshold (upper_critical, upper_warning, lower_warning, lower_critical) cannot be specified.'
+
+    ##
     
     def __init__(self, module):
         self.ism_ip = ""
@@ -163,6 +192,9 @@ class IsmCommon:
     # convert to unicode string
     def covert_unicode(self, str_var):
 
+    # dict 
+        if isinstance(str_var ,dict):
+            return str_var
     # list 
         if isinstance(str_var ,list):
             return str_var
@@ -172,7 +204,57 @@ class IsmCommon:
             return convert_str
         else:
             return str_var
+
+    """
+    @Description Function to covert unicode hash dict
+    @param       class hash_dict
+    """
+    def covertUnicodeHashDict(self, hash_dict):
+        self.module.debug("***** covertUnicodeHashDict Start *****")
+        if not isinstance(hash_dict , dict):
+            self.errorMessage(IsmCommon.MSG_SUPPORT_PARAMETER_DICT + str(hash_dict))
         
+        for key, value in hash_dict.items():
+            self.module.debug(" dict key :" + str(key) + " value :" + str(value) )
+            if isinstance(value ,str):
+                hash_dict[key] = self.covert_unicode(value)
+            
+            elif isinstance(value ,dict):
+                self.covertUnicodeHashDict(value)
+            
+            else:
+                continue
+        self.module.debug("***** covertUnicodeHashDict End *****")
+
+    """
+    @Description Function to covert unicode hash list
+    @param       class hash_list
+    """
+    def covertUnicodeHashList(self, hash_list):
+        self.module.debug("***** covertUnicodeHashList Start *****")
+        for hash in hash_list:
+            if not isinstance(hash , dict):
+                self.errorMessage(IsmCommon.MSG_SUPPORT_PARAMETER_DICT + str(hash_list))
+        
+            for key , value in hash.items():
+                # Assumed data 
+                # ex) [{"data1" : "value1"}]
+                if isinstance(value ,str):
+                    hash[key] = self.covert_unicode(value)
+                # Assumed data 
+                # ex) [{"data1" : {"data2" : "value2"}}]
+                elif isinstance(value ,dict):
+                    self.module.debug("dict :" + str(value))
+                    self.covertUnicodeHashDict(value)
+                else:
+                    continue
+                    
+        self.module.debug("***** covertUnicodeHashList End *****")
+
+    """
+    @Description Function to covert unicode hash list
+    @param       class common, hash_list
+    """
     def covert_unicode_hash_list(self, str_var,required_keys):
         self.module.log("***** covert_unicode_hash_list Start *****")
         for param_hash in str_var:
@@ -187,6 +269,22 @@ class IsmCommon:
 
         self.module.log("***** covert_unicode_hash_list End *****")
 
+    # REST-API Specification
+    #   The case for null = No , "" = No 
+    # The list type is not covert_unicode, covert_unicode inside the loop.
+    # First argument  : Target hash list.  type = list
+    # Second argument : Required key name. type = list
+    def covert_unicode_hash_list_not_none_and_empty(self, target_hash_list,required_keys):
+        self.module.log("***** covert_unicode_hash_list_not_none_and_empty Start *****")
+        for param_hash in target_hash_list:
+            for key in required_keys:
+                if key not in param_hash:
+                    self.errorMessage(IsmCommon.MSG_MISSING_REQUIRED_ARGUMENTS + str(key))
+                if param_hash[key] == "" or param_hash[key] is None:
+                    self.errorMessage(IsmCommon.MSG_NO_VALUE_KEY + str(key))
+                param_hash[key] = self.covert_unicode(param_hash[key])
+
+        self.module.log("***** covert_unicode_hash_list_not_none_and_empty End *****")
 #   ***** unicode method *****
 
 
@@ -227,9 +325,12 @@ class IsmCommon:
     @param       dict params
     @return      dict params
     """
-    def convertNull(self, params):
+    def convertNull(self, params, paramListNotBlank):
         
         for key, value in params.items():
+            if key in paramListNotBlank:
+                continue
+            
             if value is None:
                 params[key] = ""
                 
@@ -244,10 +345,10 @@ class IsmCommon:
     @Description Function pre-process
     @param       dict params 
     """
-    def preProcess(self, params, NodeCheck = True):
+    def preProcess(self, params, NodeCheck = True , paramListNotBlank = [] , hostNameCheck = False ):
         try :
             # Convert from null to blank
-            params = self.convertNull(params)
+            params = self.convertNull(params, paramListNotBlank)
             
             # Convert from parameters to unicode string
             for key, value in params.items():
@@ -271,6 +372,13 @@ class IsmCommon:
                 self.module.log(traceback.format_exc())
                 self.module.fail_json(msg="It is not json format data: " + config_path)
             f.close()
+            
+            # tha case of hostNameCheck:False
+            # If the hostname is ""  , hostname is "0.0.0.0".
+            # If the hostname is None, a type error occurs during Ip conversion.
+            if hostNameCheck == True :
+                if params['hostname'] == None or params['hostname'] == "":
+                    self.errorMessage(IsmCommon.MSG_NO_VALUE_KEY + "hostname")
             
             # Ip transformation
             match = re.match(r'^\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}$', params['hostname'])
@@ -573,5 +681,74 @@ class IsmCommon:
             self.module.log(traceback.format_exc())
             self.module.fail_json(msg=str(e))
             
-#   ***** common function *****
+    # License Check
+    def licenseCheck(self, license_check = True, usable_essential = False):
+        try :
+            self.module.debug("***** License Check Start *****")
+            
+            if license_check == False:
+                return
+            
+            # get rest url
+            rest_url = self.getRestUrl(IsmCommon.SYSTEM_URL , "licenses/")
+            
+            license_data = self.execRest(rest_url, IsmCommon.GET, IsmCommon.RESPONSE_CODE_200)
+            
+            if "OperationMode" in license_data["IsmBody"].keys():
+                # Version of ISM "2.4.0.b" after , Essential mode check
+                if license_data["IsmBody"]["OperationMode"] != "Essential":
+                    # OperationMode is not Essential (=Advanced)
+                    return
+                    
+                elif usable_essential == True:
+                    # OperationMode is Essential and usable_essential is True 
+                    return
+                    
+                # OperationMode is Essential and usable_essential is False 
+                self.module.log("This module is not supported on Essential mode.")
+                self.module.fail_json(msg="This module is not supported on Essential mode.")
 
+            else:
+                # Version of ISM "2.4.0.a" before, Server license check
+                for license in license_data["IsmBody"]["Licenses"]:
+                    if (license["Type"] == "Server"):
+                        # Server license found
+                        return
+                
+                # Server license not found
+                self.module.log("The server license of FUJITSU Software Infrastructure Manager is necessary to execute this module.")
+                self.module.fail_json(msg="The server license of FUJITSU Software Infrastructure Manager is necessary to execute this module.")
+            
+        except Exception as e:
+            self.module.log(str(e))
+            self.module.log(traceback.format_exc())
+            self.module.fail_json(msg=str(e))
+
+        finally:
+            self.module.debug("***** License Check End *****")
+    
+    # The type is 'dict' or 'list',
+    # Ansible standard parameter check can not be used.
+    def choiceCheck(self, value, choice_list , key_name):
+        self.module.debug("***** choiceCheck Start *****")
+        
+        if value not in choice_list:
+            msg = ','.join(choice_list) + ','
+            self.errorMessage(IsmCommon.MSG_VALUE_OF + key_name + IsmCommon.MSG_MUST_BE_ONE_OF + msg + IsmCommon.MSG_GOT + str(value))
+            
+        self.module.debug("***** choiceCheck End *****")
+    
+    # Error message
+    def errorMessage(self, message):
+        self.module.log(message)
+        self.module.fail_json(msg= message )
+
+    # The type is 'dict' or 'list',
+    # Ansible standard parameter name check can not be used.
+    def checkKeyName(self, param, key_name_list):
+        self.module.debug("***** checkKeyName Start *****")
+        for key in param.keys():
+            if key not in key_name_list:
+                self.errorMessage(IsmCommon.MSG_NOT_SUPPORT_PARAMETER + str(key))
+        self.module.debug("***** checkKeyName End *****")
+#   ***** common function *****
