@@ -97,6 +97,9 @@ class IsmFirmwareUpdate():
             # ISM login
             common.ismLogin(json_data)
             
+            # License Check
+            common.licenseCheck(usable_essential = True)
+            
             # get node OS
             common.getNodeOS()
             

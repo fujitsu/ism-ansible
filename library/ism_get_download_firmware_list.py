@@ -98,6 +98,9 @@ class IsmGetDownloadFirmwareInfo():
             # Pre-process
             common.preProcess(self.module.params,NodeCheck = False)
 
+            # License Check
+            common.licenseCheck(usable_essential = True)
+
             # Get Download Firmware Info execution
             result = self.getDownloadFirmwareInfo(common)
 

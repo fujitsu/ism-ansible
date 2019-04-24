@@ -85,6 +85,9 @@ class IsmPowerOn():
             # ISM login
             common.ismLogin(json_data)
             
+             # License Check
+            common.licenseCheck(license_check = False)
+            
             # get node OS
             common.getNodeOS()
             

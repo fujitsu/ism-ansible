@@ -115,6 +115,9 @@ class IsmGetInventoryInfo():
             # Pre-process
             common.preProcess(self.module.params)
             
+            # License Check
+            common.licenseCheck(usable_essential = True)
+            
             # Get inventory info execution
             result = self.getInventoryInfo(common)
             

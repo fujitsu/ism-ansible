@@ -105,6 +105,9 @@ class IsmDownloadFirmware():
             # Pre-process
             common.preProcess(self.module.params,NodeCheck = False)
 
+            # License Check
+            common.licenseCheck(usable_essential = True)
+            
             # Get download firmware execution
             downloaded_list = self.DownloadedFirmwareList(common)
 

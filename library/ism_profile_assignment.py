@@ -103,6 +103,9 @@ class IsmProfileAssignment():
             # ISM login
             common.ismLogin(json_data)
             
+            # License Check
+            common.licenseCheck()
+            
             # get node OS
             common.getNodeOS()
             
