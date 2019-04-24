@@ -162,8 +162,92 @@ Example: Host group name: servers
   | node4
   +---------------------------------------------------
 ```
+### 6. Modules and license check  
+The following is a list of modules available and unavailable in Essential.
 
-Playbook execution
+<table>
+<tr>
+  <th>Module name</th>
+  <th>Operation Mode [[note12]](#note-12) Other than Essential [[note13]](#note-13)</th>
+  <th>Operation Mode [[note12]](#note-12) Essential</th>
+</tr>
+
+<tr> 
+  <td>ism_download_firmware.py</td>
+  <td align="center">Yes</td>
+  <td align="center">Yes</td>
+</tr>
+<tr>
+  <td>ism_firmware_list.py</td>
+  <td align="center">Yes</td>
+  <td align="center">Yes</td>
+</tr>
+<tr>
+  <td>ism_firmware_update.py</td>
+  <td align="center">Yes</td>
+  <td align="center">Yes</td>
+</tr>
+<tr>
+  <td>ism_get_download_firmware_list.py</td>
+  <td align="center">Yes</td>
+  <td align="center">Yes</td>
+</tr>
+<tr>
+  <td>sm_get_inventory_info.py</td>
+  <td align="center">Yes</td>
+  <td align="center">Yes</td>
+</tr>
+<tr>
+  <td>ism_get_power_status.py</td>
+  <td align="center">Yes</td>
+  <td align="center">Yes</td>
+</tr>
+<tr>
+  <td>ism_get_profile_info.py</td>
+  <td align="center">Yes</td>
+  <td align="center">No</td>
+</tr>
+<tr>
+  <td>ism_maintenance_mode_setting.py</td>
+  <td align="center">Yes</td>
+  <td align="center">Yes</td>
+</tr>
+<tr>
+  <td>ism_power_on.py</td>
+  <td align="center">Yes</td>
+  <td align="center">Yes</td>
+</tr>
+<tr>
+  <td>ism_profile_assignment.py</td>
+  <td align="center">Yes</td>
+  <td align="center">No</td>
+</tr>
+<tr>
+  <td>ism_refresh_node_info.py</td>
+  <td align="center">Yes</td>
+  <td align="center">Yes</td>
+</tr>
+<tr>
+  <td>ism_retrieve_download_firmware_info.py</td>
+  <td align="center">Yes</td>
+  <td align="center">Yes</td>
+</tr>
+<tr>
+  <td>ism_register_node.py</td>
+  <td align="center">Yes</td>
+  <td align="center">Yes</td>
+</tr>
+<tr>
+  <td>ism_register_monitoring_setting.py</td>
+  <td align="center">Yes</td>
+  <td align="center">Yes</td>
+</tr>
+</table>
+
+Yes:Available   
+No:Unavailable [[note14]](#note-14)  
+
+### 7. Playbook execution
 ------------------
 
 The following commands are executed with Ansible server.
@@ -256,6 +340,26 @@ Since the time-out time of 10800(second)(For = three hours), which sufficient fo
 [About the software support in this project]  
 The software is not supported. 
 
+<a name="note-12">[Note12]  
+This is the "Operation Mode" value output by "ismadm license show" command.
+
+<a name="note-13">[Note13]  
+The "Operation Mode" other than Essential are as follows.  
+Advanced  
+Advanced (Trial)  
+Advanced for PRIMEFLEX  
+Advanced for PRIMEFLEX (Trial)  
+NFLEX  
+NFLEX (Trial)  
+
+<a name="note-14">[Note14]  
+The following error is output when executing an unavailable module.  
+This module is not supported on Essential mode.
+
+
+
+
+
 License
 -------
 
@@ -263,7 +367,7 @@ This project is licensed under the GPL v3 license. See the [LICENSE](LICENSE) fo
 
 Copyright
 ---------
-Copyright FUJITSU LIMITED 2017-2018
+Copyright FUJITSU LIMITED 2017-2019
 
 
 API

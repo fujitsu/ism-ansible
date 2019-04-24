@@ -352,6 +352,8 @@ Assigns specified profiles for the specified nodes managed by Infrastructure Man
 - Ansible >= 2.4.0.0
 - Python >= 2.6
 - Infrastructure Manager >= 2.2.0
+- Other than Essential.
+(This module is not approved for use in Essential.) 
 
 
 #### Options
@@ -807,6 +809,8 @@ It is used to confirm the profile information assigned in the node, such as afte
 - Ansible >= 2.4.0.0
 - Python >= 2.6
 - Infrastructure Manager >= 2.2.0
+- Other than Essential.
+(This module is not approved for use in Essential.)
 
 
 #### Options
