@@ -64,8 +64,13 @@ if [ "${password}" = "" ]; then
     echo "Password is not entered"
     exit 1
 else
-    # Password encryption
-    password=`echo -n "${password}" | openssl enc -aes-256-cbc -e -base64 -pass pass:"${passphrase}"`
+    openssl_version=`openssl version -v|awk '{print substr($2,1,3)}'`
+    if [ "${openssl_version}" = "1.0" ]; then
+        # Password encryption
+        password=`echo -n "${password}" | openssl enc -aes-256-cbc -e -base64 -pass pass:"${passphrase}"`
+    else
+        password=`echo -n "${password}" | openssl enc -aes-256-cbc -e -base64 -pass pass:"${passphrase} -A -md md5"`
+    fi
 fi
 
 echo "Please enter full path of certificate file:"
