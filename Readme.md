@@ -1,11 +1,8 @@
-Ansible Modules for Infrastructure Manager
-=====================================================
+# Ansible Modules for Infrastructure Manager
 
 This is the modules to manage Infrastructure Manager using Ansible playbooks.
 
-
-Requirements
-------------
+## Requirements
 
 - Ansible Server
   - Ansible 2.4 or later
@@ -13,12 +10,11 @@ Requirements
 - FUJITSU Software Infrastructure Manager
   - 2.2.0 or later
 
-### Examples
+## Examples
 
 Sample playbooks and instructions on how to run the modules can be found in the examples directory.
 
-Setup
------
+## Setup
 
 To run the Ansible modules and sample playbooks provided in this project, you should execute the following steps:
 
@@ -27,8 +23,8 @@ To run the Ansible modules and sample playbooks provided in this project, you sh
 Run on the Ansible Server:
 
 ```shell
-$ cd /etc/ansible
-$ git clone https://github.com/fujitsu/ism-ansible.git
+cd /etc/ansible
+git clone https://github.com/fujitsu/ism-ansible.git
 ```
 
 ### 2. Configure the ANSIBLE_LIBRARY environmental variable
@@ -38,9 +34,9 @@ Set the environment variables `ANSIBLE_LIBRARY` and `ANSIBLE_MODULE_UTILS`, `PYT
 Run on the Ansible Server:
 
 ```shell
-$ export ANSIBLE_LIBRARY=/etc/ansible/ism-ansible/library
-$ export ANSIBLE_MODULE_UTILS=/etc/ansible/ism-ansible/library/module_utils/
-$ export PYTHONPATH=$PYTHONPATH:$ANSIBLE_LIBRARY
+export ANSIBLE_LIBRARY=/etc/ansible/ism-ansible/library
+export ANSIBLE_MODULE_UTILS=/etc/ansible/ism-ansible/library/module_utils/
+export PYTHONPATH=$PYTHONPATH:$ANSIBLE_LIBRARY
 ```
 
 ### 3. Certificate assignment for Infrastructure Manager
@@ -80,7 +76,7 @@ Refer to [[Note6]](#note-6).
 
 Confirm the config file was created.
 
-#### Example of execution with IP address:
+#### Example of execution with IP address
 
 ```shell
 $ cat ./ism_config.json
@@ -89,6 +85,7 @@ $ cat ./ism_config.json
     "password":"U2FsdGVkX18iGtLsngKkgWtQQ3+j0s5W1aSTizoWny8="},
     "certificate": "/etc/ansible/ism-ansible/certificate.crt"}
 ```
+
 Describe the path of the config file in playbook.  
 Refer to [[Note7]](#note-7) and [[Note8]](#note-8).
 
@@ -111,7 +108,8 @@ Specify the operation node for the inventory file.
 Allocate the inventory file in Ansible server.
 
 INI Format:
-``` ini
+
+```INI
 [<Host group name1>]
 <Operation node1> ism_profile_name=<profile name>
 <Operation node2> ism_node_name=<Node Name> ism_node_type=<Node type> ism_node_model=<Model name>
@@ -122,8 +120,8 @@ INI Format:
 <Operation server>
 ```
 
-
 YAML Format:
+
 ```YAML
 all:
   children:
@@ -145,6 +143,7 @@ all:
       hosts:
         <Operation server>:
 ```
+
 Settings:
 
 <table>
@@ -209,28 +208,29 @@ UTF-8
 File Location:  
 Anywhere on the management server(Ansible).
 
-Example:  
+Example:
+
 - Host group name: servers
   - Operation node1
-      - IP address of OS information: 192.168.1.11
-      - Profile name: profileA
+    - IP address of OS information: 192.168.1.11
+    - Profile name: profileA
   - Operation node2
-      - Node IP address: 192.168.1.12
+    - Node IP address: 192.168.1.12
   - Operation node3
-      - Host name for IP address of OS information: node3-os.test.local
+    - Host name for IP address of OS information: node3-os.test.local
   - Operation node4
-      - Host name for IP address of node: node4
+    - Host name for IP address of node: node4
   - Operation node5
-      - Node IP address: 192.168.1.13
-      - Profile name: profileB
-      - Computer name: node5
-      - Host name for IP address of OS information: 192.168.1.23
+    - Node IP address: 192.168.1.13
+    - Profile name: profileB
+    - Computer name: node5
+    - Host name for IP address of OS information: 192.168.1.23
 - Host group name: ism_server
   - Operation server: 192.168.1.10
 
 INI Format:  
 
-```  
+```INI
 [servers]
 192.168.1.11 ism_profile_name=profileA
 192.168.1.12 ism_node_name=nodeA ism_node_type=server ism_node_model="PRIMERGY RX300S8"
@@ -241,7 +241,9 @@ node4
 [ism_server]
 192.168.1.10
 ```
+
 YAML Format:
+
 ```YAML
 all:
   children:
@@ -265,6 +267,7 @@ all:
 ```
 
 ### 6. Modules and license check  
+
 The following is a list of modules available and unavailable in Essential.  
 
 <table>
@@ -353,39 +356,29 @@ The following is a list of modules available and unavailable in Essential.
   <td align="center">Yes</td>
   <td align="center">Yes</td>
 </tr>
-<tr>
-  <td>ism_register_node.py</td>
-  <td align="center">Yes</td>
-  <td align="center">Yes</td>
-</tr>
-<tr>
-  <td>ism_register_monitoring_setting.py</td>
-  <td align="center">Yes</td>
-  <td align="center">Yes</td>
-</tr>
 </tbody>
 </table>
 
-Yes:Available   
+Yes:Available
 No:Unavailable [[note15]](#note-15)  
 
 ### 7. Playbook execution
-------------------
 
 The following commands are executed with Ansible server.
 
 ```shell
-$ ansible-playbook <playbook file path> -i <inventory file path>
+ansible-playbook <playbook file path> -i <inventory file path>
 ```
 
 Example:  
-playbook file path: ` /etc/ansible/ism-ansible/examples/ism_firmware_list.yml`  
+playbook file path: `/etc/ansible/ism-ansible/examples/ism_firmware_list.yml`  
 inventory file path: `/etc/ansible/hosts`  
 
-```shell    
-$ ansible-playbook /etc/ansible/ism-ansible/examples/ism_firmware_list.yml -i /etc/ansible/hosts
+```shell
+ansible-playbook /etc/ansible/ism-ansible/examples/ism_firmware_list.yml -i /etc/ansible/hosts
 ```
-### 8.Report information comparison tool
+
+### 8. Report information comparison tool
 
 A tool that compares the output files of the report information retrieval module.
 
@@ -394,8 +387,9 @@ By default, it is located in the following path:
 \<Directory checked out from Git>/ism-ansible/tools/ism_report_diff.py
 
 Running tool command:
+
 ```shell
-$ python  ism_report_diff.py <FILE1> [<FILE2>]
+python  ism_report_diff.py <FILE1> [<FILE2>]
 ```
 
 Options:
@@ -422,16 +416,17 @@ If this parameter is omitted, FILE1 and FILE2 are not compared and only the info
 </table>
 
 Examples:
+
 - Comparing old and new report information files
 
 ```shell
-$ python ism_report_diff.py 2019-11-04_14-35-31.json 2019-12-04_09-01-02.json
+python ism_report_diff.py 2019-11-04_14-35-31.json 2019-12-04_09-01-02.json
 ```
 
 - To output information of only FILE1 without comparison
 
 ```shell
-$ python ism_report_diff.py 2019-12-04_09-01-02.json
+python ism_report_diff.py 2019-12-04_09-01-02.json
 ```
 
 Output:
@@ -653,12 +648,13 @@ Example(For FQDN ism.test.local):
 
 ```shell
 $ ./ism-ansible/config_setting.sh
-  Enter IP address or FQDN:
-  ism.test.local
-  Traceback (most recent call last):
-    File "<string>", line 1, in <module>
-  socket.gaierror: [Errno -2] Name or service not known
+Enter IP address or FQDN:
+ism.test.local
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+socket.gaierror: [Errno -2] Name or service not known
 ```
+
 <a name="note-7">[Note7]  
 Specify the config path in single-byte upper-case, lower-case alphabetic letters, numbers and symbols.
 
@@ -699,19 +695,15 @@ This module is not supported on Essential mode.
 <a name="note-16">[Note16]
 Output only if FILE2 is specified as a tool option.
 
-
-License
--------
+## License
 
 This project is licensed under the GPL v3 license. See the [LICENSE](LICENSE) for more information.
 
-Copyright
----------
+## Copyright
+
 Copyright FUJITSU LIMITED 2017-2020
 
-
-API
----
+## API
 
 - FUJITSU Software Infrastructure Manager REST API Reference Manual
-[http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/](http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/)
+<http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/>
