@@ -65,7 +65,7 @@ if [ "${password}" = "" ]; then
     exit 1
 else
     # Password encryption
-    password=`echo -n "${password}" | openssl enc -aes-256-cbc -e -base64 -pass pass:"${passphrase}"`
+    password=`echo -n "${password}" | openssl enc -aes-256-cbc -e -base64 -pass pass:"${passphrase}" -A -md md5`
 fi
 
 echo "Please enter full path of certificate file:"

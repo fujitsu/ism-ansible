@@ -89,7 +89,7 @@ class IsmFirmwareList():
             common.ismLogin(json_data)
             
             # License Check
-            common.licenseCheck(license_check = False)
+            common.licenseCheck(usable_essential = True)
             
             # get node OS
             common.getNodeOS()
@@ -104,7 +104,10 @@ class IsmFirmwareList():
                 self.module.fail_json(msg="The target host name was not found.: " + str(self.module.params['hostname']))
             else:
                 self.module.debug("node_id: " + str(common.getNodeId()))
-                
+            
+            # Check type and model of node are supporetd on Essential mode
+            common.checkNodeSupportedOnEssential()
+            
             # firmware list execution
             result = self.execFirmwareList(common)
             

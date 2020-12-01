@@ -4014,7 +4014,7 @@ echo -n '<Password>' | openssl enc -aes-256-cbc -e -base64 -md md5 -pass pass:an
 Command Example:  
 
 ```shell
-$ echo -n 'password' | openssl enc -aes-256-cbc -e -base64 -pass pass:ansible  
+$ echo -n 'password' | openssl enc -aes-256-cbc -e -base64 -md md5 -pass pass:ansible  
 U2FsdGVkX186qfuegUxjCcApbUWJ6r51xKGj7RmmwsA=
 ```
 
