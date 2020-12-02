@@ -1324,7 +1324,7 @@ specify the IP address of IPv4 or the host name (FQDN) that are available for th
 
 <a name="note-7-3">[Note3]  
 For details, refer to "4.6.3 Separate Retrieval for Nodes Detailed Information" in "FUJITSU Software Infrastructure Manager V2.2 REST API Reference Manual".  
-[http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/index.html](http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/index.html)
+<http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/index.html>
 
 ### Example 1
 
@@ -2790,7 +2790,7 @@ Multiple firmware can be downloaded simultaneously by specifying the multiple fi
 
 |Name|Type|Essential Mode|Returned|Description|
 |:--|:--|:--:|:--|:--|
-|ism_download_firmwaret|string|Yes|Not omitted."Success."|Returns execution result of firmware download.|
+|ism_download_firmware|string|Yes|Not omitted."Success."|Returns execution result of firmware download.|
 
 ### Return Values (Abnormal)
 
@@ -2874,7 +2874,7 @@ A unique ID is output for each message.</td>
 
 ## <a name = "ism_get_report_info"> ism_get_report_info
 
- Retrieving report
+Retrieving report
 
 ### Synopsis
 
@@ -3880,20 +3880,19 @@ A unique ID is output for each message.</td>
 
 ### Notes
 
-* How to Set Parameters in the config File
-　4. Setting of config file  
-　[https://github.com/fujitsu/ism-ansible](https://github.com/fujitsu/ism-ansible)
+* Refer to the following URL for the information regarding the parameter setting in config file.  
+  [Readme.md](/Readme.md)
 
 * Sample playbook using ism_get_report_info  
 　[examples/ism_get_report_info.yml](/examples/ism_get_report_info.yml)
 
 ## <a name = "ism_backup"> ism_backup
 
- Backing Up ISM-VA
+Backing up ISM-VA
 
 ### Synopsis
 
- Perform a backup of ISM-VA.
+Perform a backup of ISM-VA.
 
 ### Requirements
 
@@ -3932,9 +3931,9 @@ Therefore, any incorrect information specified in hostname does not affect the o
 Specify a previously created directory.
 
 <a name="note-16-7">[Note7]  
-If a timeout occurs, the following error message is printed:  
-Increase the timeout period and try again.  
-waiting for backup timeout: &lt;Timeout Seconds\>s
+If a timeout occurs, the following error message is output:<br>
+```waiting for backup timeout: <Timeout Seconds>s```<br>
+Increase the timeout period and try again.
 
 ### Examples
 
@@ -3963,9 +3962,8 @@ waiting for backup timeout: &lt;Timeout Seconds\>s
 
 ### Notes
 
-* How to Set Parameters in the config File  
-　4. Setting of config file  
-　[https://github.com/fujitsu/ism-ansible](https://github.com/fujitsu/ism-ansible)
+* Refer to the following URL for the information regarding the parameter setting in config file.  
+  [Readme.md](/Readme.md)
 
 * Sample playbook using ism_backup  
 　[examples/ism_backup.yml](/examples/ism_backup.yml)
@@ -3990,7 +3988,7 @@ waiting for backup timeout: &lt;Timeout Seconds\>s
 |:--|:-:|:--:|:--|:--|:--|
 |config|Yes|No|None|None|Specifies the full path to the configuration file that contains the ISM connection information.<br>[[Note1]](#note-17-1)|
 |ism_source_profile_name|Yes|No|None|None|Specifies the name of the profile to copy from.|
-|ism_profile_name|Yes|No|None|None|Specify the destination profile name.|
+|ism_profile_name|Yes|No|None|None|Specifies the destination profile name.|
 |ism_profile_data|No|No|None|None|Specifies the value to change when copying.<br>If omitted, no changes are made.<br>[[Note2]](#note-17-2) [[Note3]](#note-17-3)|
 
 <a name="note-17-1">[Note1]  
@@ -3999,8 +3997,9 @@ Use single-byte uppercase and lowercase letters, numbers, and symbols.
 <a name="note-17-2">[Note2]  
 Refer to and specify the following REST-API request parameters "ProfileData".  
 FUJITSU Software Infrastructure Manager REST API Reference Manual  
-&nbsp; Add Profile  
-&nbsp; [http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/index.html](http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/index.html)
+
+* Add Profile  
+  <http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/index.html>
 
 <a name="note-17-3">[Note3]  
 When specifying the password information, use "ansible" as the encryption key and use the following Linux command example to specify AES 256 + Base 64 + MD5 encrypted values.  
@@ -4052,7 +4051,7 @@ U2FsdGVkX186qfuegUxjCcApbUWJ6r51xKGj7RmmwsA=
 
 ### Return Values (Normal)
 
-|Name|Type|Essential Mode|Returned|Description|
+| Name | Type | Essential Mode | Returned |Description|
 |:--|:--|:--:|:--|:--|
 |ism_copy_profile|dict|No|Always returns "Success".|The result of the copy of profile is returned.|
 
@@ -4131,13 +4130,8 @@ A unique ID is output for each message.</td>
 
 ### Notes
 
-* How to Set Parameters in the config File  
-　4. Setting of config file  
-　[https://github.com/fujitsu/ism-ansible](https://github.com/fujitsu/ism-ansible)
-
-* How to Specify the inventory File  
-　5. Setting of inventory file  
-　[https://github.com/fujitsu/ism-ansible](https://github.com/fujitsu/ism-ansible)
+* Refer to the following URL for the information regarding the parameter setting in config file and inventory file.  
+  [Readme.md](/Readme.md)
 
 * Sample playbook using ism_copy_profile  
 　[examples/ism_copy_profile.yml](/examples/ism_copy_profile.yml)

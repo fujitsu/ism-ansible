@@ -51,7 +51,7 @@ Set the account information of Infrastructure Manager for the confg file (`ism_c
 Execute `config_setting.sh` with Ansible server as follows.The config file is created in the current directory when executing it.  
 Refer from [[Note1]](#note-1) to [[Note5]](#note-5).
 
-Example:
+#### Example
 
 ```shell
 $ cd /etc/ansible/ism-ansible/
@@ -89,7 +89,7 @@ $ cat ./ism_config.json
 Describe the path of the config file in playbook.  
 Refer to [[Note7]](#note-7) and [[Note8]](#note-8).
 
-Example:
+#### Playbook example
 
 ```yaml
 - name: Firmware update
@@ -104,47 +104,48 @@ Example:
 
 ### 5. Setting inventory file
 
-Specify the operation node for the inventory file.
+The inventory file describes the IP address (OS, hardware) and hostname (OS, hardware) of the operation target node.
+Specify the operation target for the inventory file.  
 Allocate the inventory file in Ansible server.
 
-INI Format:
+#### INI Format
 
 ```INI
 [<Host group name1>]
-<Operation node1> ism_profile_name=<profile name>
-<Operation node2> ism_node_name=<Node Name> ism_node_type=<Node type> ism_node_model=<Model name>
-<Operation node3> ism_profile_name=<Profile name> ism_computer_name=<Computer name> ism_os_ip_address=<OS IP Address>
-<Operation node4>
+<Operation target node1> ism_profile_name=<profile name>
+<Operation target node2> ism_node_name=<Node Name> ism_node_type=<Node type> ism_node_model=<Model name>
+<Operation target node3> ism_profile_name=<Profile name> ism_computer_name=<Computer name> ism_os_ip_address=<OS IP Address>
+<Operation target node4>
 ...
 [<Host group name2>]
-<Operation server>
+<Operation target server>
 ```
 
-YAML Format:
+#### YAML Format
 
 ```YAML
 all:
   children:
     <Host group name1>:
       hosts:
-        <Operation node1>:
+        <Operation target node1>:
           ism_profile_name: <Profile name>
-        <Operation node2>:
+        <Operation target node2>:
           ism_node_name: <Node name>
           ism_node_type: <Node type>
           ism_node_model: <Model name>
-        <Operation node3>:
+        <Operation target node3>:
           ism_profile_name: <Profile name>
           ism_computer_name: <Computer name>
           ism_os_ip_address: <OS IP Address>
-        <Operation node4>:
+        <Operation target node4>:
         ...
     <Host group name2>:
       hosts:
-        <Operation server>:
+        <Operation target server>:
 ```
 
-Settings:
+#### Settings
 
 <table>
 <tbody>
@@ -156,18 +157,30 @@ Settings:
 <tr>
   <td>Host group name</td>
   <td>Any host group name</td>
-  <td>Specify an arbitrary host group name.<br>The host group is defined as the multiple hosts united as one group.<br>In Ansible, the playbook can be executed for the host group unit.
+  <td>Specifies an arbitrary host group name.<br>
+      The host group is defined the multiple hosts as one group.<br>
+      In Ansible, the playbook can be executed for the host group unit.
   </td>
 </tr>
 <tr>
-  <td>Operation node</td>
-  <td>IP address<br>Host name(FQDN)</td>
-  <td>Specify the IP address of the operation node registered in Infrastructure Manager or the host name (FQDN) for its IP address.<br>When the OS information of the operation node is registered in Infrastructure Manager, the host name (FQDN) for the IP address of the OS information or the IP address can be specified.<br><a href="#note-9">[Note9]</a> <a href="#note-10">[Note10]</a> <a href="#note-11">[Note11]</a></td>
+  <td>Operation target node</td>
+  <td>One of the following<br>
+  - IP address<br>
+  - Host name (FQDN)</td>
+  <td>Multiple specifications are available.<br>
+  Specifies the IP address of the operation target node registered in Infrastructure Manager or the host name (FQDN) for its IP address.<br>When the OS information of the operation target node is registered in Infrastructure Manager, the host name (FQDN) for the IP address of the OS information or the IP address can be specified.<br>
+  <a href="#note-9">[Note9]</a> <a href="#note-10">[Note10]</a> <a href="#note-11">[Note11]</a></td>
 </tr>
 <tr>
   <td>Profile name</td>
-  <td>The name of the profile to apply to the operated on node.<br>Or, the new profile name when you copy the profile.</td>
-  <td>The name of the profile assigned to the operation node can be omitted.<br>Specify when the ism_profile_assignment (Profile Assignment) module is executed.<br>In modules other than ism_profile_assignment, it is disregarded even if it is specified.<br>If omitted, no key part ("ism_profile_name=","ism_profile_name:") should be specified.</td>
+  <td>The name of the profile to apply to the operation target node.<br>
+  Or, the new profile name when you copy the profile.</td>
+  <td>
+    Optional.<br>
+    Specifies to run the profile assignment, copy profile module.<br>
+    Otherwise, it is ignored.<br>
+    If omitted, no key part (“ism_profile_name=”, “ism_profile_name:”) should be specified.
+   </td>
 </tr>
 <tr>
   <td>OS IP Address</td>
@@ -180,7 +193,12 @@ Settings:
   <td>Optional.<br>Specifies to run the copy profile module.<br>Otherwise, it is ignored.<br>If omitted, no key part ("ism_computer_name=","ism_computer_name:") should be specified.</td>
 </tr>
 <tr>
-  <td>Operation server</td><td>One of the following<br>- IP address<br>- Host name(FQDN)</td><td>Specifies the IP address of the ISM server or the hostname (FQDN) to that IP address.<br>Use this value when performing unique operations within ISM, such as updating downloadable firmware information.
+  <td>Operation target server</td>
+  <td>One of the following<br>
+  - IP address<br>
+  - Host name (FQDN)</td>
+  <td>Specifies the IP address of the ISM server or the hostname (FQDN) for its IP address.<br>
+      Use this value when performing unique operations with ISM, such as updating downloadable firmware information.
 </tr>
 <tr>
   <td>Node name</td>
@@ -202,13 +220,15 @@ Settings:
 </tbody>
 </table>
 
-Character code:  
+#### Character code
+
 UTF-8
 
-File Location:  
+#### File Location
+
 Anywhere on the management server(Ansible).
 
-Example:
+#### Example
 
 - Host group name: servers
   - Operation node1
@@ -228,7 +248,7 @@ Example:
 - Host group name: ism_server
   - Operation server: 192.168.1.10
 
-INI Format:  
+##### INI Format
 
 ```INI
 [servers]
@@ -242,7 +262,7 @@ node4
 192.168.1.10
 ```
 
-YAML Format:
+##### YAML Format
 
 ```YAML
 all:
@@ -274,10 +294,10 @@ The following is a list of modules available and unavailable in Essential.
 <tbody>
 <tr>
   <th rowspan="2">Module name</th>
-  <th colspan="2">Operation Mode<a href="#note-13">[note13]</a></th>
+  <th colspan="2">Operation Mode<a href="#note-13"> [Note13]</a></th>
 </tr>
 <tr>
-  <th>Other than Essential<a href="#note-14">[note14]</a></th>
+  <th>Other than Essential<a href="#note-14"> [Note14]</a></th>
   <th>Essential</th>
 </tr>
 
@@ -359,8 +379,9 @@ The following is a list of modules available and unavailable in Essential.
 </tbody>
 </table>
 
-Yes:Available
-No:Unavailable [[note15]](#note-15)  
+Yes:Available  
+No:Unavailable  
+[[Note15]](#note-15)  
 
 ### 7. Playbook execution
 
@@ -370,7 +391,8 @@ The following commands are executed with Ansible server.
 ansible-playbook <playbook file path> -i <inventory file path>
 ```
 
-Example:  
+#### Example
+
 playbook file path: `/etc/ansible/ism-ansible/examples/ism_firmware_list.yml`  
 inventory file path: `/etc/ansible/hosts`  
 
@@ -382,17 +404,18 @@ ansible-playbook /etc/ansible/ism-ansible/examples/ism_firmware_list.yml -i /etc
 
 A tool that compares the output files of the report information retrieval module.
 
-Deployment Path:  
-By default, it is located in the following path:  
+#### Deployment Path
+By default, it is placed in the following path:  
 \<Directory checked out from Git>/ism-ansible/tools/ism_report_diff.py
 
-Running tool command:
+#### Tool execution command
 
 ```shell
 python  ism_report_diff.py <FILE1> [<FILE2>]
 ```
 
-Options:
+#### Options
+
 <table>
 <tbody>
 <tr>
@@ -403,33 +426,33 @@ Options:
 <tr>
   <td>FILE1</td>
   <td align="center">Yes</td>
-  <td>Specify the old report information file to compare from</td>
+  <td>Specifies an old report information file to be compared.</td>
 </tr>
 <tr>
   <td>FILE2</td>
   <td align="center">No</td>
-  <td>Specify a new report information file to compare to.<br>
-If this parameter is omitted, FILE1 and FILE2 are not compared and only the information of the file specified by FILE1 is output.
+  <td>Specifies a new report information file to compare with.<br>
+If this parameter is omitted, FILE1 and FILE2 are not compared and only the information of the file specified in FILE1 is output.
 </td>
 </tr>
 </tbody>
 </table>
 
-Examples:
+#### Examples
 
-- Comparing old and new report information files
+- To compare the old and new report information files
 
 ```shell
 python ism_report_diff.py 2019-11-04_14-35-31.json 2019-12-04_09-01-02.json
 ```
 
-- To output information of only FILE1 without comparison
+- To output the information of only FILE1 without comparison
 
 ```shell
 python ism_report_diff.py 2019-12-04_09-01-02.json
 ```
 
-Output:
+#### Output
 
 <table>
 <tbody>
@@ -439,43 +462,43 @@ Output:
 </tr>
 <tr>
   <td colspan="4">Total</td>
-  <td>Number of nodes registered with ISM</td>
+  <td>Number of nodes registered in ISM.</td>
 </tr>
 <tr>
   <td colspan="4">Diff</td>
-  <td>Number of nodes added and removed by comparing old and new report information files<br>
+  <td>Number of nodes added and deleted by comparing the old and new report information files<br>
   <a href="#note-16">[Note16]</a>
 
 Format:<br>
-+&lt;Number of Additional Nodes>, -&lt;Number of deleted nodes><br>
++&lt;Number of adding nodes>, -&lt;Number of deleting nodes><br>
 
-Example: Adding Two Nodes and Deleting One Node<br>
+Example: Adding two nodes and deleting one node<br>
 +2, -1</td>
 </tr>
 <tr>
   <td colspan="4">Status</td>
-  <td>Number of nodes in each status</td>
+  <td>Number of nodes in each status.</td>
 </tr>
 <tr>
   <td rowspan="5"></td>
   <td colspan="3">Error</td>
-  <td>Number of nodes with status Error</td>
+  <td>Number of nodes that the status is Error.</td>
 </tr>
 <tr>
   <td colspan="3">Warning</td>
-  <td>Number of nodes with status Warning</td>
+  <td>Number of nodes that the status is Warning.</td>
 </tr>
 <tr>
   <td colspan="3">Unknown</td>
-  <td>Number of nodes with status Unknown</td>
+  <td>Number of nodes that the status is Unknown.</td>
 </tr>
 <tr>
   <td colspan="3">Updating</td>
-  <td>Number of nodes with status Updating</td>
+  <td>Number of nodes that the status is Updating.</td>
 </tr>
 <tr>
   <td colspan="3">Normal</td>
-  <td>Number of nodes with status Normal</td>
+  <td>Number of nodes that the status is Normal.</td>
 </tr>
 <tr>
   <td colspan="4">Alarm status</td>
@@ -484,19 +507,19 @@ Example: Adding Two Nodes and Deleting One Node<br>
 <tr>
   <td rowspan="4"></td>
   <td colspan="3">Error</td>
-  <td>Number of nodes with an alarm status of Error</td>
+  <td>Number of nodes that the alarm status is Error.</td>
 </tr>
 <tr>
   <td colspan="3">Warning</td>
-  <td>Number of nodes with an alarm status of Warning</td>
+  <td>Number of nodes that the alarm status is Warning.</td>
 </tr>
 <tr>
   <td colspan="3">Info</td>
-  <td>Number of nodes with an alarm status of Info</td>
+  <td>Number of nodes that the alarm status is Info.</td>
 </tr>
 <tr>
   <td colspan="3">Normal</td>
-  <td>Number of nodes with an alarm status of Normal</td>
+  <td>Number of nodes that the alarm status is Normal.</td>
 </tr>
 <tr>
   <td colspan="4">Added node</td>
@@ -526,12 +549,14 @@ Example: Adding Two Nodes and Deleting One Node<br>
 </tr>
 <tr>
   <td colspan="4">Firmware</td>
-  <td>Do not print if there is no</td>
+  <td>Firmware Information that can be updated.<br>
+      If there is no firmware that can be updated, it will not be output.
+  </td>
 </tr>
 <tr>
   <td rowspan="15"></td>
   <td colspan="3">Node &lt;N></td>
-  <td>Information on nodes with updatable firmware<br>
+  <td>Node Information where existing the updatable firmware.<br>
 &lt;N> is an integer, starting with 1</td>
 </tr>
 <tr>
@@ -549,11 +574,12 @@ Example: Adding Two Nodes and Deleting One Node<br>
 </tr>
 <tr>
   <td colspan="2">IP</td>
-  <td>IP address</td>
+  <td>IP address<br>
+  Displays None for nodes that do not have an IP address.</td>
 </tr>
 <tr>
   <td colspan="2">Firmware &lt;N></td>
-  <td>Currently applied firmware information<br>
+  <td>Currently applied firmware information.<br>
 &lt;N> is an integer, starting with 1</td>
 </tr>
 <tr>
@@ -589,7 +615,7 @@ Example: Adding Two Nodes and Deleting One Node<br>
 </tr>
 <tr>
   <td>RepositoryName</td>
-  <td>Reoisitroy</td>
+  <td>Repository</td>
 </tr>
 <tr>
   <td>OperationMode</td>
@@ -598,16 +624,17 @@ Example: Adding Two Nodes and Deleting One Node<br>
 </tbody>
 </table>
 
-### 9.Changing processing time of Update Firmware and Profile Assignment settings
+### 9. Changing processing time of Update Firmware and Profile Assignment settings
 
-In the module of Update Firmware or Profile Assignment, waiting to complete the task in the internal processing.
+In the module of Update Firmware or Profile Assignment, waiting to complete the task in the internal processing.  
 The timeout period for the process of waiting to complete the task can be changed with the following ism_user_settings file.  
 Refer to [[Note12]](#note-12).
 
 ism_user_settings file path: `/etc/ansible/ism-ansible/module_utils/ism_user_settings.py`  
 
-Example:
-Timeout period of firmware update: `14400` (second) (= 4hours)
+#### Example
+
+Timeout period of firmware update: `14400` (second) (= 4hours)  
 Timeout period of application of profile: `18000` (second) (= 5hours)
 
 ```python
@@ -624,7 +651,7 @@ FIRMWARE_UPDATE_TIME_OUT = 14400
 PROFILE_ASSIGNMENT_TIME_OUT = 18000
 ```
 
-### 10.Notes
+### 10. Notes
 
 <a name="note-1">[Note1]  
 When the config file already exists, it will be overwritten.
@@ -644,7 +671,7 @@ Presently IPv6 is not supported. For the connection with Infrastructure Manager,
 <a name="note-6">[Note6]  
 If the following error occurs when FQDN of Infrastructure Manager is specified with `config_setting.sh`, name resolution of FQDN of Infrastructure Manager has failed on the Ansible server. Ensure the action for name resolution and re-execute.
 
-Example(For FQDN ism.test.local):
+Example (For FQDN ism.test.local):
 
 ```shell
 $ ./ism-ansible/config_setting.sh
@@ -673,27 +700,29 @@ When operating the node registration module, specify the target server to operat
 <a name="note-12">[Note12]  
 Since the time-out time of 10800(second)(For = three hours), which sufficient for waiting for the task to complete, is specified in the default setting, it is not normally required to be changed.
 
-[About the software support in this project]  
-The software is not supported.
-
 <a name="note-13">[Note13]  
 This is the "Operation Mode" value output by "ismadm license show" command.
 
 <a name="note-14">[Note14]  
 The "Operation Mode" other than Essential are as follows.  
-Advanced  
-Advanced (Trial)  
-Advanced for PRIMEFLEX  
-Advanced for PRIMEFLEX (Trial)  
-NFLEX  
-NFLEX (Trial)  
+
+- Advanced  
+- Advanced (Trial)  
+- Advanced for PRIMEFLEX  
+- Advanced for PRIMEFLEX (Trial)  
+- NFLEX  
+- NFLEX (Trial)  
 
 <a name="note-15">[Note15]  
 The following error is output when executing an unavailable module.  
-This module is not supported on Essential mode.
+`This module is not supported on Essential mode.`
 
-<a name="note-16">[Note16]
+<a name="note-16">[Note16]  
 Output only if FILE2 is specified as a tool option.
+
+## Software support
+
+The software in this project is not supported.
 
 ## License
 
