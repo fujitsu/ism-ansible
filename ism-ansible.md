@@ -1099,7 +1099,7 @@ specify the IP address of IPv4 or the host name (FQDN) that are available for th
 
 |Name|Type|Essential Mode|Returned|Description|
 |:--|:--|:--:|:--|:--|
-|ism_refresh_node_info|Yes|string|Not omitted."Success"|Node information refreshing result are output.|
+|ism_refresh_node_info|string|Yes|Not omitted."Success"|Node information refreshing result are output.|
 
 ### Return Values (Abnormal)
 
