@@ -3902,7 +3902,6 @@ A unique ID is output for each message.</td>
 
 * Refer to the following URL for the information regarding the parameter setting in config file.  
   [Readme.md](/Readme.md)
-
 * Sample playbook using ism_get_report_info  
   [examples/ism_get_report_info.yml](/examples/ism_get_report_info.yml)
 
