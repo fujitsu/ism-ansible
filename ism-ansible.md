@@ -3984,7 +3984,6 @@ Increase the timeout period and try again.
 
 * Refer to the following URL for the information regarding the parameter setting in config file.  
   [Readme.md](/Readme.md)
-
 * Sample playbook using ism_backup  
   [examples/ism_backup.yml](/examples/ism_backup.yml)
 
@@ -4151,6 +4150,5 @@ A unique ID is output for each message.</td>
 
 * Refer to the following URL for the information regarding the parameter setting in config file and inventory file.  
   [Readme.md](/Readme.md)
-
 * Sample playbook using ism_copy_profile  
   [examples/ism_copy_profile.yml](/examples/ism_copy_profile.yml)
