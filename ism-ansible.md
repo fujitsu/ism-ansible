@@ -1054,7 +1054,7 @@ Case except the above.
 * Refer to the following URL for the information regarding parameter setting in config file and inventory file  [Readme.md](/Readme.md)
 * Refer to the following URL for the information regarding sample playbook using ism_power_on  [examples/ism_power_controls.yml](/examples/ism_power_controls.yml)
 
-## <a name="#ism_refresh_node_info">ism_refresh_node_info
+## <a name="ism_refresh_node_info">ism_refresh_node_info
 
 Refreshing Node Information
 
