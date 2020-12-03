@@ -39,6 +39,7 @@ The list of retrieved information is specified for the parameter of firmware upd
 <tbody>
 <tr>
   <th>Parameter</th>
+  <th>Type</th>
   <th>Required</th>
   <th>Essential Mode</th>
   <th>Default</th>
@@ -47,6 +48,7 @@ The list of retrieved information is specified for the parameter of firmware upd
 </tr>
 <tr>
   <td>config</td>
+  <td>string</td>
   <td align="center">Yes</td>
   <td align="center">Yes</td>
   <td>None</td>
@@ -55,6 +57,7 @@ The list of retrieved information is specified for the parameter of firmware upd
 </tr>
 <tr>
   <td>hostname</td>
+  <td>string</td>
   <td align="center">Yes</td>
   <td align="center">Yes</td>
   <td>None</td>
@@ -63,7 +66,8 @@ The list of retrieved information is specified for the parameter of firmware upd
 </tr>
 <tr>
   <td>firmware_type</td>
-  <td align="center">-</td>
+  <td>string</td>
+  <td align="center">No</td>
   <td align="center">Yes</td>
   <td>None</td>
   <td>
@@ -359,6 +363,7 @@ Commences updating process firmware registered to Infrastructure Manager.
 <tbody>
 <tr>
   <th colspan="2">Parameter</th>
+  <th>Type</th>
   <th>Required</th>
   <th>Essential Mode</th>
   <th>Default</th>
@@ -367,6 +372,7 @@ Commences updating process firmware registered to Infrastructure Manager.
 </tr>
 <tr>
   <td colspan="2">config</td>
+  <td>string</td>
   <td align="center">Yes</td>
   <td align="center">Yes</td>
   <td>None</td>
@@ -375,6 +381,7 @@ Commences updating process firmware registered to Infrastructure Manager.
 </tr>
 <tr>
   <td colspan="2">hostname</td>
+  <td>string</td>
   <td align="center">Yes</td>
   <td align="center">Yes</td>
   <td>None</td>
@@ -383,6 +390,7 @@ Commences updating process firmware registered to Infrastructure Manager.
 </tr>
 <tr>
   <td colspan="2">firmware_update_list</td>
+  <td>string</td>
   <td align="center">Yes</td>
   <td align="center">Yes</td>
   <td>None</td>
@@ -392,6 +400,7 @@ Commences updating process firmware registered to Infrastructure Manager.
 <tr>
   <td rowspan="4"></td>
   <td>firmware_name</td>
+  <td>string</td>
   <td align="center">Yes</td>
   <td align="center">Yes</td>
   <td>None</td>
@@ -400,6 +409,7 @@ Commences updating process firmware registered to Infrastructure Manager.
 </tr>
 <tr>
   <td>repository_name</td>
+  <td>string</td>
   <td align="center">Yes</td>
   <td align="center">Yes</td>
   <td>None</td>
@@ -408,7 +418,8 @@ Commences updating process firmware registered to Infrastructure Manager.
 </tr>
 <tr>
   <td>firmware_version</td>
-  <td align="center">-</td>
+  <td>string</td>
+  <td align="center">No</td>
   <td align="center">Yes</td>
   <td>None</td>
   <td>None</td>
@@ -416,6 +427,7 @@ Commences updating process firmware registered to Infrastructure Manager.
 </tr>
 <tr>
   <td>operation_mode</td>
+  <td>string</td>
   <td align="center">Yes</td>
   <td align="center">Yes</td>
   <td>None</td>
@@ -609,11 +621,11 @@ A node with its maintenance mode in "Maintenance" cannot perform retrieval of no
 
 ### Options
 
-|Parameter|Required|Essential Mode|Default|Choices|Comments|
-|:--|:-:|:--:|:--|:--|:--|
-|config|Yes|Yes|None|None|Specifies the full path for the described setting file of the connection information of Infrastructure Manager.|
-|hostname|Yes|Yes|None|None|Specifies the IP address and the host name of the operation. <br>[[Note1]](#note-3-1) [[Note2]](#note-3-2)|
-|mode|Yes|Yes|None|<ul><li>On</li><li>Off</li></ul>|Maintenance mode<br>“On”： Setting<br>“Off”： Release|
+|Parameter|Type  |Required|Essential Mode|Default|Choices                         |Comments                                                                                                       |
+|:--------|:-----|:------:|:------------:|:------|:-------------------------------|:--------------------------------------------------------------------------------------------------------------|
+|config   |string|Yes     |Yes           |None   |None                            |Specifies the full path for the described setting file of the connection information of Infrastructure Manager.|
+|hostname |string|Yes     |Yes           |None   |None                            |Specifies the IP address and the host name of the operation. <br>[[Note1]](#note-3-1) [[Note2]](#note-3-2)     |
+|mode     |string|Yes     |Yes           |None   |<ul><li>On</li><li>Off</li></ul>|Maintenance mode<br>"On": Setting<br>"Off": Release                                                            |
 
 <a name="note-3-1">[Note1]  
 Specify the host name (FQDN) for the IP address or the IP address of the operation node registered in Infrastructure Manager.
@@ -746,14 +758,14 @@ Assigns specified profiles for the specified nodes managed by Infrastructure Man
 
 ### Options
 
-|Parameter|Required|Essential Mode|Default|Choices|Comments|
-|:--|:-:|:--:|:--|:--|:--|
-|config|Yes|No|None|None|Specifies the full path for the described setting file of the connection information of Infrastructure Manager.|
-|hostname|Yes|No|None|None|Specifies the IP address and the host name of the operation.<br>[[Note1]](#note-4-1) [[Note2]](#note-4-2)|
-|ism_profile_name|Yes|No|None|None|Profile name.|
-|assign_mode|-|No|None|<ul><li>Normal</li><li>Advanced</li></ul>|Specifies assign mode.<br>- Normal: Usual assignment<br>- Advanced: Advanced assignment<br>When this setting is omitted or null, operations will be carried out as Normal.<br>[[Note3]](#note-4-3) |
-|advanced_kind|-|No|None|<ul><li>ForcedAssign</li><li>WithoutHardwareAccess</li><li>OnlineAssign</li></ul>|Specifies the assign profile name for the operation node. Refer to [[Table1]](#table-4-1) for the combination that can be specified.<br>Specifies type of advanced application.<br>To be specified when the AssignMode is 'Advanced'.<br>- ForcedAssign: Forced assignment<br>- WithoutHardwareAccess: The application intended to be applied<br>- OnlineAssign: Online assignment<br>ForcedAssign cannot be used in first-time application.<br>When IOVirtualization or OSInstallation is included in the AssignRange, OnlineAssign cannot be used.|
-|assign_range|-|No|None|<ul><li>BIOS</li><li>iRMC</li><li>MMB</li><li>IOVirtualization</li><li>OSInstallation</li></ul>|Records types of Profile for assignment.<br>If the AssignMode is Advanced, "BIOS," "iRMC," "MMB,"<br>"IOVirtualization" and/or "OSInstallation" can be specifiedeither individually or together.<br>E.g.) ["BIOS","iRMC"]<br>When this setting is omitted or null, all types of profile in ProfileData are assigned.<br>Refer to [[Table1]](#table-4-1) for the combination that can be specified.|
+|Parameter        |Type  |Required|Essential Mode|Default|Choices                                                                                        |Comments                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+|:----------------|:-----|:------:|:------------:|:------|:----------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|config           |string|Yes     |No            |None   |None                                                                                           |Specifies the full path for the described setting file of the connection information of Infrastructure Manager.                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+|hostname         |string|Yes     |No            |None   |None                                                                                           |Specifies the IP address and the host name of the operation.<br>[[Note1]](#note-4-1) [[Note2]](#note-4-2)                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+|ism_profile_name |string|Yes     |No            |None   |None                                                                                           |Profile name.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+|assign_mode      |string|No      |No            |None   |<ul><li>Normal</li><li>Advanced</li></ul>                                                      |Specifies assign mode.<br>- Normal: Usual assignment<br>- Advanced: Advanced assignment<br>When this setting is omitted or null, operations will be carried out as Normal.<br>[[Note3]](#note-4-3)                                                                                                                                                                                                                                                                                                                                                  |
+|advanced_kind    |string|No      |No            |None   |<ul><li>ForcedAssign</li><li>WithoutHardwareAccess</li><li>OnlineAssign</li></ul>              |Specifies the assign profile name for the operation node. Refer to [[Table1]](#table-4-1) for the combination that can be specified.<br>Specifies type of advanced application.<br>To be specified when the AssignMode is 'Advanced'.<br>- ForcedAssign: Forced assignment<br>- WithoutHardwareAccess: The application intended to be applied<br>- OnlineAssign: Online assignment<br>ForcedAssign cannot be used in first-time application.<br>When IOVirtualization or OSInstallation is included in the AssignRange, OnlineAssign cannot be used.|
+|assign_range     |string|No      |No            |None   |<ul><li>BIOS</li><li>iRMC</li><li>MMB</li><li>IOVirtualization</li><li>OSInstallation</li></ul>|Records types of Profile for assignment.<br>If the AssignMode is Advanced, "BIOS," "iRMC," "MMB,"<br>"IOVirtualization" and/or "OSInstallation" can be specifiedeither individually or together.<br>E.g.) ["BIOS","iRMC"]<br>When this setting is omitted or null, all types of profile in ProfileData are assigned.<br>Refer to [[Table1]](#table-4-1) for the combination that can be specified.                                                                                                                                                  |
 
 <a name="note-4-1">[Note1]  
 Specify the host name (FQDN) for the IP address or the IP address of the operation node registered in Infrastructure Manager.  
@@ -780,7 +792,9 @@ For the usual assignment and advanced assignment, refer to "2.2.3 Profile Manage
 (\*2)  
 When the profile is unassigned and if you specify the ForcedAssign, REST-API returns the error.
 
-### Example 1
+### Examples
+
+#### Example 1
 
 ```yaml
 - name: Execution of ism_profile_assignment
@@ -792,7 +806,7 @@ When the profile is unassigned and if you specify the ForcedAssign, REST-API ret
 - debug: var=ism_profile_assignment_result
 ```
 
-### Example 2
+#### Example 2
 
 A case of specified value of the assign_range is only one.
 
@@ -810,7 +824,7 @@ A case of specified value of the assign_range is only one.
 - debug: var=ism_profile_assignment_result
 ```
 
-### Example 3
+#### Example 3
 
 A case of specified value of the assign_range is two or more.
 
@@ -939,10 +953,10 @@ Instructions for Power-on of the specified nodes managed by Infrastructure Manag
 
 ### Options
 
-|Parameter|Required|Essential Mode|Default|Choices|Comments|
-|:--|:-:|:--:|:--|:--|:--|
-|config|Yes|Yes|None|None|Specifies the full path for the described setting file of the connection information of Infrastructure Manager.|
-|hostname|Yes|Yes|None|None|Specifies the IP address and the host name of the operation. [[Note1]](#note-5-1) [[Note2]](#note-5-2)
+|Parameter|Type  |Required|Essential Mode|Default|Choices|Comments                                                                                                       |
+|:--------|:-----|:------:|:------------:|:------|:------|:--------------------------------------------------------------------------------------------------------------|
+|config   |string|Yes     |Yes           |None   |None   |Specifies the full path for the described setting file of the connection information of Infrastructure Manager.|
+|hostname |string|Yes     |Yes           |None   |None   |Specifies the IP address and the host name of the operation. [[Note1]](#note-5-1) [[Note2]](#note-5-2)         |
 
 <a name="note-5-1">[Note1]  
 Specify the host name (FQDN) for the IP address or the IP address of the operation node registered in Infrastructure Manager is specified.
@@ -1071,10 +1085,10 @@ It is used to refresh the inventory information, such as after a firmware update
 
 ### Options
 
-|Parameter|Required|Essential Mode|Default|Choices|Comments|
-|:--|:-:|:--:|:--|:--|:--|
-|config|Yes|Yes|None|None|Specifies the full path for the described setting file of the connection information of Infrastructure Manager.|
-|hostname|Yes|Yes|None|None|Specifies the IP address and the host name of the operation. <br>[[Note1]](#note-6-1) [[Note2]](#note-6-2)
+|Parameter|Type  |Required|Essential Mode|Default|Choices|Comments                                                                                                       |
+|:--------|:-----|:------:|:------------:|:------|:------|:--------------------------------------------------------------------------------------------------------------|
+|config   |string|Yes     |Yes           |None   |None   |Specifies the full path for the described setting file of the connection information of Infrastructure Manager.|
+|hostname |string|Yes     |Yes           |None   |None   |Specifies the IP address and the host name of the operation. <br>[[Note1]](#note-6-1) [[Note2]](#note-6-2)     |
 
 <a name="note-6-1">[Note1]  
 Specify the host name (FQDN) for the IP address or the IP address of the operation node registered in Infrastructure Manager.
@@ -1307,12 +1321,12 @@ It is used to retrieve the firmware information, such as after a firmware is upd
 
 ### Options
 
-|Parameter|Required|Essential Mode|Default|Choices|Comments|
-|:--|:-:|:--:|:--|:--|:--|
-|config|Yes|Yes|None|None|Specifies the full path for the described setting file of the connection information of Infrastructure Manager.|
-|hostname|Yes|Yes|None|None|Specifies the IP address and the host name of the operation. [[Note1]](#note-7-1) [[Note2]](#note-7-2)|
-|level|-|Yes|All|<ul><li>Top</li><li>All</li></ul>|Retrieves process level<br><br>Assigns if VariableData should be obtained. Unless specified, it operates by All.[[Note3]](#note-7-3)<br><br>-Top: No information on VariableData<br>-All:VariableData available|
-|target|-|Yes|None|Type of detailed information [[Note3]](#note-7-3)|Specifystype of detailed information<br><br>Assign parameters inside VariableData. Displays only specified information. Specify All for the retrieving process level. [[Note3]](#note-7-3)<br><br>Example of assignment)<br>/nodes/{nodeid}/inventory?level=All&target=Firmware -><br>Displays only Firmware in VariableData.|
+|Parameter|Type  |Required|Essential Mode|Default|Choices                                          |Comments                                                                                                                                                                                                                                                                                                                       |
+|:--------|:-----|:------:|:------------:|:------|:------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|config   |string|Yes     |Yes           |None   |None                                             |Specifies the full path for the described setting file of the connection information of Infrastructure Manager.                                                                                                                                                                                                                |
+|hostname |string|Yes     |Yes           |None   |None                                             |Specifies the IP address and the host name of the operation. [[Note1]](#note-7-1) [[Note2]](#note-7-2)                                                                                                                                                                                                                         |
+|level    |string|No      |Yes           |All    |<ul><li>Top</li><li>All</li></ul>                |Retrieves process level<br><br>Assigns if VariableData should be obtained. Unless specified, it operates by All.[[Note3]](#note-7-3)<br><br>-Top: No information on VariableData<br>-All:VariableData available                                                                                                                |
+|target   |string|No      |Yes           |None   |Type of detailed information [[Note3]](#note-7-3)|Specifies type of detailed information<br><br>Assign parameters inside VariableData. Displays only specified information. Specify All for the retrieving process level. [[Note3]](#note-7-3)<br><br>Example of assignment)<br>/nodes/{nodeid}/inventory?level=All&target=Firmware -><br>Displays only Firmware in VariableData.|
 
 <a name="note-7-1">[Note1]  
 Specify the host name (FQDN) for the IP address or the IP address of the operation node registered in Infrastructure Manager is specified.  
@@ -1356,7 +1370,7 @@ Case in specifying "All" (retrieving all the detailed information)
 
 ### Example 3
 
-Case in specifying “level=All&target=Firmware” (retrieving the detailed information of firmware)
+Case in specifying "level=All&target=Firmware" (retrieving the detailed information of firmware)
 
 ```yaml
 - name: Execution of ism_get_inventory_info
@@ -1647,11 +1661,11 @@ It is used to confirm the profile information assigned in the node, such as afte
 
 ### Options
 
-|Parameter|Required|Essential Mode|Default|Choices|Comments|
-|:--|:-:|:--:|:--|:--|:--|
-|config|Yes|No|None|None|Specifies the full path for the described setting file of the connection information of Infrastructure Manager.|
-|hostname|Yes|No|None|None|Specifies the IP address and the host name of the operation. [[Note1]](#note-8-1)[[Note2]](#note-8-2)
-|status|-|No|None|<ul><li>assigned</li><li>mismatch</li><li>processing</li><li>canceling</li><li>canceled</li><li>error</li></ul>|Specifies the assigned status<br>- assigned: assignment complete<br>- mismatch: status that existing assigned profile was edited but the setting was not yet assigned. (there is a difference between the profile and the device)<br><br>(there is a difference between the profile and the device)<br>- processing: 'assigned/unassigned' processing in progress<br>- canceling: cancellation of 'assigned/unassigned' is in progress<br>- canceled: cancellation of 'assigned/unassigned' is complete<br>- error: 'assigned/unassigned' has failed<br>If Choice is not specified, the profile information of the operation target node is output regardless of the assigned status of the profile.|
+|Parameter|Type  |Required|Essential Mode|Default|Choices                                                                                                        |Comments                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+|:--------|:-----|:------:|:------------:|:------|:--------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|config   |string|Yes     |No            |None   |None                                                                                                           |Specifies the full path for the described setting file of the connection information of Infrastructure Manager.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+|hostname |string|Yes     |No            |None   |None                                                                                                           |Specifies the IP address and the host name of the operation. [[Note1]](#note-8-1)[[Note2]](#note-8-2)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+|status   |string|No      |No            |None   |<ul><li>assigned</li><li>mismatch</li><li>processing</li><li>canceling</li><li>canceled</li><li>error</li></ul>|Specifies the assigned status<br>- assigned: assignment complete<br>- mismatch: status that existing assigned profile was edited but the setting was not yet assigned. (there is a difference between the profile and the device)<br><br>(there is a difference between the profile and the device)<br>- processing: 'assigned/unassigned' processing in progress<br>- canceling: cancellation of 'assigned/unassigned' is in progress<br>- canceled: cancellation of 'assigned/unassigned' is complete<br>- error: 'assigned/unassigned' has failed<br>If Choice is not specified, the profile information of the operation target node is output regardless of the assigned status of the profile.|
 
 <a name="note-8-1">[Note1]  
 Specify the host name (FQDN) for the IP address or the IP address of the operation node registered in Infrastructure Manager is specified.  
@@ -2024,10 +2038,10 @@ It is used to confirm the power status of the node, such as after the operation 
 
 ### Options
 
-|Parameter|Required|Esential Mode|Default|Choices|Comments|
-|:--|:-:|:--:|:--|:--|:--|
-|config|Yes|Yes|None|None|Specifies the full path for the described setting file of the connection information of Infrastructure Manager.|
-|hostname|Yes|Yes|None|None|Specifies the IP address and host name of the operation. [[Note1]](#note-9-1)[[Note2]](#note-9-2)|
+|Parameter|Type  |Required|Esential Mode|Default|Choices|Comments                                                                                                       |
+|:--------|:-----|:------:|:-----------:|:------|:------|:--------------------------------------------------------------------------------------------------------------|
+|config   |string|Yes     |Yes          |None   |None   |Specifies the full path for the described setting file of the connection information of Infrastructure Manager.|
+|hostname |string|Yes     |Yes          |None   |None   |Specifies the IP address and host name of the operation. [[Note1]](#note-9-1)[[Note2]](#note-9-2)              |
 
 <a name="note-9-1">[Note1]  
 Specify the host name (FQDN) for the IP address or the IP address of the operation node registered in Infrastructure Manager is specified.  
@@ -2256,10 +2270,10 @@ It is used before retrieving the information of downloadable firmware.
 
 ### Options
 
-|Parameter|Required|Essential Mode|Default|Choices|Comments|
-|:--|:-:|:--:|:--|:--|:--|
-|config|Yes|Yes|None|None|Specifies the full path for the described setting file of the connection information of Infrastructure Manager.|
-|hostname|Yes|Yes|None|None|Specifies the IP address and the host name of the operation.<br>[[Note1]](#note-10-1)[[Note2]](#note-10-2)[[Note3]](#note-10-3)[[Note4]](#note-10-4)|
+|Parameter|Type  |Required|Essential Mode|Default|Choices|Comments                                                                                                                                            |
+|:--------|:-----|:------:|:------------:|:------|:------|:---------------------------------------------------------------------------------------------------------------------------------------------------|
+|config   |string|Yes     |Yes           |None   |None   |Specifies the full path for the described setting file of the connection information of Infrastructure Manager.                                     |
+|hostname |string|Yes     |Yes           |None   |None   |Specifies the IP address and the host name of the operation.<br>[[Note1]](#note-10-1)[[Note2]](#note-10-2)[[Note3]](#note-10-3)[[Note4]](#note-10-4)|
 
 <a name="note-10-1">[Note1]  
 Specify the IP address or the hostname of the ISM server.
@@ -2270,8 +2284,8 @@ and no need to update the firmware of each ISM node.
 Specify the ISM server information for the hostname to operate only once for each ISM server.
 
 <a name="note-10-3">[Note3]  
-This module connects to ISM with the information specified in the “config” parameter.
-Therefore, misconfiguration of the "hostname” parameter does not affect the behavior of this module.
+This module connects to ISM with the information specified in the "config" parameter.
+Therefore, misconfiguration of the "hostname" parameter does not affect the behavior of this module.
 
 <a name="note-10-4">[Note4]  
 Presently IPv6 is not supported. For the connection with Infrastructure Manager, specify the IP address of IPv4 or the host name (FQDN) that are available for the name resolution of IPv4.
@@ -2427,22 +2441,22 @@ It is used after update of the information of downloadable firmware.
 
 ### Options
 
-|Parameter|Required|Essential Mode|Default|Choices|Comments|
-|:--|:-:|:--:|:--|:--|:--|
-|config|Yes|Yes|None|None|Specifies the full path for the described setting file of the connection information of Infrastructure Manager.|
-|hostname|Yes|Yes|None|None|Specifies the IP address and the host name of the operation.<br>[[Note1]](#note-11-1)[[Note2]](#note-11-2)[[Note3]](#note-11-3)[[Note4]](#note-11-4)|
-|filter|-|Yes|False|<ul><li>True</li><li>False</li></ul>|True:  Retrieves information of downloadble firmware for each node registered in ISM.<br>False: Retrieves information of all the downloadble firmware.<br>[[Note5]](#note-11-5)|
+|Parameter|Type   |Required|Essential Mode|Default|Choices                             |Comments                                                                                                                                                                      |
+|:--------|:------|:------:|:------------:|:------|:-----------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|config   |string |Yes     |Yes           |None   |None                                |Specifies the full path for the described setting file of the connection information of Infrastructure Manager.                                                               |
+|hostname |string |Yes     |Yes           |None   |None                                |Specifies the IP address and the host name of the operation.<br>[[Note1]](#note-11-1)[[Note2]](#note-11-2)[[Note3]](#note-11-3)[[Note4]](#note-11-4)                          |
+|filter   |boolean|No      |Yes           |False  |<ul><li>True</li><li>False</li></ul>|True: Retrieves information of downloadble firmware for each node registered in ISM.<br>False: Retrieves information of all the downloadble firmware.<br>[[Note5]](#note-11-5)|
 
 <a name="note-11-1">[Note1]  
 Specify the IP address or the hostname of the ISM server.
 
 <a name="note-11-2">[Note2]  
 The information of downloadable firmware is unique in each ISM server and no need to update the firmware for each node registered in ISM.  
-Specify the information of an ISM server to “hostname” parameter and run once for each ISM server.
+Specify the information of an ISM server to "hostname" parameter and run once for each ISM server.
 
 <a name="note-11-3">[Note3]  
-This module connects to ISM with the information specified in the “config” parameter.  
-Therefore, misconfiguration of the “hostname” parameter does not affect the behavior of this module.
+This module connects to ISM with the information specified in the "config" parameter.  
+Therefore, misconfiguration of the "hostname" parameter does not affect the behavior of this module.
 
 <a name="note-11-4">[Note4]  
 Presently IPv6 is not supported. For the connection with Infrastructure Manager, specify the IP address of IPv4 or the host name (FQDN) that are available for the name resolution of IPv4.
@@ -2455,11 +2469,11 @@ False: Retrieves information of all the firmwares provided by Global Flash.
 
 ```yaml
 - name: Getting Download Firmware List
-   ism_get_download_firmware_list:
-    config: “/etc/ansible/ism-ansible/ism_config.json”
-    hostname: “192.168.1.10”
-　　　filter:True
-   register: ism_get _download_firmware_list_result
+  ism_get_download_firmware_list:
+    config: "/etc/ansible/ism-ansible/ism_config.json"
+    hostname: "192.168.1.10"
+    filter:True
+  register: ism_get _download_firmware_list_result
 - debug: var= ism_get_download_firmware_list_result
 ```
 
@@ -2574,7 +2588,7 @@ False: Retrieves information of all the firmwares provided by Global Flash.
   <td>string</td>
   <td align="center">Yes</td>
   <td>Not omitted, but null is allowed.</td>
-  <td>API type<br>The API type is output in the format “Method name URI”.</td>
+  <td>API type<br>The API type is output in the format "Method name URI".</td>
 </tr>
 <tr>
   <td colspan="2">Message</td>
@@ -2694,6 +2708,7 @@ It is used to download the firmware before firmware update.
 <tbody>
 <tr>
   <th colspan="2">Parameter</th>
+  <th>Type</th>
   <th>Required</th>
   <th>Essential Mode</th>
   <th>Default</th>
@@ -2702,6 +2717,7 @@ It is used to download the firmware before firmware update.
 </tr>
 <tr>
   <td colspan="2">config</td>
+  <td>string</td>  
   <td align="center">Yes</td>
   <td align="center">Yes</td>
   <td>None</td>
@@ -2710,6 +2726,7 @@ It is used to download the firmware before firmware update.
 </tr>
 <tr>
   <td colspan="2">hostname</td>
+  <td>string</td>  
   <td align="center">Yes</td>
   <td align="center">Yes</td>
   <td>None</td>
@@ -2718,6 +2735,7 @@ It is used to download the firmware before firmware update.
 </tr>
 <tr>
   <td colspan="2">firmware_list</td>
+  <td>dict-list</td>  
   <td align="center">Yes</td>
   <td align="center">Yes</td>
   <td>None</td>
@@ -2728,6 +2746,7 @@ Specify firmware_name and firmware_version as elements of this list.<br><a href=
 <tr>
   <td rowspan="2"></td>
   <td>firmware_name</td>
+  <td>string</td>  
   <td align="center">Yes</td>
   <td align="center">Yes</td>
   <td>None</td>
@@ -2736,6 +2755,7 @@ Specify firmware_name and firmware_version as elements of this list.<br><a href=
 </tr>
 <tr>
   <td>firmware_version</td>
+  <td>string</td>  
   <td align="center">Yes</td>
   <td align="center">Yes</td>
   <td>None</td>
@@ -2890,10 +2910,10 @@ Refer to "Report information comparison tool" in Readme.md.
 
 ### Options
 
-|Parameter|Required|Essential Mode|Default|Choices|Comments|
-|:--|:-:|:--:|:--|:--|:--|
-|config|Yes|Yes|None|None|Specifies the full path to the configuration file that contains the ISM connection information.|
-|hostname|Yes|Yes|None|None|Specifies the IP address or hostname of the ISM server. <br>[[Note1]](#note-15-1) [[Note2]](#note-15-2) [[Note3]](#note-15-3) [[Note4]](#note-15-4)|
+|Parameter|Type  |Required|Essential Mode|Default|Choices|Comments                                                                                                                                           |
+|:--------|:-----|:------:|:------------:|:------|:------|:--------------------------------------------------------------------------------------------------------------------------------------------------|
+|config   |string|Yes     |Yes           |None   |None   |Specifies the full path to the configuration file that contains the ISM connection information.                                                    |
+|hostname |string|Yes     |Yes           |None   |None   |Specifies the IP address or hostname of the ISM server. <br>[[Note1]](#note-15-1) [[Note2]](#note-15-2) [[Note3]](#note-15-3) [[Note4]](#note-15-4)|
 
 <a name="note-15-1">[Note1]  
  Specifies the IP address of the ISM server or the hostname to that IP address.
@@ -3884,7 +3904,7 @@ A unique ID is output for each message.</td>
   [Readme.md](/Readme.md)
 
 * Sample playbook using ism_get_report_info  
-　[examples/ism_get_report_info.yml](/examples/ism_get_report_info.yml)
+  [examples/ism_get_report_info.yml](/examples/ism_get_report_info.yml)
 
 ## <a name = "ism_backup"> ism_backup
 
@@ -3903,12 +3923,12 @@ Perform a backup of ISM-VA.
 
 ### Options
 
-|Parameter|Required|Essential Mode|Default|Choices|Comments|
-|:--|:-:|:--:|:--|:--|:--|
-|config|Yes|Yes|None|None|Specifies the full path to the configuration file that contains the ISM connection information.<br>[[Note1]](#note-16-1)|
-|hostname|Yes|Yes|None|None|Specifies the IP address or hostname of the ISM server. <br> [[Note2]](#note-16-2) [[Note3]](#note-16-3) [[Note4]](#note-16-4) [[Note5]](#note-16-5)|
-|dest_dir|Yes|Yes|None|None|Specifies the full path to the destination directory for the backup files. <br> The backup file name is automatically set in the following format. <br>- Format<br>&nbsp; ism&lt;ISM Version\>-backup-&lt;Backup Datetime\>.tar.gz <br>- Example<br>&nbsp; ism2.5.0.03-backup-20191219041611.tar.gz<br>[[Note6]](#note-16-6)|
-|timeout|No|Yes|0|None|Specifies an integer timeout to wait for the backup to complete. The unit is seconds. If it is less than or equal to zero or omitted, no timeout is performed.<br>[[Note7]](#note-16-7)|
+|Parameter|Type   |Required|Essential Mode|Default|Choices|Comments                                                                                                                                                                                                                                                                                                                    |
+|:--------|:------|:------:|:------------:|:------|:------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|config   |string |Yes     |Yes           |None   |None   |Specifies the full path to the configuration file that contains the ISM connection information.<br>[[Note1]](#note-16-1)                                                                                                                                                                                                    |
+|hostname |string |Yes     |Yes           |None   |None   |Specifies the IP address or hostname of the ISM server. <br> [[Note2]](#note-16-2) [[Note3]](#note-16-3) [[Note4]](#note-16-4) [[Note5]](#note-16-5)                                                                                                                                                                        |
+|dest_dir |string |Yes     |Yes           |None   |None   |Specifies the full path to the destination directory for the backup files. <br> The backup file name is automatically set in the following format. <br>- Format<br>&nbsp; ism&lt;ISM Version\>-backup-&lt;Backup Datetime\>.tar.gz <br>- Example<br>&nbsp; ism2.5.0.03-backup-20191219041611.tar.gz<br>[[Note6]](#note-16-6)|
+|timeout  |integer|No      |Yes           |0      |None   |Specifies an integer timeout to wait for the backup to complete. The unit is seconds. If it is less than or equal to zero or omitted, no timeout is performed.<br>[[Note7]](#note-16-7)                                                                                                                                     |
 
 <a name="note-16-1">[Note1]  
 Use single-byte uppercase and lowercase letters, numbers, and symbols.
@@ -3966,7 +3986,7 @@ Increase the timeout period and try again.
   [Readme.md](/Readme.md)
 
 * Sample playbook using ism_backup  
-　[examples/ism_backup.yml](/examples/ism_backup.yml)
+  [examples/ism_backup.yml](/examples/ism_backup.yml)
 
 ## <a name = "ism_copy_profile"> ism_copy_profile
 
@@ -3984,12 +4004,12 @@ Increase the timeout period and try again.
 
 ### Options
 
-|Parameter|Required|Essential Mode|Default|Choices|Comments|
-|:--|:-:|:--:|:--|:--|:--|
-|config|Yes|No|None|None|Specifies the full path to the configuration file that contains the ISM connection information.<br>[[Note1]](#note-17-1)|
-|ism_source_profile_name|Yes|No|None|None|Specifies the name of the profile to copy from.|
-|ism_profile_name|Yes|No|None|None|Specifies the destination profile name.|
-|ism_profile_data|No|No|None|None|Specifies the value to change when copying.<br>If omitted, no changes are made.<br>[[Note2]](#note-17-2) [[Note3]](#note-17-3)|
+|Parameter              |Type  |Required|Essential Mode|Default|Choices|Comments                                                                                                                      |
+|:----------------------|:-----|:------:|:------------:|:------|:------|:-----------------------------------------------------------------------------------------------------------------------------|
+|config                 |string|Yes     |No            |None   |None   |Specifies the full path to the configuration file that contains the ISM connection information.<br>[[Note1]](#note-17-1)      |
+|ism_source_profile_name|string|Yes     |No            |None   |None   |Specifies the name of the profile to copy from.                                                                               |
+|ism_profile_name       |string|Yes     |No            |None   |None   |Specifies the destination profile name.                                                                                       |
+|ism_profile_data       |dict  |No      |No            |None   |None   |Specifies the value to change when copying.<br>If omitted, no changes are made.<br>[[Note2]](#note-17-2) [[Note3]](#note-17-3)|
 
 <a name="note-17-1">[Note1]  
 Use single-byte uppercase and lowercase letters, numbers, and symbols.
@@ -4021,32 +4041,31 @@ U2FsdGVkX186qfuegUxjCcApbUWJ6r51xKGj7RmmwsA=
 
 ```yaml
 - name: Copy Profile
-   hosts: servers
-   gather_facts: no
-   connection: local
-   vars:
-     config: "/etc/ansible/ism-ansible/ism_config.json"
-     ism_source_profile_name: "SourceProfile"
-     ism_profile_data:
-       Server-RX:
-         OSInstallation:
-           Windows:
-             OsIndividualConfig:
-               BasicSettings:
-                 ComputerName: "{{ ism_computer_name }}"
-               NetworkInterface:
-                 IPv4:
-                   Address: "{{ ism_os_ip_address }}"
-   tasks:
-   - name: Copying Profile
-     ism_copy_profile:
-       config: "{{ config }}"
-       ism_source_profile_name: "{{ ism_source_profile_name }}"
-       ism_profile_name: "{{ ism_profile_name }}"
-       ism_profile_data: "{{ ism_profile_data }}"
-
-     register: ism_copy_profile_result
-   - debug: var=ism_copy_profile_result
+  hosts: servers
+  gather_facts: no
+  connection: local
+  vars:
+    config: "/etc/ansible/ism-ansible/ism_config.json"
+    ism_source_profile_name: "SourceProfile"
+    ism_profile_data:
+      Server-RX:
+        OSInstallation:
+          Windows:
+            OsIndividualConfig:
+              BasicSettings:
+                ComputerName: "{{ ism_computer_name }}"
+              NetworkInterface:
+                IPv4:
+                  Address: "{{ ism_os_ip_address }}"
+  tasks:
+    - name: Copying Profile
+      ism_copy_profile:
+        config: "{{ config }}"
+        ism_source_profile_name: "{{ ism_source_profile_name }}"
+        ism_profile_name: "{{ ism_profile_name }}"
+        ism_profile_data: "{{ ism_profile_data }}"
+      register: ism_copy_profile_result
+    - debug: var=ism_copy_profile_result
 ```
 
 ### Return Values (Normal)
@@ -4134,4 +4153,4 @@ A unique ID is output for each message.</td>
   [Readme.md](/Readme.md)
 
 * Sample playbook using ism_copy_profile  
-　[examples/ism_copy_profile.yml](/examples/ism_copy_profile.yml)
+  [examples/ism_copy_profile.yml](/examples/ism_copy_profile.yml)

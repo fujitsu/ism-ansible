@@ -179,7 +179,7 @@ all:
     Optional.<br>
     Specifies to run the profile assignment, copy profile module.<br>
     Otherwise, it is ignored.<br>
-    If omitted, no key part (“ism_profile_name=”, “ism_profile_name:”) should be specified.
+    If omitted, no key part ("ism_profile_name=", "ism_profile_name:") should be specified.
    </td>
 </tr>
 <tr>
@@ -400,21 +400,22 @@ inventory file path: `/etc/ansible/hosts`
 ansible-playbook /etc/ansible/ism-ansible/examples/ism_firmware_list.yml -i /etc/ansible/hosts
 ```
 
-### 8. Report information comparison tool
+## Report information comparison tool
 
 A tool that compares the output files of the report information retrieval module.
 
-#### Deployment Path
+### Deployment path
+
 By default, it is placed in the following path:  
 \<Directory checked out from Git>/ism-ansible/tools/ism_report_diff.py
 
-#### Tool execution command
+### Tool execution command
 
 ```shell
 python  ism_report_diff.py <FILE1> [<FILE2>]
 ```
 
-#### Options
+### Options
 
 <table>
 <tbody>
@@ -438,7 +439,7 @@ If this parameter is omitted, FILE1 and FILE2 are not compared and only the info
 </tbody>
 </table>
 
-#### Examples
+### Examples
 
 - To compare the old and new report information files
 
@@ -452,7 +453,7 @@ python ism_report_diff.py 2019-11-04_14-35-31.json 2019-12-04_09-01-02.json
 python ism_report_diff.py 2019-12-04_09-01-02.json
 ```
 
-#### Output
+### Output
 
 <table>
 <tbody>
@@ -624,7 +625,12 @@ Example: Adding two nodes and deleting one node<br>
 </tbody>
 </table>
 
-### 9. Changing processing time of Update Firmware and Profile Assignment settings
+### Notes
+
+- Sample playbook using ism_report_diff.py  
+  [examples/ism_diff_report.yml](/examples/ism_diff_report.yml)
+
+## Changing processing time of Update Firmware and Profile Assignment settings
 
 In the module of Update Firmware or Profile Assignment, waiting to complete the task in the internal processing.  
 The timeout period for the process of waiting to complete the task can be changed with the following ism_user_settings file.  
@@ -632,7 +638,7 @@ Refer to [[Note12]](#note-12).
 
 ism_user_settings file path: `/etc/ansible/ism-ansible/module_utils/ism_user_settings.py`  
 
-#### Example
+### Example
 
 Timeout period of firmware update: `14400` (second) (= 4hours)  
 Timeout period of application of profile: `18000` (second) (= 5hours)
@@ -651,7 +657,7 @@ FIRMWARE_UPDATE_TIME_OUT = 14400
 PROFILE_ASSIGNMENT_TIME_OUT = 18000
 ```
 
-### 10. Notes
+## Notes
 
 <a name="note-1">[Note1]  
 When the config file already exists, it will be overwritten.
