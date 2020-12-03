@@ -96,11 +96,11 @@ Presently IPv6 is not supported. To the connection with Infrastructure Manager, 
 
 ```yaml
 - name: Execution of ism_firmware_list
-   ism_firmware_list:
+  ism_firmware_list:
     config: "/etc/ansible/ism-ansible/ism_config.json"
     hostname: "192.168.1.22"
     firmware_type: "iRMC"
-   register: ism_firmware_list_result
+  register: ism_firmware_list_result
 - debug: var=ism_firmware_list_result
 ```
 
@@ -472,15 +472,15 @@ When you update the firmware of iRMC
 
 ```yaml
 - name: Execution of ism_firmware_update
-   ism_firmware_update:
+  ism_firmware_update:
     config: "/etc/ansible/ism-ansible/ism_config.json"
     hostname: "192.168.1.22"
     firmware_update_list:
-     - firmware_name: "RX300 S8_iRMC"
-       repository_name: "Update DVD 12.17.04.03 Administrator"
-       firmware_version: "8.64F&3.72"
-       operation_mode: "Online"
-   register: ism_firmware_update_result
+      - firmware_name: "RX300 S8_iRMC"
+        repository_name: "Update DVD 12.17.04.03 Administrator"
+        firmware_version: "8.64F&3.72"
+        operation_mode: "Online"
+  register: ism_firmware_update_result
 - debug: var=ism_firmware_update_result
 ```
 
@@ -639,11 +639,11 @@ specify the IP address of IPv4 or the host name (FQDN) that are available for th
 
 ```yaml
 - name: Set Maintenance Mode
-   ism_maintenance_mode_setting:
+  ism_maintenance_mode_setting:
     config: "/etc/ansible/ism-ansible/ism_config.json"
     hostname: "192.168.1.22"
     mode: "On"
-   register: ism_maintenance_mode_setting_result
+  register: ism_maintenance_mode_setting_result
 - debug: var=ism_maintenance_mode_setting_result
 ```
 
@@ -798,11 +798,11 @@ When the profile is unassigned and if you specify the ForcedAssign, REST-API ret
 
 ```yaml
 - name: Execution of ism_profile_assignment
-   ism_profile_assignment:
+  ism_profile_assignment:
     config: "/etc/ansible/ism-ansible/ism_config.json"
     hostname: "192.168.1.22"
     ism_profile_name: "profileA"
-   register: ism_profile_assignment_result
+  register: ism_profile_assignment_result
 - debug: var=ism_profile_assignment_result
 ```
 
@@ -812,7 +812,7 @@ A case of specified value of the assign_range is only one.
 
 ```yaml
 - name: Execution of ism_profile_assignment
-   ism_profile_assignment:
+  ism_profile_assignment:
     config: "/etc/ansible/ism-ansible/ism_config.json"
     hostname: "192.168.1.22"
     ism_profile_name: "profileA"
@@ -820,7 +820,7 @@ A case of specified value of the assign_range is only one.
     advanced_kind: "OnlineAssign"
     assign_range:
       - BIOS
-   register: ism_profile_assignment_result
+  register: ism_profile_assignment_result
 - debug: var=ism_profile_assignment_result
 ```
 
@@ -830,7 +830,7 @@ A case of specified value of the assign_range is two or more.
 
 ```yaml
 - name: Execution of ism_profile_assignment
-   ism_profile_assignment:
+  ism_profile_assignment:
     config: "/etc/ansible/ism-ansible/ism_config.json"
     hostname: "192.168.1.22"
     ism_profile_name: "profileA"
@@ -839,7 +839,7 @@ A case of specified value of the assign_range is two or more.
     assign_range:
       - BIOS
       - iRMC
-   register: ism_profile_assignment_result
+  register: ism_profile_assignment_result
 - debug: var=ism_profile_assignment_result
 ```
 
@@ -969,10 +969,10 @@ Presently IPv6 is not supported. For the connection with Infrastructure Manager,
 
 ```yaml
 - name: Execution of ism_power_on
-   ism_power_on:
+  ism_power_on:
     config: "/etc/ansible/ism-ansible/ism_config.json"
     hostname: "192.168.1.22"
-   register: ism_power_on_result
+  register: ism_power_on_result
 - debug: var=ism_power_on_result
 ```
 
@@ -1102,10 +1102,10 @@ specify the IP address of IPv4 or the host name (FQDN) that are available for th
 
 ```yaml
 - name: Execution of ism_refresh_node_info
-   ism_refresh_node_info:
+  ism_refresh_node_info:
     config: "/etc/ansible/ism-ansible/ism_config.json"
     hostname: "192.168.1.25"
-   register: ism_refresh_node_info_result
+  register: ism_refresh_node_info_result
 - debug: var=ism_refresh_node_info_result
 ```
 
@@ -1346,11 +1346,11 @@ Case in specifying "Top"(not retrieving the detailed information)
 
 ```yaml
 - name: Execution of ism_get_inventory_info
-   ism_get_inventory_info:
+  ism_get_inventory_info:
     config: "/etc/ansible/ism-ansible/ism_config.json"
     hostname: "192.168.1.22"
     level: "Top"
-   register: ism_get_inventory_info_result
+  register: ism_get_inventory_info_result
 - debug: var=ism_get_inventory_info_result
 ```
 
@@ -1360,11 +1360,11 @@ Case in specifying "All" (retrieving all the detailed information)
 
 ```yaml
 - name: Execution of ism_get_inventory_info
-   ism_get_inventory_info:
+  ism_get_inventory_info:
     config: "/etc/ansible/ism-ansible/ism_config.json"
     hostname: "192.168.1.22"
     level: "All"
-   register: ism_get_inventory_info_result
+  register: ism_get_inventory_info_result
 - debug: var=ism_get_inventory_info_result
 ```
 
@@ -1374,12 +1374,12 @@ Case in specifying "level=All&target=Firmware" (retrieving the detailed informat
 
 ```yaml
 - name: Execution of ism_get_inventory_info
-   ism_get_inventory_info:
+  ism_get_inventory_info:
     config: "/etc/ansible/ism-ansible/ism_config.json"
     hostname: "192.168.1.22"
     level: "All"
     target: "Firmware"
-   register: ism_get_inventory_info_result
+  register: ism_get_inventory_info_result
 - debug: var=ism_get_inventory_info_result
 ```
 
@@ -1681,11 +1681,11 @@ When retrieving the assigned profile information.
 
 ```yaml
 - name: Getting Profile Information
-   ism_get_profile_info:
+  ism_get_profile_info:
     config: "/etc/ansible/ism-ansible/ism_config.json"
     hostname: "192.168.1.22"
     status: "assigned"
-   register: ism_get_profile_info_result
+  register: ism_get_profile_info_result
 - debug: var=ism_get_profile_info_result
 ```
 
@@ -2055,10 +2055,10 @@ specify the IP address of IPv4 or the host name (FQDN) that are available for th
 
 ```yaml
 - name: Getting Power Status
-   ism_get_power_status:
+  ism_get_power_status:
     config: "/etc/ansible/ism-ansible/ism_config.json"
     hostname: "192.168.1.22"
-   register: ism_get_power_status_result
+  register: ism_get_power_status_result
 - debug: var=ism_get_power_status_result
 ```
 
@@ -2294,10 +2294,10 @@ Presently IPv6 is not supported. For the connection with Infrastructure Manager,
 
 ```yaml
 - name: Retrieving Download Firmware Info
-   ism_retrieve_download_firmware_info:
+  ism_retrieve_download_firmware_info:
     config: "/etc/ansible/ism-ansible/ism_config.json"
     hostname: "192.168.1.10"
-   register: ism_retrieve_download_firmware_info_result
+  register: ism_retrieve_download_firmware_info_result
 - debug: var= ism_retrieve_download_firmware_info_result
 ```
 
@@ -2786,24 +2786,24 @@ Multiple firmware can be downloaded simultaneously by specifying the multiple fi
 
 ```yaml
 - name: Download Firmware
-   hosts: ism_server
-   connection: local
-   vars:
-     config: "/etc/ansible/ism-ansible/ism_config.json"
-     firmware_download_list:
+  hosts: ism_server
+  connection: local
+  vars:
+    config: "/etc/ansible/ism-ansible/ism_config.json"
+    firmware_download_list:
       - firmware_name: "RX300 S8_iRMC"
         firmware_version: "8.13F&3.71"
       - firmware_name: "RX300 S8_BIOS"
         firmware_version: "R1.11.0"
 
-   tasks:
-     - name: Downloading Firmware
-       ism_download_firmware:
-         config: "{{ config }}"
-         hostname: "{{ inventory_hostname }}"
-         download_list: "{{ firmware_download_list }}"
-       register: ism_download_firmware_result
-     - debug: var=ism_download_firmware_result
+  tasks:
+    - name: Downloading Firmware
+      ism_download_firmware:
+        config: "{{ config }}"
+        hostname: "{{ inventory_hostname }}"
+        download_list: "{{ firmware_download_list }}"
+      register: ism_download_firmware_result
+    - debug: var=ism_download_firmware_result
 ```
 
 ### Return Values (Normal)
