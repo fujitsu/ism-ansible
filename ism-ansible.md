@@ -2923,7 +2923,7 @@ Retrieving report
 
 Retrieving ISM report information.  
 Outputs file for the Report information comparison tool.  
-Refer to [Readme.md - 8. Report information comparison tool](/Readme.md#8-report-information-comparison-tool).
+Refer to [Readme.md - Report information comparison tool](/Readme.md#report-information-comparison-tool).
 
 ### Requirements
 
