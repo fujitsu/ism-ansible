@@ -338,10 +338,12 @@ Case except the above.
 
 ### Notes
 
-* Refer to the following URL for the information regarding parameter setting in config file and inventory file.  
-[Readme.md](/Readme.md)
-* Refer to the following URL for the information regarding sample playbook using ism_firmware_list.  
-[examples/ism_firmware_list.yml](/examples/ism_firmware_list.yml)
+* Parameter setting in config file.  
+  [Readme.md - 4. Setting config file](/Readme.md#4-setting-config-file)
+* Parameter setting in inventory file.  
+  [Readme.md - 5. Setting inventory file](/Readme.md#5-setting-inventory-file)
+* Sample playbook.  
+  [examples/ism_firmware_list.yml](/examples/ism_firmware_list.yml)
 
 ## <a name="ism_firmware_update">ism_firmware_update
 
@@ -593,16 +595,15 @@ Case other than the above.
 
 ### Notes
 
-* Refer to the following URL for the information regarding parameter setting in config file and inventory file.  
-[Readme.md](/Readme.md)
-* Refer to the following URL for the information regarding sample playbook using ism_firmware_update.  
-[examples/ism_firmware_update.yml](/examples/ism_firmware_update.yml)
-* Refer to the following URL for the information regarding sample playbook using ism_firmware_online_update.  
-[examples/ism_firmware_online_update.yml](/examples/ism_firmware_online_update.yml)
-* Refer to the following URL for the information regarding sample playbook using ism_firmware_offline_update.  
-[examples/ism_firmware_offline_update.yml](/examples/ism_firmware_offline_update.yml)
-* Refer to the following URL for the information regarding sample playbook using ism_firmware_easy_update.  
-[examples/ism_firmware_easy_update.yml](/examples/ism_firmware_easy_update.yml)
+* Parameter setting in config file.  
+  [Readme.md - 4. Setting config file](/Readme.md#4-setting-config-file)
+* Parameter setting in inventory file.  
+  [Readme.md - 5. Setting inventory file](/Readme.md#5-setting-inventory-file)
+* Sample playbooks.  
+  [examples/ism_firmware_update.yml](/examples/ism_firmware_update.yml)  
+  [examples/ism_firmware_online_update.yml](/examples/ism_firmware_online_update.yml)  
+  [examples/ism_firmware_offline_update.yml](/examples/ism_firmware_offline_update.yml)  
+  [examples/ism_firmware_easy_update.yml](/examples/ism_firmware_easy_update.yml)
 
 ## <a name="ism_maintenance_mode_setting">ism_maintenance_mode_setting
 
@@ -736,10 +737,12 @@ Case except the above.
 
 ### Notes
 
-* Refer to the following URL for the information regarding parameter setting in config file and inventory file.  
-[Readme.md](/Readme.md)
-* Refer to the following URL for the information regarding sample playbook using ism_maintenance_mode.  
-[examples/ism_firmware_update.yml](/examples/ism_firmware_update.yml)
+* Parameter setting in config file.  
+  [Readme.md - 4. Setting config file](/Readme.md#4-setting-config-file)
+* Parameter setting in inventory file.  
+  [Readme.md - 5. Setting inventory file](/Readme.md#5-setting-inventory-file)
+* Sample playbook.  
+  [examples/ism_firmware_update.yml](/examples/ism_firmware_update.yml)
 
 ## <a name="ism_profile_assignment">ism_profile_assignment
 
@@ -932,10 +935,12 @@ Case except the above.
 
 ### Notes
 
-* Refer to the following URL for the information regarding parameter setting in config file and inventory file.  
-[Readme.md](/Readme.md)
-* Refer to the following URL for the information regarding sample playbook using ism_profile_assignment.  
-[examples/ism_profile_assignment.yml](/examples/ism_profile_assignment.yml)
+* Parameter setting in config file.  
+  [Readme.md - 4. Setting config file](/Readme.md#4-setting-config-file)
+* Parameter setting in inventory file.  
+  [Readme.md - 5. Setting inventory file](/Readme.md#5-setting-inventory-file)
+* Sample playbook.  
+  [examples/ism_profile_assignment.yml](/examples/ism_profile_assignment.yml)
 
 ## <a name="ism_power_on">ism_power_on
 
@@ -1065,8 +1070,12 @@ Case except the above.
 
 ### Notes
 
-* Refer to the following URL for the information regarding parameter setting in config file and inventory file  [Readme.md](/Readme.md)
-* Refer to the following URL for the information regarding sample playbook using ism_power_on  [examples/ism_power_controls.yml](/examples/ism_power_controls.yml)
+* Parameter setting in config file.  
+  [Readme.md - 4. Setting config file](/Readme.md#4-setting-config-file)
+* Parameter setting in inventory file.  
+  [Readme.md - 5. Setting inventory file](/Readme.md#5-setting-inventory-file)
+* Sample playbook.  
+  [examples/ism_power_controls.yml](/examples/ism_power_controls.yml)
 
 ## <a name="ism_refresh_node_info">ism_refresh_node_info
 
@@ -1298,10 +1307,12 @@ Case except the above.
 
 ### Notes
 
-* Refer to the following URL for the information regarding parameter setting in config file and inventory file.  
-[Readme.md](/Readme.md)
-* Refer to the following URL for the information regarding sample playbook using ism_refresh_node_info.  
-[examples/ism_refresh_node_info.yml](/examples/ism_refresh_node_info.yml)
+* Parameter setting in config file.  
+  [Readme.md - 4. Setting config file](/Readme.md#4-setting-config-file)
+* Parameter setting in inventory file.  
+  [Readme.md - 5. Setting inventory file](/Readme.md#5-setting-inventory-file)
+* Sample playbook.  
+  [examples/ism_refresh_node_info.yml](/examples/ism_refresh_node_info.yml)
 
 ## <a name="ism_get_inventory_info">ism_get_inventory_info
 
@@ -1638,10 +1649,12 @@ Case other than the above.
 
 ### Notes
 
-* Refer to the following URL for the information regarding the parameter setting in config file and inventory file.  
-[Readme.md](/Readme.md)
-* Refer to the following URL for the information regarding sample playbook using ism_get_inventory_info.  
-[examples/ism_get_inventory_info.yml](/examples/ism_get_inventory_info.yml)
+* Parameter setting in config file.  
+  [Readme.md - 4. Setting config file](/Readme.md#4-setting-config-file)
+* Parameter setting in inventory file.  
+  [Readme.md - 5. Setting inventory file](/Readme.md#5-setting-inventory-file)
+* Sample playbook.  
+  [examples/ism_get_inventory_info.yml](/examples/ism_get_inventory_info.yml)
 
 ## <a name="ism_get_profile_info">ism_get_profile_info
 
@@ -2016,10 +2029,12 @@ Case other than the above.
 
 ### Notes
 
-* Refer to the following URL for the information regarding the parameter setting in config file and inventory file.  
-[Readme.md](/Readme.md)
-* Refer to the following URL for the information regarding sample playbook using ism_get_profile_info.  
-[examples/ism_get_profile_info.yml](/examples/ism_get_profile_info.yml)
+* Parameter setting in config file.  
+  [Readme.md - 4. Setting config file](/Readme.md#4-setting-config-file)
+* Parameter setting in inventory file.  
+  [Readme.md - 5. Setting inventory file](/Readme.md#5-setting-inventory-file)
+* Sample playbook.  
+  [examples/ism_get_profile_info.yml](/examples/ism_get_profile_info.yml)
 
 ## <a name="ism_get_power_status">ism_get_power_status
 
@@ -2247,9 +2262,11 @@ Case other than the above.
 
 ### Notes
 
-* Refer to the following URL for the information regarding the parameter setting in config file and inventory file.  
-[Readme.md](/Readme.md)
-* Refer to the following URL for the information regarding sample playbook using ism_get_power_status.  
+* Parameter setting in config file.  
+  [Readme.md - 4. Setting config file](/Readme.md#4-setting-config-file)
+* Parameter setting in inventory file.  
+  [Readme.md - 5. Setting inventory file](/Readme.md#5-setting-inventory-file)
+* Sample playbooks.  
   [examples/ism_get_power_status.yml](/examples/ism_get_power_status.yml)  
   [examples/ism_power_on_and_wait.yml](/examples/ism_power_on_and_wait.yml)
 
@@ -2419,10 +2436,12 @@ A unique ID is output for each message.</td>
 
 ### Notes
 
-* Refer to the following URL for the information regarding the parameter setting in config file and inventory file.  
-[Readme.md](/Readme.md)
-* Refer to the following URL for the information regarding sample playbook using ism_retrieve_download_firmware_info.  
-[examples/ism_retrieve_download_firmware_info.yml](/examples/ism_retrieve_download_firmware_info.yml)
+* Parameter setting in config file.  
+  [Readme.md - 4. Setting config file](/Readme.md#4-setting-config-file)
+* Parameter setting in inventory file.  
+  [Readme.md - 5. Setting inventory file](/Readme.md#5-setting-inventory-file)
+* Sample playbook.  
+  [examples/ism_retrieve_download_firmware_info.yml](/examples/ism_retrieve_download_firmware_info.yml)
 
 ## <a name="ism_get_download_firmware_list">ism_get_download_firmware_list
 
@@ -2682,10 +2701,12 @@ A unique ID is output for each message.</td>
 
 ### Notes
 
-* Refer to the following URL for the information regarding the parameter setting in config file and inventory file.  
-[Readme.md](/Readme.md)
-* Refer to the following URL for the information regarding sample playbook using ism_get_download_firmware_list.  
-[examples/ism_get_download_firmware_list.yml](/examples/ism_get_download_firmware_list.yml)
+* Parameter setting in config file.  
+  [Readme.md - 4. Setting config file](/Readme.md#4-setting-config-file)
+* Parameter setting in inventory file.  
+  [Readme.md - 5. Setting inventory file](/Readme.md#5-setting-inventory-file)
+* Sample playbook.  
+  [examples/ism_get_download_firmware_list.yml](/examples/ism_get_download_firmware_list.yml)
 
 ## <a name="ism_download_firmware">ism_download_firmware
 
@@ -2887,10 +2908,12 @@ A unique ID is output for each message.</td>
 
 ### Notes
 
-* Refer to the following URL for the information regarding the parameter setting in config file and inventory file.  
-[Readme.md](/Readme.md)
-* Refer to the following URL for the information regarding sample playbook using ism_download_firmware.  
-[examples/ism_download_firmware.yml](/examples/ism_download_firmware.yml)
+* Parameter setting in config file.  
+  [Readme.md - 4. Setting config file](/Readme.md#4-setting-config-file)
+* Parameter setting in inventory file.  
+  [Readme.md - 5. Setting inventory file](/Readme.md#5-setting-inventory-file)
+* Sample playbook.  
+  [examples/ism_download_firmware.yml](/examples/ism_download_firmware.yml)
 
 ## <a name = "ism_get_report_info"> ism_get_report_info
 
@@ -2900,7 +2923,7 @@ Retrieving report
 
 Retrieving ISM report information.  
 Outputs file for the Report information comparison tool.  
-Refer to "Report information comparison tool" in Readme.md.
+Refer to [Readme.md - 8. Report information comparison tool](/Readme.md#8-report-information-comparison-tool).
 
 ### Requirements
 
@@ -3900,9 +3923,9 @@ A unique ID is output for each message.</td>
 
 ### Notes
 
-* Refer to the following URL for the information regarding the parameter setting in config file.  
-  [Readme.md](/Readme.md)
-* Sample playbook using ism_get_report_info  
+* Parameter setting in config file.  
+  [Readme.md - 4. Setting config file](/Readme.md#4-setting-config-file)
+* Sample playbook.  
   [examples/ism_get_report_info.yml](/examples/ism_get_report_info.yml)
 
 ## <a name = "ism_backup"> ism_backup
@@ -3981,9 +4004,9 @@ Increase the timeout period and try again.
 
 ### Notes
 
-* Refer to the following URL for the information regarding the parameter setting in config file.  
-  [Readme.md](/Readme.md)
-* Sample playbook using ism_backup  
+* Parameter setting in config file.  
+  [Readme.md - 4. Setting config file](/Readme.md#4-setting-config-file)
+* Sample playbook.  
   [examples/ism_backup.yml](/examples/ism_backup.yml)
 
 ## <a name = "ism_copy_profile"> ism_copy_profile
@@ -4147,7 +4170,9 @@ A unique ID is output for each message.</td>
 
 ### Notes
 
-* Refer to the following URL for the information regarding the parameter setting in config file and inventory file.  
-  [Readme.md](/Readme.md)
-* Sample playbook using ism_copy_profile  
+* Parameter setting in config file.  
+  [Readme.md - 4. Setting config file](/Readme.md#4-setting-config-file)
+* Parameter setting in inventory file.  
+  [Readme.md - 5. Setting inventory file](/Readme.md#5-setting-inventory-file)
+* Sample playbook.  
   [examples/ism_copy_profile.yml](/examples/ism_copy_profile.yml)
