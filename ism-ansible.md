@@ -9,14 +9,14 @@
 * [ism_power_on - Instruction to Power-on.](#ism_power_on)
 * [ism_refresh_node_info - Refreshing Node Information.](#ism_refresh_node_info)
 * [ism_get_inventory_info - Retrieving Inventory Information.](#ism_get_inventory_info)
-* [ism_get_profile_info - Retrieving Profile Information](#ism_get_profile_info)
-* [ism_get_power_status - Retrieving Power Status](#ism_get_power_status)
-* [ism_retrieve_download_firmware_info - Retrieving Download Firmware Info](#ism_retrieve_download_firmware_info)
-* [ism_get_download_firmware_list - Retrieving Download Firmware List](#ism_get_download_firmware_list)
-* [ism_download_firmware - Downloading Firmware](#ism_download_firmware)
-* [ism_get_report_info - Retrieving Report Information](#ism_get_report_info)
-* [ism_backup - Backing up ISM-VA](#ism_backup)
-* [ism_copy_profile - Copying Profile](#ism_copy_profile)
+* [ism_get_profile_info - Retrieving Profile Information.](#ism_get_profile_info)
+* [ism_get_power_status - Retrieving Power Status.](#ism_get_power_status)
+* [ism_retrieve_download_firmware_info - Retrieving Download Firmware Info.](#ism_retrieve_download_firmware_info)
+* [ism_get_download_firmware_list - Retrieving Download Firmware List.](#ism_get_download_firmware_list)
+* [ism_download_firmware - Downloading Firmware.](#ism_download_firmware)
+* [ism_get_report_info - Retrieving Report Information.](#ism_get_report_info)
+* [ism_backup - Backing up ISM-VA.](#ism_backup)
+* [ism_copy_profile - Copying Profile.](#ism_copy_profile)
 
 ## <a name="ism_firmware_list">ism_firmware_list
 
