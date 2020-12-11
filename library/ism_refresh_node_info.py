@@ -96,10 +96,7 @@ class IsmRefreshNodeInfo():
             common = IsmCommon(self.module)
             
             # Pre-process
-            common.preProcess(self.module.params)
-            
-            # License Check
-            common.licenseCheck(license_check = False)
+            common.preProcess(self.module.params, usableEssential = True)
             
             # Refresh node info execution
             result = self.execRefreshNodeInfo(common)

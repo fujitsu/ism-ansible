@@ -111,9 +111,6 @@ class IsmGetProfileInfo():
             # Pre-process
             common.preProcess(self.module.params)
             
-            # License Check
-            common.licenseCheck()
-            
             # Get profile info execution
             result = self.getProfileInfo(common)
             

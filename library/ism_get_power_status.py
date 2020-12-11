@@ -93,10 +93,7 @@ class IsmGetPowerStatus():
             common = IsmCommon(self.module)
             
             # Pre-process
-            common.preProcess(self.module.params)
-            
-            # License Check
-            common.licenseCheck(license_check = False)
+            common.preProcess(self.module.params, usableEssential = True)
             
             # Get power status execution
             result = self.getPowerStatus(common)
