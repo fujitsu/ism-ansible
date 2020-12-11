@@ -376,5 +376,5 @@ Copyright FUJITSU LIMITED 2017-2019
 API
 ---
 
-- FUJITSU Software Infrastructure Manager REST API Reference Manual
+- FUJITSU Software Infrastructure Manager REST API Reference Manual  
 <http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/>
