@@ -377,4 +377,4 @@ API
 ---
 
 - FUJITSU Software Infrastructure Manager REST API Reference Manual
-[http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/](http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/)
+<http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/>
