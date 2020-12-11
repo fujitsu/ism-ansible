@@ -104,6 +104,9 @@ class IsmMaintenanceModeSetting():
                 self.module.fail_json(msg="The target host name was not found.: " + str(self.module.params['hostname']))
             else:
                 self.module.debug("node_id: " + common.getNodeId())
+            
+            # Check type and model of node are supporetd on Essential mode
+            common.checkNodeSupportedOnEssential()
                 
             mode = ""
             if self.module.params['mode'] == "On":

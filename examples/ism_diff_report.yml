@@ -1,0 +1,40 @@
+#######
+# Copyright FUJITSU LIMITED 2019
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#######
+
+ - name: Diff report
+   hosts: localhost
+   connection: local
+   vars:
+     file_old: "/etc/ansible/ism-ansible/report/sample_report_01.json"
+     file_new: "/etc/ansible/ism-ansible/report/sample_report_02.json"
+     dest_dir: "/etc/ansible/ism-ansible/report"
+
+   tasks:
+   - name: Setting File Name
+     set_fact:
+       diff_file: "{{ dest_dir }}/diff_{{ lookup('pipe', 'date +%Y-%m-%dT%H-%M-%S') }}.txt"
+
+   - name: Diffing Report
+     command: python "/etc/ansible/ism-ansible/tools/ism_report_diff.py" "{{ file_old }}" "{{ file_new }}"
+     register: ism_report_diff_result
+   - debug: var=ism_report_diff_result
+
+   - name: Writing To File
+     copy:
+       content: "{{ ism_report_diff_result.stdout }}"
+       dest: "{{ diff_file }}"
+   - debug: var=diff_file

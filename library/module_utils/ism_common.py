@@ -2,7 +2,7 @@
 #coding: UTF-8
 
 #######
-# Copyright FUJITSU LIMITED 2017-2018
+# Copyright FUJITSU LIMITED 2017-2020
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,9 @@ import re
 import socket
 import traceback
 from os import path
+from distutils.version import StrictVersion
 from ansible.module_utils.ism_user_settings import IsmUserSettingsValue
+from ansible.module_utils.ism_essential_not_supported_model import IsmEssentialNotSupportedModel
 
 # common class
 class IsmCommon:
@@ -50,6 +52,9 @@ class IsmCommon:
     # Parameter check flag of ism monitoring setting module
     ISM_REGISTER_MONITORING_SETTING_PARAMETER_CHECK = True
     
+    # Operation mode essential
+    OPE_MODE_ESSENTIAL = "Essential"
+    
     # rest url
     LOGIN_REST_URL = "/ism/api/v2/users/login"
     GET_NODE_OS_REST_URL = "/ism/api/v2/nodes/os"
@@ -63,6 +68,7 @@ class IsmCommon:
     FIRMWARE_INVENTORY_REST_URL = "/ism/api/v2/nodes/inventory/"
     TASK_INFO_REST_URL = "/ism/api/v2/tasks/"
     SYSTEM_URL = "/ism/api/v2/system/"
+    ISMVA_SETTINGS_URL = "/ism/api/v2/ismva/settings"
     
     # message
     MSG_NO_VALUE_KEY = 'no value key: '
@@ -72,6 +78,8 @@ class IsmCommon:
     MSG_GOT = ' got: ' 
     MSG_VALID_INPUT_RANGE = 'The valid input range is '
     MSG_NOT_SUPPORT_PARAMETER = 'not support parameter: '
+    MSG_NOT_SUPPORTED_PARAMETER_ESSENTIAL = 'not supported parameter on Essential mode: '
+    MSG_NOT_SUPPORTED_TYPE_MODE_ESSENTIAL = 'The node type and model are not supported on Essential mode. Node type: {0}, model: {1}'
     MSG_SUPPORT_PARAMETER_DICT = 'Specify the value as a dictionary type. :'
     MSG_SUPPORT_PARAMETER_STR = 'Specify the value as a string type. :'
     
@@ -87,6 +95,23 @@ class IsmCommon:
     MSG_THE_SIXTH_DECIMAL_PLACE = 'The threshold can be specified up to 6 decimal places.'
     MSG_THRESHOLD_VALUE_MONITORING_IS_DISABLED = 'If the status of Threshold monitoring (is_threshold_monitoring_active) is disabled, the information of the threshold (upper_critical, upper_warning, lower_warning, lower_critical) cannot be specified.'
 
+    ESSENTIAL_NOT_SUPPORTED_KEYS_INVENTORY = [
+        'HardwareLogTarget',
+        'RaidLogTarget',
+        'ServerViewLogTarget',
+        'SoftwareLogTarget'
+    ]
+
+    ESSENTIAL_NOT_SUPPORTED_KEYS_NODELIST = [
+        'MountType',
+        'Outlet',
+        'PduPosition',
+        'RackInfo'
+    ]
+
+    OPENSSL_DEC = [u"openssl", u"enc", u"-aes-256-cbc", u"-d", u"-A", u"-base64",
+                   u"-md", u"md5", u"-pass"]
+
     ##
     
     def __init__(self, module):
@@ -98,6 +123,7 @@ class IsmCommon:
         self.session_id = ""
         self.node_id = ""
         self.module = module
+        self.operation_mode = ""
         
 #   ***** set method *****
 
@@ -129,6 +155,10 @@ class IsmCommon:
     def setNodeId(self, node_id):
         self.node_id = str(node_id)
         
+    # set operation mode
+    def setOperationMode(self, operation_mode):
+        self.operation_mode = operation_mode
+
 #   ***** set method *****
 
 
@@ -163,6 +193,10 @@ class IsmCommon:
     def getNodeId(self):
         return self.node_id
 
+    # get operation mode
+    def getOperationMode(self):
+        return self.operation_mode
+
     # get rest url
     def getRestUrl(self, rest_url, param = ""):
         if param != "":
@@ -173,6 +207,16 @@ class IsmCommon:
         
 #   ***** get method *****
 
+#   ***** is method *****
+
+    # is Essential mode
+    def isEssentialMode(self):
+        if self.getOperationMode() == self.OPE_MODE_ESSENTIAL:
+            return True
+        else:
+            return False
+
+#   ***** is method *****
 
 #   ***** escape method *****
     # singlequote escape
@@ -185,18 +229,24 @@ class IsmCommon:
 
 #   *****  unicode method *****
     # run_command_unicode
-    def run_command_unicode(self, exec_command):
-        (rc, stdout, stderr) = self.module.run_command(exec_command)
+    def run_command_unicode(self, exec_command, data=None):
+        if data:
+            (rc, stdout, stderr) = self.module.run_command(exec_command, data=data)
+        else:
+            (rc, stdout, stderr) = self.module.run_command(exec_command)
         return (rc, unicode(stdout, IsmCommon.UNICODE_STRING), unicode(stderr, IsmCommon.UNICODE_STRING))
 
     # convert to unicode string
     def covert_unicode(self, str_var):
 
-    # dict 
-        if isinstance(str_var ,dict):
+        # dict
+        if isinstance(str_var, dict):
             return str_var
-    # list 
-        if isinstance(str_var ,list):
+        # list
+        if isinstance(str_var, list):
+            return str_var
+        # int
+        if isinstance(str_var, int):
             return str_var
 
         if str_var is not None:
@@ -286,10 +336,19 @@ class IsmCommon:
 
         self.module.log("***** covert_unicode_hash_list_not_none_and_empty End *****")
 #   ***** unicode method *****
-
-
 #   ***** param check method *****
-    # param check
+ 
+    """
+    @Description required_param_check (whether "" or None)
+    @param value check target
+    @param key parameter name for error message
+    """
+    # required_param_check
+    def required_param_check(self, value, key):
+        if value == "" or value is None:
+            self.errorMessage(IsmCommon.MSG_MISSING_REQUIRED_ARGUMENTS + key)
+
+    # param check for firmware_update_list
     def param_check(self, firmware_update_list):
         required_keys = ["firmware_name", "repository_name", "operation_mode"]
         
@@ -343,9 +402,10 @@ class IsmCommon:
 
     """
     @Description Function pre-process
-    @param       dict params 
+    @param       dict params
     """
-    def preProcess(self, params, NodeCheck = True , paramListNotBlank = [] , hostNameCheck = False ):
+    def preProcess(self, params, NodeCheck=True, paramListNotBlank=[], hostNameCheck=False,
+                   licenseCheck=True, usableEssential=False, doIsmLogin=True, noHost=False):
         try :
             # Convert from null to blank
             params = self.convertNull(params, paramListNotBlank)
@@ -366,6 +426,7 @@ class IsmCommon:
             # Config file loads
             try :
                 json_data = json.load(f)
+                self.ism_config_json = json_data
             except Exception as e:
                 f.close()
                 self.module.log("Not json format data: " + config_path + ", e=" + str(e))
@@ -376,23 +437,31 @@ class IsmCommon:
             # tha case of hostNameCheck:False
             # If the hostname is ""  , hostname is "0.0.0.0".
             # If the hostname is None, a type error occurs during Ip conversion.
-            if hostNameCheck == True :
-                if params['hostname'] == None or params['hostname'] == "":
-                    self.errorMessage(IsmCommon.MSG_NO_VALUE_KEY + "hostname")
-            
-            # Ip transformation
-            match = re.match(r'^\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}$', params['hostname'])
-            if match is None:
-                try :
-                    params['hostname'] = socket.gethostbyname(params['hostname'])
-                    self.module.debug("Host name is converted to IP address: " + params['hostname'])
-                except Exception as e:
-                    self.module.log("ip transformation error: Hostname=" + params['hostname'] + ", e=" + str(e))
-                    self.module.log(traceback.format_exc())
-                    self.module.fail_json(msg="Host name could not be converted to IP address: " + params['hostname'])
-                    
+            if noHost == False:
+                if hostNameCheck == True :
+                    if params['hostname'] == None or params['hostname'] == "":
+                        self.errorMessage(IsmCommon.MSG_NO_VALUE_KEY + "hostname")
+                
+                # Ip transformation
+                if params['hostname']!=None:
+                    match = re.match(r'^\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}$', params['hostname'])
+                    if match is None:
+                        try :
+                            params['hostname'] = socket.gethostbyname(params['hostname'])
+                            self.module.debug("Host name is converted to IP address: " + params['hostname'])
+                        except Exception as e:
+                            self.module.log("ip transformation error: Hostname=" + params['hostname'] + ", e=" + str(e))
+                            self.module.log(traceback.format_exc())
+                            self.module.fail_json(msg="Host name could not be converted to IP address: " + params['hostname'])
             # ISM login
-            self.ismLogin(json_data)
+            if doIsmLogin:
+                self.ismLogin(json_data)
+            else:
+                # don't check license, node
+                return
+            
+            # ISM licenseCheck
+            self.licenseCheck(license_check = licenseCheck, usable_essential = usableEssential)
             
             if NodeCheck:
                 # Get node ID of OS
@@ -407,6 +476,9 @@ class IsmCommon:
                     self.module.log("The target host name was not found.: " + params['hostname'])
                     self.module.fail_json(msg="The target host name was not found.: " + params['hostname'])
                 
+                # Check type and model of node are supporetd on Essential mode
+                self.checkNodeSupportedOnEssential()
+
         except Exception as e:
             self.module.log(str(e))
             self.module.log(traceback.format_exc())
@@ -546,7 +618,10 @@ class IsmCommon:
     def ismLogout(self):
         try :
             self.module.debug("***** ismLogout Start *****")
-            
+
+            if self.getSessionId() == "":
+                return
+
             # get rest url
             rest_url = self.getRestUrl(IsmCommon.LOGOUT_REST_URL)
             
@@ -579,8 +654,7 @@ class IsmCommon:
         except Exception as e:
             self.module.log(str(e))
             self.module.log(traceback.format_exc())
-            self.module.fail_json(msg=str(e))
-            
+
     # get node OS
     def getNodeOS(self):
         try :
@@ -695,8 +769,12 @@ class IsmCommon:
             license_data = self.execRest(rest_url, IsmCommon.GET, IsmCommon.RESPONSE_CODE_200)
             
             if "OperationMode" in license_data["IsmBody"].keys():
+
+                # store OperationMode
+                self.setOperationMode(license_data["IsmBody"]["OperationMode"])
+
                 # Version of ISM "2.4.0.b" after , Essential mode check
-                if license_data["IsmBody"]["OperationMode"] != "Essential":
+                if license_data["IsmBody"]["OperationMode"] != self.OPE_MODE_ESSENTIAL:
                     # OperationMode is not Essential (=Advanced)
                     return
                     
@@ -726,7 +804,241 @@ class IsmCommon:
 
         finally:
             self.module.debug("***** License Check End *****")
+
+    """
+    @Description Function get node information with self.getNodeId()
+    @return      dict node information from node list
+    """
+    def getNodeInfo(self):
+        node_id = self.getNodeId()
+        
+        try :
+            self.module.debug("***** getNodeInfo Start *****")
+
+            # Get REST URL
+            rest_url = self.getRestUrl(self.NODES_REST_URL, node_id)
+            
+            # REST API execution
+            node_info = self.execRest(rest_url, self.GET, self.RESPONSE_CODE_200)
+            
+            return node_info
+            
+        except Exception as e:
+            self.module.log(str(e))
+            self.module.log(traceback.format_exc())
+            self.module.fail_json(msg=str(e))
+
+        finally:
+            self.module.debug("***** getNodeInfo End *****")
+
+    """
+    @Description Function to check node type and model of node are 
+                          supported on Essential mode
+                          if not specified arguments, note_type and nome_model are
+                          collected in this method and checked
+    @param       string node_type
+    @param       string node_model
+    @error       when node type and model are not supported on Essential mode
+    """
+    def checkNodeSupportedOnEssential(self, node_type = None, node_model = None):
+        self.module.debug("***** checkNodeSupportedOnEssential Start *****")
+        
+        if not self.isEssentialMode():
+            # not Essential mode, do nothing
+            return
+        
+        if not node_type and not node_model:
+            node_info = self.getNodeInfo()
+            node_type = node_info["IsmBody"]["Node"]["Type"]
+            node_model = node_info["IsmBody"]["Node"]["Model"]
+        
+        self.checkNodeSupportedOnEssentialImpl(node_type, node_model)
+
+        self.module.debug("***** checkNodeSupportedOnEssential End *****")
     
+    """
+    @Description Function to implement of check type and model of node
+                 are supported on Essential mode
+    @param       string node_type
+    @param       string node_model
+    @error       when node type and model are not supported on Essential mode
+    """
+    def checkNodeSupportedOnEssentialImpl(self, node_type, node_model):
+
+        self.module.debug("***** checkNodeSupportedOnEssentialImpl Start *****")
+
+        not_supported_models = self.getEssentialNotSupportedModelTable()
+
+        for not_supported_def in not_supported_models:
+            if not_supported_def["Type"] == node_type and \
+               not_supported_def["Model"] == node_model:
+                
+                # not supported on Essential
+                # ex. The node type and model are not supported on Essential mode. Node type: server, model: HPE ProLiant DL series
+                msg = self.MSG_NOT_SUPPORTED_TYPE_MODE_ESSENTIAL.format(node_type, node_model)
+                
+                self.errorMessage(msg)
+
+        self.module.debug("***** checkNodeSupportedOnEssentialImpl End *****")
+
+    """
+    @Description Function to filter out not supported values of inventory on Essential mode
+    @param       dict inventory info of node
+    """
+    def filterEssentialModeForInventory(self, result_node):
+        if not self.isEssentialMode():
+            # not Essential mode, do nothing
+            return
+        
+        self.module.debug("***** filterEssentialModeForInventory Start *****")
+        
+        node_info = result_node['IsmBody']['Node']
+        
+        for not_supported_key in self.ESSENTIAL_NOT_SUPPORTED_KEYS_INVENTORY:
+            if not_supported_key in node_info:
+                node_info.pop(not_supported_key)
+
+        self.module.debug("***** filterEssentialModeForInventory End *****")
+
+    """
+    @Description Function to filter out not supported values of
+                 inventory array on Essential mode
+    @param       dict inventory info of node
+    """
+    def filterEssentialModeForInventoryArray(self, result_node):
+        if not self.isEssentialMode():
+            # not Essential mode, do nothing
+            return
+
+        self.module.debug("***** filterEssentialModeForInventoryArray Start *****")
+
+        for node_info in result_node['IsmBody']['Nodes']:
+            for not_supported_key in self.ESSENTIAL_NOT_SUPPORTED_KEYS_INVENTORY:
+                if not_supported_key in node_info:
+                    node_info.pop(not_supported_key)
+
+        self.module.debug("***** filterEssentialModeForInventoryArray End *****")
+
+    """
+    @Description Function to check parameters supported on Essential mode
+    @error       when a parameter not supported on Essential mode exists
+    """
+    def checkParamsSupportedOnEssentialForNodeList(self):
+        if not self.isEssentialMode():
+            # not Essential mode, do nothing
+            return
+        
+        self.module.debug("***** checkParamsSupportedOnEssentialForNodeList Start *****")
+        
+        not_supported_params = [
+                                'rack_info',
+                                'mount_type'
+                               ]
+
+        # check not supported params on Essential mode is not specified
+        for not_supported_param in not_supported_params:
+            if self.module.params[not_supported_param]:
+                # ex. not supported parameter on Essential mode: rack_info
+                msg = self.MSG_NOT_SUPPORTED_PARAMETER_ESSENTIAL + not_supported_param
+                self.errorMessage(msg)
+        
+        self.module.debug("***** checkParamsSupportedOnEssentialForNodeList End *****")
+        
+    """
+    @Description Function to filter out not supported values of node list on Essential mode
+    @param       dict node info
+    """
+    def filterEssentialModeForNodeList(self, result_node):
+        
+        if not self.isEssentialMode():
+            # not Essential mode, do nothing
+            return
+        
+        self.module.debug("***** filterEssentialModeForNodeList Start *****")
+        
+        node_info = result_node['IsmBody']['Node']
+        
+        for not_supported_key in self.ESSENTIAL_NOT_SUPPORTED_KEYS_NODELIST:
+            if not_supported_key in node_info:
+                node_info.pop(not_supported_key)
+        
+        self.module.debug("***** filterEssentialModeForNodeList End *****")
+
+    """
+    @Description Function to filter out not supported values of node list arary on Essential mode
+    @param       dict node info
+    """
+    def filterEssentialModeForNodeListArray(self, result_node):
+
+        if not self.isEssentialMode():
+            # not Essential mode, do nothing
+            return
+
+        self.module.debug("***** filterEssentialModeForNodeListArray Start *****")
+
+        for node_info in result_node['IsmBody']['Nodes']:
+            for not_supported_key in self.ESSENTIAL_NOT_SUPPORTED_KEYS_NODELIST:
+                if not_supported_key in node_info:
+                    node_info.pop(not_supported_key)
+
+        self.module.debug("***** filterEssentialModeForNodeListArray End *****")
+
+    """
+    @Description Function to get ISM version information
+    @return      string ISM version. ex. "2.4.0.b (S20190305-01)"
+    """
+    def getIsmVersion(self):
+        try :
+            self.module.debug("***** getIsmVersion Start *****")
+
+            # Get REST URL
+            rest_url = self.getRestUrl(self.ISMVA_SETTINGS_URL)
+            
+            # REST API execution
+            setting_info = self.execRest(rest_url, self.GET, self.RESPONSE_CODE_200)
+            
+            ism_version = setting_info["IsmBody"]["System"]["ISMVersion"]
+            
+            self.module.debug("ism_version = " + str(ism_version))
+            
+            return ism_version
+            
+        except Exception as e:
+            self.module.log(str(e))
+            self.module.log(traceback.format_exc())
+            self.module.fail_json(msg=str(e))
+
+        finally:
+            self.module.debug("***** getIsmVersion End *****")
+
+    """
+    @Description Function to get model table of not supported on Essential mode
+    @return      dict model table of not supported on Essential mode
+    """
+    def getEssentialNotSupportedModelTable(self):
+        self.module.debug("***** getEssentialNotSupportedModelTable Start *****")
+
+        # default (2.4.0.b)
+        not_supported_models = IsmEssentialNotSupportedModel.ISM_240B
+
+        ism_version = self.getIsmVersion()
+        
+        #########################################################################
+        # !!! NOTE !!!                                                          #
+        # When "not supported models" are changed in the future version of ISM, #
+        # implement codes here to select a definition of "not supported models" #
+        # corresponding to ISM version.                                         #
+        #########################################################################
+
+        if re.match(r'^2\.4\..* ', ism_version):
+            # 2.4.xxx
+            self.module.debug("essential not supported model 2.4.0.b selected")
+            not_supported_models = IsmEssentialNotSupportedModel.ISM_240B
+        
+        self.module.debug("***** getEssentialNotSupportedModelTable End *****")
+
+        return not_supported_models
+
     # The type is 'dict' or 'list',
     # Ansible standard parameter check can not be used.
     def choiceCheck(self, value, choice_list , key_name):
@@ -751,4 +1063,54 @@ class IsmCommon:
             if key not in key_name_list:
                 self.errorMessage(IsmCommon.MSG_NOT_SUPPORT_PARAMETER + str(key))
         self.module.debug("***** checkKeyName End *****")
+
+    """
+    @Description check library version. (support only digit version)
+    @param actual actual version string ex: "4.8.0"
+    @param expected expected version string ex: "4.7.0"
+    @return True: success, False: failed
+    """
+    def checkLibraryVersion(self, actual, expected):
+        if StrictVersion(actual) < StrictVersion(expected):
+            return False
+        return True
+
+    def decryptIsmPassword(self, password, ism_ip):
+        # hostname to ip address
+        ism_ip = self.convertHostnameToIP(ism_ip)
+
+        exec_command = self.OPENSSL_DEC + ["pass:" + ism_ip]
+        (rc, dec_pass, stderr) = self.run_command_unicode(exec_command, data=password)
+        if rc != 0:
+            self.module.fail_json(msg="invalid ISM password")
+        return dec_pass
+
+    def convertHostnameToIP(self, hostname):
+        match = re.match(r'^\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}$', hostname)
+        if match is None:
+            # FQDN
+            try:
+                ip = socket.gethostbyname(hostname)
+                self.module.debug("Host name is converted to IP address: " + hostname)
+                return ip
+            except Exception as e:
+                self.module.log("ip transformation error: Hostname=" + hostname + ", e=" + str(e))
+                self.module.log(traceback.format_exc())
+                self.module.fail_json(
+                    msg="Host name could not be converted to IP address: " + hostname)
+        else:
+            # IP
+            return hostname
+
+    def mergeDicts(self, dict1, dict2):
+        # Recursively merges dict2 into dict1
+        if not isinstance(dict1, dict) or not isinstance(dict2, dict):
+            return dict2
+        for k in dict2:
+            if k in dict1:
+                dict1[k] = self.mergeDicts(dict1[k], dict2[k])
+            else:
+                dict1[k] = dict2[k]
+        return dict1
+
 #   ***** common function *****

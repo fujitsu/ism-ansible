@@ -103,10 +103,8 @@ class IsmDownloadFirmware():
             common.covert_unicode_hash_list(self.module.params['download_list'],required_keys)
             
             # Pre-process
-            common.preProcess(self.module.params,NodeCheck = False)
-
-            # License Check
-            common.licenseCheck(usable_essential = True)
+            common.preProcess(self.module.params,NodeCheck = False,
+                              usableEssential = True)
             
             # Get download firmware execution
             downloaded_list = self.DownloadedFirmwareList(common)

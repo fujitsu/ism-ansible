@@ -113,13 +113,14 @@ class IsmGetInventoryInfo():
             common = IsmCommon(self.module)
             
             # Pre-process
-            common.preProcess(self.module.params)
-            
-            # License Check
-            common.licenseCheck(usable_essential = True)
+            common.preProcess(self.module.params,
+                              usableEssential = True)
             
             # Get inventory info execution
             result = self.getInventoryInfo(common)
+            
+            # Filter not supported values on Essential mode
+            common.filterEssentialModeForInventory(result)
             
             # ISM logout
             common.ismLogout()
