@@ -392,7 +392,7 @@ Commences updating process firmware registered to Infrastructure Manager.
 </tr>
 <tr>
   <td colspan="2">firmware_update_list</td>
-  <td>string</td>
+  <td>dict-list</td>
   <td align="center">Yes</td>
   <td align="center">Yes</td>
   <td>None</td>
