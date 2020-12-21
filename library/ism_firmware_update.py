@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #coding: UTF-8
 #######
-# Copyright FUJITSU LIMITED 2017-2018
+# Copyright FUJITSU LIMITED 2017-2020
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -44,9 +44,9 @@ class IsmFirmwareUpdate():
         argument_spec=dict(
             config=dict(required=True),
             hostname=dict(required=True),
-            firmware_update_list=dict(required=True, type="list"),
+            firmware_update_list=dict(required=True, type="list")
         ),
-                supports_check_mode=True
+        supports_check_mode=True
     )
 
     def __init__(self):
@@ -113,10 +113,10 @@ class IsmFirmwareUpdate():
                 self.module.fail_json(msg="The target host name was not found.: " + str(self.module.params['hostname']))
             else:
                 self.module.debug("node_id: " + common.getNodeId())
-            
+
             # Check type and model of node are supporetd on Essential mode
             common.checkNodeSupportedOnEssential()
-                
+
             # firmware update execution
             firmware_update_list = []
             for update_param_hash in self.module.params['firmware_update_list']:
@@ -148,7 +148,7 @@ class IsmFirmwareUpdate():
                 changed_result = False
             else:
                 if self.module.check_mode:
-                    result = dict( changed=True, original_message='', message="Firmware versions that would be changed: " + str(firmware_update_list))
+                    result = dict(changed=True, message="Firmware versions that would be changed: " + str(firmware_update_list))
                     self.module.exit_json(**result)
                 else:
                     result = self.firmwareUpdate(common, firmware_update_list)
@@ -224,8 +224,6 @@ class IsmFirmwareUpdate():
         try :
             self.module.debug("***** getCurrentFirmwareVersion Start *****")
 
-            result = True
-
             # get rest url
             rest_url = common.getRestUrl(IsmFirmwareUpdate.INVENTORY_INFO_REST_URL, common.getNodeId() + "/inventory/?level=All\&target=Firmware")
 
@@ -268,7 +266,7 @@ class IsmFirmwareUpdate():
 
             self.module.debug("***** getCurrentFirmwareVersion End *****")
 
-            return result
+            return None
 
         except Exception as e:
             self.module.log(str(e))
