@@ -136,6 +136,9 @@ class IsmFirmwareUpdate():
                     latest_firmware_version = self.getFirmwareVersion(common, update_param_hash['firmware_name'], update_param_hash['operation_mode'])
                     update_param_hash['firmware_version'] = latest_firmware_version
 
+                if update_param_hash['firmware_version'] == "":
+                    break
+
                 # check firmware version
                 current_version = self.getCurrentFirmwareVersion(common, update_param_hash['firmware_name'])
                 if current_version != update_param_hash['firmware_version']:
