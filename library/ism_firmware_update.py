@@ -151,7 +151,7 @@ class IsmFirmwareUpdate():
                 changed_result = False
             else:
                 if self.module.check_mode:
-                    result = dict(changed=True, message="Firmware versions that would be changed: " + str(firmware_update_list))
+                    result = dict(changed=True, msg="Firmware versions that would be changed: " + str(firmware_update_list))
                     self.module.exit_json(**result)
                 else:
                     result = self.firmwareUpdate(common, firmware_update_list)
