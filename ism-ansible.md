@@ -359,6 +359,10 @@ Commences updating process firmware registered to Infrastructure Manager.
 * Python >= 2.6
 * Infrastructure Manager >= 2.2.
 
+### Check Mode
+
+Supported
+
 ### Options
 
 <table>
@@ -510,7 +514,16 @@ When you update the firmware of iRMC and BIOS at the same time
 
 |Name|Type|Essential Mode|Returned|Description|
 |:--|:--|:--:|:--|:--|
-|Ism_firmware_update|string|Yes|Not omitted. "Success"|Firmware update result|
+|ism_firmware_update|string|Yes|Not omitted. "Success"|Firmware update result|
+
+### Return Values (Normal, Check mode) 
+
+|Name|Type|Essential Mode|Returned|Description|
+|:--|:--|:--:|:--|:--|
+|ism_firmware_update|string|Yes|Returns a string with the following format.<br><br>Firmware versions that would be changed: &lt;Firmware string that can be updated<a href="#note-2-4">[Note 4]</a>&gt;|The firmware that can be updated will be returned.|
+
+<a name="note-2-4">[Note4]  
+The firmware updatable element in the firmware_update_list specified in the argument is converted to a string and returned. The string also contains the value of the current firmware version as firmware_current_version.
 
 ### Return Values (Abnormal)
 
