@@ -357,7 +357,7 @@ Commences updating process firmware registered to Infrastructure Manager.
 
 * Ansible >= 2.4.0.0
 * Python >= 2.6
-* Infrastructure Manager >= 2.2.
+* Infrastructure Manager >= 2.2.0
 
 ### Check Mode
 
