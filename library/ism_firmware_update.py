@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #coding: UTF-8
 #######
-# Copyright FUJITSU LIMITED 2017-2020
+# Copyright FUJITSU LIMITED 2017-2021
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -151,7 +151,7 @@ class IsmFirmwareUpdate():
                 changed_result = False
             else:
                 if self.module.check_mode:
-                    result = dict(changed=True, msg="Firmware versions that would be changed: " + str(firmware_update_list))
+                    result = dict(changed=True, msg="Firmware versions to be changed: " + str(firmware_update_list))
                     self.module.exit_json(**result)
                 else:
                     result = self.firmwareUpdate(common, firmware_update_list)
