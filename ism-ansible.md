@@ -357,7 +357,11 @@ Commences updating process firmware registered to Infrastructure Manager.
 
 * Ansible >= 2.4.0.0
 * Python >= 2.6
-* Infrastructure Manager >= 2.2.
+* Infrastructure Manager >= 2.2.0
+
+### Check Mode
+
+Supported
 
 ### Options
 
@@ -510,7 +514,19 @@ When you update the firmware of iRMC and BIOS at the same time
 
 |Name|Type|Essential Mode|Returned|Description|
 |:--|:--|:--:|:--|:--|
-|Ism_firmware_update|string|Yes|Not omitted. "Success"|Firmware update result|
+|ism_firmware_update|string|Yes|Not omitted. "Success"|Firmware update result|
+
+### Return Values (Normal, Check mode) 
+
+|Name|Type|Essential Mode|Returned|Description|
+|:--|:--|:--:|:--|:--|
+|ism_firmware_update|string|Yes|Returns a string with the following format.<br><br>Firmware versions to be changed: &lt;Firmware string that can be updated<a href="#note-2-4">[Note4]</a> <a href="#note-2-5">[Note5]</a>&gt;|The firmware that can be updated will be returned.|
+
+<a name="note-2-4">[Note4]  
+The element of the updatable firmware where in the firmware_update_list specified in the argument is converted to a string and then returned. The string also contains the value of the current firmware version as firmware_current_version.
+
+<a name="note-2-5">[Note5]  
+If the specified value in the firmware_update_list is incorrect, the value may be returned as the updatable firmware. In this case, the update fails when run in normal mode.
 
 ### Return Values (Abnormal)
 
