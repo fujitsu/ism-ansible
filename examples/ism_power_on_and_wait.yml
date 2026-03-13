@@ -1,0 +1,45 @@
+#######
+# Copyright FUJITSU LIMITED 2018
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#######
+
+ - name: Power-on and wait
+   hosts: servers
+   connection: local
+   vars:
+     config: "/etc/ansible/ism-ansible/ism_config.json"
+     
+   tasks:
+   - name: Instruction for Power-on
+     ism_power_on:
+       config: "{{ config }}"
+       hostname: "{{ inventory_hostname }}"
+     register: ism_power_on_result
+   - debug: var=ism_power_on_result
+   
+#  This sample, wait 10 times at 30 seconds intervals.
+#  If abnormal termination, increase the time interval.
+   - name: Waitng Power On Status
+     ism_get_power_status:
+       config: "{{ config }}"
+       hostname: "{{ inventory_hostname }}"
+     register: ism_get_power_status_result
+     until: (ism_get_power_status_result|failed) or
+            (ism_get_power_status_result.ism_get_power_status.IsmBody.Parts[0] is defined and
+            ism_get_power_status_result.ism_get_power_status.IsmBody.Parts[0].PowerStatus == "On")
+     retries: 10
+     delay: 30
+   - debug: var=ism_get_power_status_result
+
