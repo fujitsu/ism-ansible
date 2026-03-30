@@ -1,4 +1,4 @@
-# Ansible Fujitsu Infrastructure Manager Modules
+# Ansible Fsas Infrastructure Manager Modules
 
 ## Modules
 
@@ -796,8 +796,8 @@ Presently IPv6 is not supported. For the connection with Infrastructure Manager,
 <a name="note-4-3">[Note3]  
 Specify the Normal for the usual assignment.  
 Specify the Advanced for the advanced assignment.  
-For the usual assignment and advanced assignment, refer to "2.2.3 Profile Management" in "FUJITSU Software Infrastructure Manager V2.2 User's Manual".  
-<http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/index.html>
+For the usual assignment and advanced assignment, refer to "2.2.3 Profile Management" in "Infrastructure Manager V2.2 User's Manual".  
+<https://www.fsastech.com/ja-jp/products/software/ism/technical/>
 
 <a name="table-4-1">[Table 1]
 
@@ -1364,8 +1364,8 @@ Presently IPv6 is not supported. For the connection with Infrastructure Manager,
 specify the IP address of IPv4 or the host name (FQDN) that are available for the name resolution of IPv4.
 
 <a name="note-7-3">[Note3]  
-For details, refer to "4.6.3 Separate Retrieval for Nodes Detailed Information" in "FUJITSU Software Infrastructure Manager V2.2 REST API Reference Manual".  
-<http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/index.html>
+For details, refer to "4.6.3 Separate Retrieval for Nodes Detailed Information" in "Infrastructure Manager V2.2 REST API Reference Manual".  
+<https://www.fsastech.com/ja-jp/products/software/ism/technical/>
 
 ### Example 1
 
@@ -4053,10 +4053,10 @@ Use single-byte uppercase and lowercase letters, numbers, and symbols.
 
 <a name="note-17-2">[Note2]  
 Refer to and specify the following REST-API request parameters "ProfileData".  
-FUJITSU Software Infrastructure Manager REST API Reference Manual  
+Infrastructure Manager REST API Reference Manual  
 
 * Add Profile  
-  <http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/index.html>
+  <https://www.fsastech.com/ja-jp/products/software/ism/technical/>
 
 <a name="note-17-3">[Note3]  
 When specifying the password information, use "ansible" as the encryption key and use the following Linux command example to specify AES 256 + Base 64 + MD5 encrypted values.  

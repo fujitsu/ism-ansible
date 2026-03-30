@@ -7,7 +7,7 @@ This is the modules to manage Infrastructure Manager using Ansible playbooks.
 - Ansible Server
   - Ansible 2.4 or later
   - Python  2.6 or later
-- FUJITSU Software Infrastructure Manager
+- Infrastructure Manager
   - 2.2.0 or later
 
 ## Examples
@@ -43,7 +43,7 @@ export PYTHONPATH=$PYTHONPATH:$ANSIBLE_LIBRARY
 
 Acquire the certificate used for https communication and assign in the Ansible server.
 For information on how to assign certificates, refer to "3.1.1 Preparation" in
-"FUJITSU Software Infrastructure Manager V2.2 REST API Reference Manual".
+"Infrastructure Manager V2.2 REST API Reference Manual".
 
 ### 4. Setting config file
 
@@ -736,9 +736,9 @@ This project is licensed under the GPL v3 license. See the [LICENSE](LICENSE) fo
 
 ## Copyright
 
-Copyright FUJITSU LIMITED 2017-2020
+Copyright Fsas Technologies Inc. 2017-2026
 
 ## API
 
-- FUJITSU Software Infrastructure Manager REST API Reference Manual  
-<http://www.fujitsu.com/jp/products/software/infrastructure-software/infrastructure-software/serverviewism/technical/>
+- Infrastructure Manager REST API Reference Manual  
+<https://www.fsastech.com/ja-jp/products/software/ism/technical/>

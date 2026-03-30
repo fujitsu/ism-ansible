@@ -2,7 +2,7 @@
 #coding: UTF-8
 
 #######
-# Copyleft FUJITSU LIMITED 2018
+# Copyleft Fsas Technologies Inc. 2018-2026
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

@@ -2,7 +2,7 @@
 #coding: UTF-8
 
 #######
-# Copyright FUJITSU LIMITED 2017-2020
+# Copyright Fsas Technologies Inc. 2017-2026
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -794,8 +794,8 @@ class IsmCommon:
                         return
                 
                 # Server license not found
-                self.module.log("The server license of FUJITSU Software Infrastructure Manager is necessary to execute this module.")
-                self.module.fail_json(msg="The server license of FUJITSU Software Infrastructure Manager is necessary to execute this module.")
+                self.module.log("The server license of Infrastructure Manager is necessary to execute this module.")
+                self.module.fail_json(msg="The server license of Infrastructure Manager is necessary to execute this module.")
             
         except Exception as e:
             self.module.log(str(e))
