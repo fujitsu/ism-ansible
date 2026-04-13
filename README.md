@@ -8,7 +8,7 @@ This is the modules to manage Infrastructure Manager using Ansible playbooks.
   - Ansible 2.4 or later
   - Python  2.6 or later
 - Infrastructure Manager
-  - 2.2.0 or later
+  - 3.0.0 or later
 
 ## Examples
 
@@ -43,7 +43,7 @@ export PYTHONPATH=$PYTHONPATH:$ANSIBLE_LIBRARY
 
 Acquire the certificate used for https communication and assign in the Ansible server.
 For information on how to assign certificates, refer to "3.1.1 Preparation" in
-"Infrastructure Manager V2.2 REST API Reference Manual".
+"Infrastructure Manager V3.X REST API Reference Manual".
 
 ### 4. Setting config file
 

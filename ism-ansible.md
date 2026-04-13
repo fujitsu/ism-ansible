@@ -31,7 +31,7 @@ The list of retrieved information is specified for the parameter of firmware upd
 
 * Ansible >= 2.4.0.0
 * Python >= 2.6
-* Infrastructure Manager >= 2.2.0
+* Infrastructure Manager >= 3.0.0
 
 ### Options
 
@@ -357,7 +357,7 @@ Commences updating process firmware registered to Infrastructure Manager.
 
 * Ansible >= 2.4.0.0
 * Python >= 2.6
-* Infrastructure Manager >= 2.2.0
+* Infrastructure Manager >= 3.0.0
 
 ### Check Mode
 
@@ -634,7 +634,7 @@ A node with its maintenance mode in "Maintenance" cannot perform retrieval of no
 
 * Ansible >= 2.4.0.0
 * Python >= 2.6
-* Infrastructure Manager >= 2.2.0
+* Infrastructure Manager >= 3.0.0
 
 ### Options
 
@@ -772,7 +772,7 @@ Assigns specified profiles for the specified nodes managed by Infrastructure Man
 
 * Ansible >= 2.4.0.0
 * Python >= 2.6
-* Infrastructure Manager >= 2.2.0
+* Infrastructure Manager >= 3.0.0
 * Other than Essential. (This module is not approved for use in Essential.)
 
 ### Options
@@ -796,7 +796,7 @@ Presently IPv6 is not supported. For the connection with Infrastructure Manager,
 <a name="note-4-3">[Note3]  
 Specify the Normal for the usual assignment.  
 Specify the Advanced for the advanced assignment.  
-For the usual assignment and advanced assignment, refer to "2.2.3 Profile Management" in "Infrastructure Manager V2.2 User's Manual".  
+For the usual assignment and advanced assignment, refer to "2.2.3 Profile Management" in "Infrastructure Manager V3.X User's Manual".  
 <https://www.fsastech.com/ja-jp/products/software/ism/technical/>
 
 <a name="table-4-1">[Table 1]
@@ -970,7 +970,7 @@ Instructions for Power-on of the specified nodes managed by Infrastructure Manag
 
 * Ansible >= 2.4.0.0
 * Python >= 2.6
-* Infrastructure Manager >= 2.2.0
+* Infrastructure Manager >= 3.0.0
 
 ### Options
 
@@ -1106,7 +1106,7 @@ It is used to refresh the inventory information, such as after a firmware update
 
 * Ansible >= 2.4.0.0
 * Python >= 2.6
-* Infrastructure Manager >= 2.2.0
+* Infrastructure Manager >= 3.0.0
 
 ### Options
 
@@ -1344,7 +1344,7 @@ It is used to retrieve the firmware information, such as after a firmware is upd
 
 * Ansible >= 2.4.0.0
 * Python >= 2.6
-* Infrastructure Manager >= 2.2.0
+* Infrastructure Manager >= 3.0.0
 
 ### Options
 
@@ -1364,7 +1364,7 @@ Presently IPv6 is not supported. For the connection with Infrastructure Manager,
 specify the IP address of IPv4 or the host name (FQDN) that are available for the name resolution of IPv4.
 
 <a name="note-7-3">[Note3]  
-For details, refer to "4.6.3 Separate Retrieval for Nodes Detailed Information" in "Infrastructure Manager V2.2 REST API Reference Manual".  
+For details, refer to "4.6.3 Separate Retrieval for Nodes Detailed Information" in "Infrastructure Manager V3.X REST API Reference Manual".  
 <https://www.fsastech.com/ja-jp/products/software/ism/technical/>
 
 ### Example 1
@@ -1685,7 +1685,7 @@ It is used to confirm the profile information assigned in the node, such as afte
 
 * Ansible >= 2.4.0.0
 * Python >= 2.6
-* Infrastructure Manager >= 2.2.0
+* Infrastructure Manager >= 3.0.0
 * Other than Essential. (This module is not approved for use in Essential.)
 
 ### Options
@@ -2065,7 +2065,7 @@ It is used to confirm the power status of the node, such as after the operation 
 
 * Ansible >= 2.4.0.0
 * Python >= 2.6
-* Infrastructure Manager >= 2.2.0
+* Infrastructure Manager >= 3.0.0
 
 ### Options
 
@@ -2299,7 +2299,7 @@ It is used before retrieving the information of downloadable firmware.
 
 * Ansible >= 2.4.0.0
 * Python >= 2.6
-* Infrastructure Manager >= 2.3.0
+* Infrastructure Manager >= 3.0.0
 
 ### Options
 
@@ -2472,7 +2472,7 @@ It is used after update of the information of downloadable firmware.
 
 * Ansible >= 2.4.0.0
 * Python >= 2.6
-* Infrastructure Manager >= 2.3.0
+* Infrastructure Manager >= 3.0.0
 
 ### Options
 
@@ -2737,7 +2737,7 @@ It is used to download the firmware before firmware update.
 
 * Ansible >= 2.4.0.0
 * Python >= 2.6
-* Infrastructure Manager >= 2.3.0
+* Infrastructure Manager >= 3.0.0
 
 ### Options
 
@@ -2945,7 +2945,7 @@ Refer to [Readme.md - Report information comparison tool](/Readme.md#report-info
 
 * Ansible >= 2.4.0.0
 * Python >= 2.6
-* ISM >= 2.2.0
+* ISM >= 3.0.0
 
 ### Options
 
@@ -3957,7 +3957,7 @@ Perform a backup of ISM-VA.
 * Ansible >= 2.4.0.0
 * Python >= 2.7
 * pexpect >= 4.7 (Python Library)
-* ISM >= 2.2.0.c
+* ISM >= 3.0.0
 
 ### Options
 
@@ -4037,7 +4037,7 @@ Increase the timeout period and try again.
 
 * Ansible >= 2.4.0.0
 * Python >= 2.6
-* ISM >= 2.2.0
+* ISM >= 3.0.0
 
 ### Options
 

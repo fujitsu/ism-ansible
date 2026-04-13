@@ -50,7 +50,7 @@ options:
 requirements:
     - Ansible >= 2.4.0.0
     - python >= 2.6
-    - ISM >= 2.2.0
+    - ISM >= 3.0.0
 notes:
     - "The setting method of the setting file specified in the config
        parameter is in the following location:

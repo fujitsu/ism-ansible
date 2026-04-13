@@ -58,7 +58,7 @@ options:
 requirements:
     - "python >= 2.7"
     - "pexpect >= 4.7"
-    - "ISM >= 2.2.0.c"
+    - "ISM >= 3.0.0"
 notes:
     - "The setting method of the setting file specified in the config parameter is in the following
       location:
