@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #coding: UTF-8
 #######
-# Copyright FUJITSU LIMITED 2017-2021
+# Copyright Fsas Technologies Inc. 2017-2026
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

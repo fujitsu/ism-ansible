@@ -2,7 +2,7 @@
 # coding: UTF-8
 
 #######
-# Copyright FUJITSU LIMITED 2020
+# Copyright Fsas Technologies Inc. 2020-2026
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ options:
 requirements:
     - Ansible >= 2.4.0.0
     - python >= 2.6
-    - ISM >= 2.2.0
+    - ISM >= 3.0.0
 notes:
     - "The setting method of the setting file specified in the config
        parameter is in the following location:
