@@ -57,7 +57,7 @@ options:
       default: 0
 requirements:
     - "python >= 2.7"
-    - "pexpect >= 4.7"
+    - "pexpect >= 4.9"
     - "ISM >= 3.0.0"
 notes:
     - "The setting method of the setting file specified in the config parameter is in the following
@@ -101,8 +101,8 @@ from ansible.module_utils.ism_common import IsmCommon
 
 
 class IsmBackup():
-    PEXPECT_VERSION = "4.7.0"
-    PEXPECT_VERSION_MSG = 'The pexpect >= 4.7.0 python module is required'
+    PEXPECT_VERSION = "4.9.0"
+    PEXPECT_VERSION_MSG = 'The pexpect >= 4.9.0 python module is required'
     PXSSH_DEBUG = False
     PXSSH_CONNECT_TIMEOUT = 60
     PXSSH_MSG_HEADER = "SSH connection error: {0}"
@@ -148,7 +148,7 @@ class IsmBackup():
         # check pexpect installed and its version
         if not HAS_PEXPECT:
             self.module.fail_json(msg=self.PEXPECT_VERSION_MSG)
-        if not self.common.checkLibraryVersion(pexpect.__version__, "4.7.0"):
+        if not self.common.checkLibraryVersion(pexpect.__version__, "4.9.0"):
             self.module.fail_json(msg=self.PEXPECT_VERSION_MSG)
 
         try:
@@ -158,11 +158,11 @@ class IsmBackup():
                                    paramListNotBlank=["timeout"],  # don't convert None to blank("")
                                    doIsmLogin=False)
             # convert to unicode
-            self.module.params['config'] = self.common.covert_unicode(
+            self.module.params['config'] = self.common.convert_unicode(
                 self.module.params['config'])
-            self.module.params['hostname'] = self.common.covert_unicode(
+            self.module.params['hostname'] = self.common.convert_unicode(
                 self.module.params['hostname'])
-            self.module.params['dest_dir'] = self.common.covert_unicode(
+            self.module.params['dest_dir'] = self.common.convert_unicode(
                 self.module.params['dest_dir'])
 
             self.dest_dir = self.module.params["dest_dir"]

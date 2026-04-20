@@ -43,7 +43,7 @@ options:
           IPv6 is not supported. Specify a host name that can be resolved by IPv4 or IPv4.
       required: true
 requirements:
-    - "python >= 2.6"
+    - "python >= 3.10"
     - "ISM >= 3.0.0"
 notes:
     - "The setting method of the setting file specified in the config parameter is in the following location:
@@ -159,8 +159,8 @@ class IsmRefreshNodeInfo():
             self.module.debug("***** getInventoryInfo Start *****")
             
             now = datetime.datetime.now()
-            start_time = long(time.mktime(now.timetuple()))
-            time_out = long(start_time) + long(IsmUserSettingsValue.REFRESH_NODE_INFO_TIME_OUT)
+            start_time = int(time.mktime(now.timetuple()))
+            time_out = int(start_time) + int(IsmUserSettingsValue.REFRESH_NODE_INFO_TIME_OUT)
             
             # Get REST URL
             rest_url = common.getRestUrl(common.NODES_REST_URL, common.getNodeId() + "/inventory?level=Top")
@@ -171,9 +171,9 @@ class IsmRefreshNodeInfo():
             progress = ""
             while True:
                 now = datetime.datetime.now()
-                now_time = long(time.mktime(now.timetuple()))
+                now_time = int(time.mktime(now.timetuple()))
                 
-                if long(now_time) < long(time_out):
+                if int(now_time) < int(time_out):
                     # REST API execution
                     json_data = common.execRest(rest_url, common.GET, common.RESPONSE_CODE_200)
                     progress = json_data["IsmBody"]["Node"]["Progress"]

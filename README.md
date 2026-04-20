@@ -5,8 +5,8 @@ This is the modules to manage Infrastructure Manager using Ansible playbooks.
 ## Requirements
 
 - Ansible Server
-  - Ansible 2.4 or later
-  - Python  2.6 or later
+  - Ansible 2.16 or later
+  - Python  3.10  or later
 - Infrastructure Manager
   - 3.0.0 or later
 

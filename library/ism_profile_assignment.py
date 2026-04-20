@@ -63,14 +63,14 @@ class IsmProfileAssignment():
             common = IsmCommon(self.module)
             
             # convert parameters to unicode string
-            self.module.params['config'] = common.covert_unicode(self.module.params['config'])
-            self.module.params['hostname'] = common.covert_unicode(self.module.params['hostname'])
-            self.module.params['ism_profile_name'] = common.covert_unicode(self.module.params['ism_profile_name'])
-            self.module.params['assign_mode'] = common.covert_unicode(self.module.params['assign_mode'])
-            self.module.params['advanced_kind'] = common.covert_unicode(self.module.params['advanced_kind'])
+            self.module.params['config'] = common.convert_unicode(self.module.params['config'])
+            self.module.params['hostname'] = common.convert_unicode(self.module.params['hostname'])
+            self.module.params['ism_profile_name'] = common.convert_unicode(self.module.params['ism_profile_name'])
+            self.module.params['assign_mode'] = common.convert_unicode(self.module.params['assign_mode'])
+            self.module.params['advanced_kind'] = common.convert_unicode(self.module.params['advanced_kind'])
             if self.module.params['assign_range'] is not None:
                 for key in self.module.params['assign_range']:
-                    key = common.covert_unicode(key)
+                    key = common.convert_unicode(key)
                     
             # config file open
             try :
@@ -282,7 +282,7 @@ class IsmProfileAssignment():
                     param = " '{\"IsmBody\": {\"ProfileId\":\"" + profile_id + "\", \"AssignMode\":\"" + self.module.params['assign_mode'] + "\", \"AdvancedKind\":\"" + advanced_kind + "\" }}' "
                 else:
                     assign_range_param = ""
-                    assign_range_list = map(str, self.module.params['assign_range'])
+                    assign_range_list = list(map(str, self.module.params['assign_range']))
                     assign_range_param = "\",\"".join(assign_range_list)
                     assign_range_param = "[\"" + assign_range_param + "\"]"
                     param = " '{\"IsmBody\": {\"ProfileId\":\"" + profile_id + "\", \"AssignMode\":\"" + self.module.params['assign_mode'] + "\", \"AdvancedKind\":\"" + advanced_kind + "\", \"AssignRange\":" + common.singleEscape(assign_range_param) + " }}' "
@@ -336,8 +336,8 @@ class IsmProfileAssignment():
             self.module.debug("***** taskCheck Start *****")
             
             now = datetime.datetime.now()
-            unix_time = long(time.mktime(now.timetuple()))
-            time_out = long(unix_time) + long(IsmUserSettingsValue.PROFILE_ASSIGNMENT_TIME_OUT)
+            unix_time = int(time.mktime(now.timetuple()))
+            time_out = int(unix_time) + int(IsmUserSettingsValue.PROFILE_ASSIGNMENT_TIME_OUT)
             
             # get rest url
             rest_url = common.getRestUrl(IsmProfileAssignment.TASK_INFO_REST_URL, task_id)
@@ -350,9 +350,9 @@ class IsmProfileAssignment():
             while True:
             
                 now = datetime.datetime.now()
-                now_time = long(time.mktime(now.timetuple()))
+                now_time = int(time.mktime(now.timetuple()))
                 
-                if long(now_time) < long(time_out):
+                if int(now_time) < int(time_out):
                     # execute rest
                     exec_command = common.COMMAND + rest_url + common.HEADER + add_head + common.GET + common.HTTP_RESPONSE_CODE + common.CERTIFICATE + "'" + common.singleEscape(common.getIsmCertificate()) + "'"
                     self.module.debug("exec_command = " + exec_command)

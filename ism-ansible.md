@@ -29,8 +29,8 @@ The list of retrieved information is specified for the parameter of firmware upd
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Options
@@ -355,8 +355,8 @@ Commences updating process firmware registered to Infrastructure Manager.
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Check Mode
@@ -632,8 +632,8 @@ A node with its maintenance mode in "Maintenance" cannot perform retrieval of no
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Options
@@ -770,8 +770,8 @@ Assigns specified profiles for the specified nodes managed by Infrastructure Man
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 * Other than Essential. (This module is not approved for use in Essential.)
 
@@ -968,8 +968,8 @@ Instructions for Power-on of the specified nodes managed by Infrastructure Manag
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Options
@@ -1104,8 +1104,8 @@ It is used to refresh the inventory information, such as after a firmware update
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Options
@@ -1342,8 +1342,8 @@ It is used to retrieve the firmware information, such as after a firmware is upd
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Options
@@ -1683,8 +1683,8 @@ It is used to confirm the profile information assigned in the node, such as afte
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 * Other than Essential. (This module is not approved for use in Essential.)
 
@@ -2063,8 +2063,8 @@ It is used to confirm the power status of the node, such as after the operation 
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Options
@@ -2297,8 +2297,8 @@ It is used before retrieving the information of downloadable firmware.
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Options
@@ -2470,8 +2470,8 @@ It is used after update of the information of downloadable firmware.
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Options
@@ -2735,8 +2735,8 @@ It is used to download the firmware before firmware update.
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Options
@@ -2943,8 +2943,8 @@ Refer to [Readme.md - Report information comparison tool](/Readme.md#report-info
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * ISM >= 3.0.0
 
 ### Options
@@ -3954,9 +3954,9 @@ Perform a backup of ISM-VA.
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.7
-* pexpect >= 4.7 (Python Library)
+* Ansible >= 2.16
+* Python >= 3.10
+* pexpect >= 4.9 (Python Library)
 * ISM >= 3.0.0
 
 ### Options
@@ -4035,8 +4035,8 @@ Increase the timeout period and try again.
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * ISM >= 3.0.0
 
 ### Options

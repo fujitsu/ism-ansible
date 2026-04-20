@@ -55,7 +55,7 @@ options:
       choices: ['assigned', 'mismatch', 'processing', 'canceling', 'canceled', 'error']
       required: false
 requirements:
-    - "python >= 2.6"
+    - "python >= 3.10"
     - "ISM >= 3.0.0"
 notes:
     - "The setting method of the setting file specified in the config parameter is in the following location:

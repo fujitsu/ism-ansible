@@ -234,79 +234,73 @@ class IsmCommon:
             (rc, stdout, stderr) = self.module.run_command(exec_command, data=data)
         else:
             (rc, stdout, stderr) = self.module.run_command(exec_command)
-        return (rc, unicode(stdout, IsmCommon.UNICODE_STRING), unicode(stderr, IsmCommon.UNICODE_STRING))
 
-    # convert to unicode string
-    def covert_unicode(self, str_var):
+        # Ensure outputs are strings (decode if bytes)
+        if isinstance(stdout, bytes):
+            stdout = stdout.decode('utf-8', errors='replace')
+        if isinstance(stderr, bytes):
+            stderr = stderr.decode('utf-8', errors='replace')
 
-        # dict
-        if isinstance(str_var, dict):
-            return str_var
-        # list
-        if isinstance(str_var, list):
-            return str_var
-        # int
-        if isinstance(str_var, int):
-            return str_var
+        return (rc, stdout, stderr)
 
-        if str_var is not None:
-            convert_str = unicode(str_var, IsmCommon.UNICODE_STRING)
-            return convert_str
-        else:
-            return str_var
+    # Convert to Unicode string (in Python 3, str is already Unicode)
+    def convert_unicode(self, str_var):
+        if isinstance(str_var, bytes):
+            return str_var.decode('utf-8', errors='replace')
+        return str(str_var)
 
     """
-    @Description Function to covert unicode hash dict
+    @Description Function to convert unicode hash dict
     @param       class hash_dict
     """
-    def covertUnicodeHashDict(self, hash_dict):
-        self.module.debug("***** covertUnicodeHashDict Start *****")
+    def convertUnicodeHashDict(self, hash_dict):
+        self.module.debug("***** convertUnicodeHashDict Start *****")
         if not isinstance(hash_dict , dict):
             self.errorMessage(IsmCommon.MSG_SUPPORT_PARAMETER_DICT + str(hash_dict))
         
-        for key, value in hash_dict.items():
+        for key, value in list(hash_dict.items()):
             self.module.debug(" dict key :" + str(key) + " value :" + str(value) )
             if isinstance(value ,str):
-                hash_dict[key] = self.covert_unicode(value)
+                hash_dict[key] = self.convert_unicode(value)
             
             elif isinstance(value ,dict):
-                self.covertUnicodeHashDict(value)
+                self.convertUnicodeHashDict(value)
             
             else:
                 continue
-        self.module.debug("***** covertUnicodeHashDict End *****")
+        self.module.debug("***** convertUnicodeHashDict End *****")
 
     """
-    @Description Function to covert unicode hash list
+    @Description Function to convert unicode hash list
     @param       class hash_list
     """
-    def covertUnicodeHashList(self, hash_list):
-        self.module.debug("***** covertUnicodeHashList Start *****")
+    def convertUnicodeHashList(self, hash_list):
+        self.module.debug("***** convertUnicodeHashList Start *****")
         for hash in hash_list:
             if not isinstance(hash , dict):
                 self.errorMessage(IsmCommon.MSG_SUPPORT_PARAMETER_DICT + str(hash_list))
         
-            for key , value in hash.items():
+            for key , value in list(hash.items()):
                 # Assumed data 
                 # ex) [{"data1" : "value1"}]
                 if isinstance(value ,str):
-                    hash[key] = self.covert_unicode(value)
+                    hash[key] = self.convert_unicode(value)
                 # Assumed data 
                 # ex) [{"data1" : {"data2" : "value2"}}]
                 elif isinstance(value ,dict):
                     self.module.debug("dict :" + str(value))
-                    self.covertUnicodeHashDict(value)
+                    self.convertUnicodeHashDict(value)
                 else:
                     continue
                     
-        self.module.debug("***** covertUnicodeHashList End *****")
+        self.module.debug("***** convertUnicodeHashList End *****")
 
     """
-    @Description Function to covert unicode hash list
+    @Description Function to convert unicode hash list
     @param       class common, hash_list
     """
-    def covert_unicode_hash_list(self, str_var,required_keys):
-        self.module.log("***** covert_unicode_hash_list Start *****")
+    def convert_unicode_hash_list(self, str_var,required_keys):
+        self.module.log("***** convert_unicode_hash_list Start *****")
         for param_hash in str_var:
             for key in required_keys:
                 if key not in param_hash:
@@ -315,26 +309,26 @@ class IsmCommon:
                 if param_hash[key] is None:
                     self.module.log("no value key: " + key)
                     self.module.fail_json(msg="no value key: " + key)
-                param_hash[key] = self.covert_unicode(param_hash[key])
+                param_hash[key] = self.convert_unicode(param_hash[key])
 
-        self.module.log("***** covert_unicode_hash_list End *****")
+        self.module.log("***** convert_unicode_hash_list End *****")
 
     # REST-API Specification
     #   The case for null = No , "" = No 
-    # The list type is not covert_unicode, covert_unicode inside the loop.
+    # The list type is not convert_unicode, convert_unicode inside the loop.
     # First argument  : Target hash list.  type = list
     # Second argument : Required key name. type = list
-    def covert_unicode_hash_list_not_none_and_empty(self, target_hash_list,required_keys):
-        self.module.log("***** covert_unicode_hash_list_not_none_and_empty Start *****")
+    def convert_unicode_hash_list_not_none_and_empty(self, target_hash_list,required_keys):
+        self.module.log("***** convert_unicode_hash_list_not_none_and_empty Start *****")
         for param_hash in target_hash_list:
             for key in required_keys:
                 if key not in param_hash:
                     self.errorMessage(IsmCommon.MSG_MISSING_REQUIRED_ARGUMENTS + str(key))
                 if param_hash[key] == "" or param_hash[key] is None:
                     self.errorMessage(IsmCommon.MSG_NO_VALUE_KEY + str(key))
-                param_hash[key] = self.covert_unicode(param_hash[key])
+                param_hash[key] = self.convert_unicode(param_hash[key])
 
-        self.module.log("***** covert_unicode_hash_list_not_none_and_empty End *****")
+        self.module.log("***** convert_unicode_hash_list_not_none_and_empty End *****")
 #   ***** unicode method *****
 #   ***** param check method *****
  
@@ -374,10 +368,10 @@ class IsmCommon:
                 if param_hash[key] == "" or param_hash[key] is None:
                     self.module.log("no value key: " + key)
                     self.module.fail_json(msg="no value key: " + key)
-                param_hash[key] = self.covert_unicode(param_hash[key])
+                param_hash[key] = self.convert_unicode(param_hash[key])
                 
             if "firmware_version" in param_hash:
-                param_hash['firmware_version'] = self.covert_unicode(param_hash['firmware_version'])
+                param_hash['firmware_version'] = self.convert_unicode(param_hash['firmware_version'])
                 
     """
     @Description Convert from null to blank
@@ -386,7 +380,7 @@ class IsmCommon:
     """
     def convertNull(self, params, paramListNotBlank):
         
-        for key, value in params.items():
+        for key, value in list(params.items()):
             if key in paramListNotBlank:
                 continue
             
@@ -411,8 +405,8 @@ class IsmCommon:
             params = self.convertNull(params, paramListNotBlank)
             
             # Convert from parameters to unicode string
-            for key, value in params.items():
-                value = self.covert_unicode(value)
+            for key, value in list(params.items()):
+                value = self.convert_unicode(value)
             
             # Config file open
             try :
@@ -548,7 +542,7 @@ class IsmCommon:
     def getQueryParam(self, dict_param):
         try :
             param = ""
-            for key, value in dict_param.items():
+            for key, value in list(dict_param.items()):
                 if value != "" and param == "":
                     param = "?" + key + "=" + value
                 elif value != "" and param != "":
@@ -768,7 +762,7 @@ class IsmCommon:
             
             license_data = self.execRest(rest_url, IsmCommon.GET, IsmCommon.RESPONSE_CODE_200)
             
-            if "OperationMode" in license_data["IsmBody"].keys():
+            if "OperationMode" in list(license_data["IsmBody"].keys()):
 
                 # store OperationMode
                 self.setOperationMode(license_data["IsmBody"]["OperationMode"])
@@ -1059,7 +1053,7 @@ class IsmCommon:
     # Ansible standard parameter name check can not be used.
     def checkKeyName(self, param, key_name_list):
         self.module.debug("***** checkKeyName Start *****")
-        for key in param.keys():
+        for key in list(param.keys()):
             if key not in key_name_list:
                 self.errorMessage(IsmCommon.MSG_NOT_SUPPORT_PARAMETER + str(key))
         self.module.debug("***** checkKeyName End *****")
