@@ -24,7 +24,7 @@ import re
 import socket
 import traceback
 from os import path
-from distutils.version import StrictVersion
+from packaging.version import Version
 from ansible.module_utils.ism_user_settings import IsmUserSettingsValue
 from ansible.module_utils.ism_essential_not_supported_model import IsmEssentialNotSupportedModel
 
@@ -546,7 +546,7 @@ class IsmCommon:
                 if value != "" and param == "":
                     param = "?" + key + "=" + value
                 elif value != "" and param != "":
-                    param = param + "\&" + key + "=" + value
+                    param = param + "&" + key + "=" + value
             return param
             
         except Exception as e:
@@ -1065,7 +1065,7 @@ class IsmCommon:
     @return True: success, False: failed
     """
     def checkLibraryVersion(self, actual, expected):
-        if StrictVersion(actual) < StrictVersion(expected):
+        if Version(actual) < Version(expected):
             return False
         return True
 

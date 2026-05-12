@@ -228,7 +228,7 @@ class IsmFirmwareUpdate():
             self.module.debug("***** getCurrentFirmwareVersion Start *****")
 
             # get rest url
-            rest_url = common.getRestUrl(IsmFirmwareUpdate.INVENTORY_INFO_REST_URL, common.getNodeId() + "/inventory/?level=All\&target=Firmware")
+            rest_url = common.getRestUrl(IsmFirmwareUpdate.INVENTORY_INFO_REST_URL, common.getNodeId() + "/inventory/?level=All&target=Firmware")
 
             # adding a response header
             add_head = " -H 'X-Ism-Authorization: " + common.getSessionId() + "' "

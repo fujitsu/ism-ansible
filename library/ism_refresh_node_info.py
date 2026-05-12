@@ -215,7 +215,7 @@ class IsmRefreshNodeInfo():
             
             # Get REST URL
             rest_url = common.getRestUrl(common.EVENT_LOG_LIST_REST_URL, \
-                       "?loglevel=error\&start=" + refresh_date + "\&resourceidtype=NodeId\&resourceid=" + common.getNodeId())
+                       "?loglevel=error&start=" + refresh_date + "&resourceidtype=NodeId&resourceid=" + common.getNodeId())
             
             # REST API execution
             json_data = common.execRest(rest_url, common.GET, common.RESPONSE_CODE_200)
