@@ -51,8 +51,8 @@ class IsmPowerOn():
             common = IsmCommon(self.module)
             
             # convert parameters to unicode string
-            self.module.params['config'] = common.covert_unicode(self.module.params['config'])
-            self.module.params['hostname'] = common.covert_unicode(self.module.params['hostname'])
+            self.module.params['config'] = common.convert_unicode(self.module.params['config'])
+            self.module.params['hostname'] = common.convert_unicode(self.module.params['hostname'])
             
             # config file open
             try :

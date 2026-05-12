@@ -43,7 +43,7 @@ options:
           IPv6 is not supported. Specify a host name that can be resolved by IPv4 or IPv4.
       required: true
 requirements:
-    - "python >= 2.6"
+    - "python >= 3.10"
     - "ISM >= 3.0.0"
 notes:
     - "The setting method of the setting file specified in the config parameter is in the following location:
@@ -198,7 +198,7 @@ class IsmGetDownloadFirmwareInfo():
                             # Len Comparison
                             len = self.getLenComparison(left_version, right_version)
                             
-                            for i in range(len):
+                            for i in list(range(len)):
                                 
                                 # Version Comparison
                                 result = self.versionComparison(left_version,right_version,type,i)
@@ -219,7 +219,7 @@ class IsmGetDownloadFirmwareInfo():
                                             # Len Comparison
                                             check_len = self.getLenComparison(check_left_version, check_version)
                                             
-                                            for y in range(check_len):
+                                            for y in list(range(check_len)):
                                             
                                                 # Version Comparison
                                                 copy_result = self.versionComparison(check_left_version,check_version,type,y)
@@ -325,7 +325,7 @@ class IsmGetDownloadFirmwareInfo():
         right_array = self.getArrayProcessing(right)
         
         len = self.getLenComparison(left_array, right_array)
-        for i in range(len):
+        for i in list(range(len)):
             result = self.noComparison(left_array[i],right_array[i])
             
             if result == "OK":

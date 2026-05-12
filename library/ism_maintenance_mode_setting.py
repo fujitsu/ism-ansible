@@ -53,9 +53,9 @@ class IsmMaintenanceModeSetting():
             common = IsmCommon(self.module)
             
             # convert parameters to unicode string
-            self.module.params['config'] = common.covert_unicode(self.module.params['config'])
-            self.module.params['hostname'] = common.covert_unicode(self.module.params['hostname'])
-            self.module.params['mode'] = common.covert_unicode(self.module.params['mode'])
+            self.module.params['config'] = common.convert_unicode(self.module.params['config'])
+            self.module.params['hostname'] = common.convert_unicode(self.module.params['hostname'])
+            self.module.params['mode'] = common.convert_unicode(self.module.params['mode'])
             
             # config file open
             try :
@@ -188,7 +188,7 @@ class IsmMaintenanceModeSetting():
             self.module.debug("***** checkMaintenanceMode End *****")
             
             return result
-        except Exception, e:
+        except Exception as e:
             self.module.log(str(e))
             self.module.fail_json(msg=str(e))
             
@@ -231,7 +231,7 @@ class IsmMaintenanceModeSetting():
             self.module.debug("***** maintenanceModeSetting End *****")
             
             return result
-        except Exception, e:
+        except Exception as e:
             self.module.log(str(e))
             self.module.fail_json(msg=str(e))
             

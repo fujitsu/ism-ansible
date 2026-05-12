@@ -43,7 +43,7 @@ options:
           IPv6 is not supported. Specify a host name that can be resolved by IPv4 or IPv4.
       required: true
 requirements:
-    - "python >= 2.6"
+    - "python >= 3.10"
     - "ISM >= 3.0.0"
 notes:
     - "The setting method of the setting file specified in the config parameter is in the following location:
@@ -100,7 +100,7 @@ class IsmDownloadFirmware():
 
             # Parameter chack hash list
             required_keys = ["firmware_name","firmware_version"]
-            common.covert_unicode_hash_list(self.module.params['download_list'],required_keys)
+            common.convert_unicode_hash_list(self.module.params['download_list'],required_keys)
             
             # Pre-process
             common.preProcess(self.module.params,NodeCheck = False,
@@ -247,8 +247,8 @@ class IsmDownloadFirmware():
             self.module.debug("***** taskCheck Start *****")
             
             now = datetime.datetime.now()
-            unix_time = long(time.mktime(now.timetuple()))
-            time_out = long(unix_time) + long(IsmUserSettingsValue.FIRMWARE_DOWNLOAD_TIME_OUT) * firmware_number
+            unix_time = int(time.mktime(now.timetuple()))
+            time_out = int(unix_time) + int(IsmUserSettingsValue.FIRMWARE_DOWNLOAD_TIME_OUT) * firmware_number
             
             # get rest url
             rest_url = common.getRestUrl(common.TASK_INFO_REST_URL, id)
@@ -261,9 +261,9 @@ class IsmDownloadFirmware():
             while True:
             
                 now = datetime.datetime.now()
-                now_time = long(time.mktime(now.timetuple()))
+                now_time = int(time.mktime(now.timetuple()))
                 
-                if long(now_time) < long(time_out):
+                if int(now_time) < int(time_out):
                     # execute rest
                     exec_command = common.COMMAND + rest_url + common.HEADER + add_head + common.HTTP_RESPONSE_CODE + common.CERTIFICATE + "'" + common.singleEscape(common.getIsmCertificate()) + "'"
                     self.module.debug("exec_command = " + exec_command)

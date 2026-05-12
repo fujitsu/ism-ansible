@@ -40,8 +40,7 @@
 
        - name: js_query
          set_fact:
-           firmware_list: "{{ ism_firmware_list_result | json_query('ism_get_download_firmware_list.IsmBody.FirmwareList[*].{firmware_name: FirmwareName, firmware_version: FirmwareVersion}') }}"
-         register: firmware_list
+           firmware_list: "{{ ism_firmware_list_result | json_query('ism_get_download_firmware_list.IsmBody.FirmwareList[*].{firmware_name: FirmwareName, firmware_version: FirmwareVersion}') | default([]) }}"
 
        - name: Downloading Firmware
          ism_download_firmware:

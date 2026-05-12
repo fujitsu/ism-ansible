@@ -36,9 +36,12 @@
        config: "{{ config }}"
        hostname: "{{ inventory_hostname }}"
      register: ism_get_power_status_result
-     until: (ism_get_power_status_result|failed) or
-            (ism_get_power_status_result.ism_get_power_status.IsmBody.Parts[0] is defined and
-            ism_get_power_status_result.ism_get_power_status.IsmBody.Parts[0].PowerStatus == "On")
+     until: (ism_get_power_status_result is defined and ism_get_power_status_result.failed) or 
+            (ism_get_power_status_result is defined and ism_get_power_status_result.ism_get_power_status is defined and 
+             ism_get_power_status_result.ism_get_power_status.IsmBody is defined and 
+             ism_get_power_status_result.ism_get_power_status.IsmBody.Parts is defined and 
+             ism_get_power_status_result.ism_get_power_status.IsmBody.Parts | length > 0 and 
+             ism_get_power_status_result.ism_get_power_status.IsmBody.Parts[0].PowerStatus == "On")
      retries: 10
      delay: 30
    - debug: var=ism_get_power_status_result

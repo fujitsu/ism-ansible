@@ -63,8 +63,8 @@ class IsmFirmwareUpdate():
             common.param_check(self.module.params['firmware_update_list'])
 
             # convert parameters to unicode string
-            self.module.params['config'] = common.covert_unicode(self.module.params['config'])
-            self.module.params['hostname'] = common.covert_unicode(self.module.params['hostname'])
+            self.module.params['config'] = common.convert_unicode(self.module.params['config'])
+            self.module.params['hostname'] = common.convert_unicode(self.module.params['hostname'])
 
             # config file open
             try :
@@ -228,7 +228,7 @@ class IsmFirmwareUpdate():
             self.module.debug("***** getCurrentFirmwareVersion Start *****")
 
             # get rest url
-            rest_url = common.getRestUrl(IsmFirmwareUpdate.INVENTORY_INFO_REST_URL, common.getNodeId() + "/inventory/?level=All\&target=Firmware")
+            rest_url = common.getRestUrl(IsmFirmwareUpdate.INVENTORY_INFO_REST_URL, common.getNodeId() + "/inventory/?level=All&target=Firmware")
 
             # adding a response header
             add_head = " -H 'X-Ism-Authorization: " + common.getSessionId() + "' "
@@ -345,8 +345,8 @@ class IsmFirmwareUpdate():
             self.module.debug("***** taskCheck Start *****")
 
             now = datetime.datetime.now()
-            unix_time = long(time.mktime(now.timetuple()))
-            time_out = long(unix_time) + long(IsmUserSettingsValue.FIRMWARE_UPDATE_TIME_OUT)
+            unix_time = int(time.mktime(now.timetuple()))
+            time_out = int(unix_time) + int(IsmUserSettingsValue.FIRMWARE_UPDATE_TIME_OUT)
 
             # get rest url
             rest_url = common.getRestUrl(IsmFirmwareUpdate.TASK_INFO_REST_URL, id)
@@ -359,9 +359,9 @@ class IsmFirmwareUpdate():
             while True:
 
                 now = datetime.datetime.now()
-                now_time = long(time.mktime(now.timetuple()))
+                now_time = int(time.mktime(now.timetuple()))
 
-                if long(now_time) < long(time_out):
+                if int(now_time) < int(time_out):
                     # execute rest
                     exec_command = common.COMMAND + rest_url + common.HEADER + add_head + common.HTTP_RESPONSE_CODE + common.CERTIFICATE + "'" + common.singleEscape(common.getIsmCertificate()) + "'"
                     self.module.debug("exec_command = " + exec_command)

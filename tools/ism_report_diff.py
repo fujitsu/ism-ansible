@@ -177,8 +177,8 @@ def convert_str(target):
     if target is None:
         return str(target)
     else:
-        if isinstance(target, unicode):
-            return target.encode('utf-8')
+        if isinstance(target, bytes):
+            return target.decode('utf-8')
         else:
             return str(target)
 

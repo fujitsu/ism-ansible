@@ -48,8 +48,8 @@ options:
       required: false
       type: dict
 requirements:
-    - Ansible >= 2.4.0.0
-    - python >= 2.6
+    - Ansible >= 2.16
+    - python >= 3.10
     - ISM >= 3.0.0
 notes:
     - "The setting method of the setting file specified in the config
@@ -130,14 +130,15 @@ class IsmCopyProfile():
 
             # Pre-process
             self.common.preProcess(self.module.params, NodeCheck=False, noHost=True)
-            self.module.params['config'] = self.common.covert_unicode(self.module.params['config'])
-            self.module.params['ism_source_profile_name'] = self.common.covert_unicode(
+            self.module.params['config'] = self.common.convert_unicode(
+                self.module.params['config'])
+            self.module.params['ism_source_profile_name'] = self.common.convert_unicode(
                 self.module.params['ism_source_profile_name'])
-            self.module.params['ism_profile_name'] = self.common.covert_unicode(
+            self.module.params['ism_profile_name'] = self.common.convert_unicode(
                 self.module.params['ism_profile_name'])
 
             if self.module.params['ism_profile_data']:
-                self.common.covertUnicodeHashDict(self.module.params['ism_profile_data'])
+                self.common.convertUnicodeHashDict(self.module.params['ism_profile_data'])
 
             # Check profile
             check_profile_result = \

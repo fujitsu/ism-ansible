@@ -2,7 +2,7 @@
 
 ## Modules
 
-* [ism_firmware_list - List Applicable Firmware.](#ism_firmware_list)
+* [ism_firmware_list - List Applicable Firmware. This module is restricted.](#ism_firmware_list)
 * [ism_firmware_update - Firmware Updates.](#ism_firmware_update)
 * [ism_maintenance_mode_setting - Changing from/to Maintenance Mode.](#ism_maintenance_mode_setting)
 * [ism_profile_assignment - Assigning Profiles to Nodes.](#ism_profile_assignment)
@@ -15,10 +15,10 @@
 * [ism_get_download_firmware_list - Retrieving Download Firmware List.](#ism_get_download_firmware_list)
 * [ism_download_firmware - Downloading Firmware.](#ism_download_firmware)
 * [ism_get_report_info - Retrieving Report Information.](#ism_get_report_info)
-* [ism_backup - Backing up ISM-VA.](#ism_backup)
-* [ism_copy_profile - Copying Profile.](#ism_copy_profile)
+* [ism_backup - Backing up ISM-VA. This module is restricted.](#ism_backup)
+* [ism_copy_profile - Copying Profile. This module is restricted.](#ism_copy_profile)
 
-## <a name="ism_firmware_list">ism_firmware_list
+## <a name="ism_firmware_list">ism_firmware_list (This module is restricted.)
 
 List Applicable Firmware
 
@@ -29,9 +29,15 @@ The list of retrieved information is specified for the parameter of firmware upd
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
+
+### Restrictions
+
+* ism_firmware_list
+* ism_backup
+* ism_copy_profile
 
 ### Options
 
@@ -355,8 +361,8 @@ Commences updating process firmware registered to Infrastructure Manager.
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Check Mode
@@ -632,8 +638,8 @@ A node with its maintenance mode in "Maintenance" cannot perform retrieval of no
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Options
@@ -770,8 +776,8 @@ Assigns specified profiles for the specified nodes managed by Infrastructure Man
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 * Other than Essential. (This module is not approved for use in Essential.)
 
@@ -968,8 +974,8 @@ Instructions for Power-on of the specified nodes managed by Infrastructure Manag
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Options
@@ -1104,8 +1110,8 @@ It is used to refresh the inventory information, such as after a firmware update
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Options
@@ -1342,8 +1348,8 @@ It is used to retrieve the firmware information, such as after a firmware is upd
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Options
@@ -1683,8 +1689,8 @@ It is used to confirm the profile information assigned in the node, such as afte
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 * Other than Essential. (This module is not approved for use in Essential.)
 
@@ -2063,8 +2069,8 @@ It is used to confirm the power status of the node, such as after the operation 
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Options
@@ -2297,8 +2303,8 @@ It is used before retrieving the information of downloadable firmware.
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Options
@@ -2470,8 +2476,8 @@ It is used after update of the information of downloadable firmware.
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Options
@@ -2735,8 +2741,8 @@ It is used to download the firmware before firmware update.
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * Infrastructure Manager >= 3.0.0
 
 ### Options
@@ -2943,8 +2949,8 @@ Refer to [Readme.md - Report information comparison tool](/Readme.md#report-info
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * ISM >= 3.0.0
 
 ### Options
@@ -3119,7 +3125,7 @@ Therefore, any incorrect information specified in hostname does not affect the o
   <td>dict</td>
   <td align="center">Yes</td>
   <td>Not omitted.</td>
-  <td>Management LAN information(ISM 2.4.0.b or later)<br>The output is the management LAN to use when PXE booting the server.</td>
+  <td>Management LAN information(ISM 3.0.0 or later)<br>The output is the management LAN to use when PXE booting the server.</td>
 </tr>
 <tr>
   <td rowspan="5"></td>
@@ -3127,14 +3133,14 @@ Therefore, any incorrect information specified in hostname does not affect the o
   <td>string</td>
   <td align="center">Yes</td>
   <td>Not omitted, but null is allowed.</td>
-  <td>Management LAN designated mode (ISM 2.4.0.b or later)<br>- null: Not specified. When PXE booting, the port with the smaller order of slot 0 is used.<br>- MACAddress: MAC address<br>- Adapter: Adapter</td>
+  <td>Management LAN designated mode (ISM 3.0.0 or later)<br>- null: Not specified. When PXE booting, the port with the smaller order of slot 0 is used.<br>- MACAddress: MAC address<br>- Adapter: Adapter</td>
 </tr>
 <tr>
   <td colspan="2">AdapterInfo</td>
   <td>dict</td>
   <td align="center">Yes</td>
   <td>Not omitted.</td>
-  <td>Information about the adapter used as the management LAN (ISM 2.4.0.b or later)</td>
+  <td>Information about the adapter used as the management LAN (ISM 3.0.0 or later)</td>
 </tr>
 <tr>
   <td rowspan="2"></td>
@@ -3142,21 +3148,21 @@ Therefore, any incorrect information specified in hostname does not affect the o
   <td>integer</td>
   <td align="center">Yes</td>
   <td>Not omitted, but null is allowed.</td>
-  <td>Slot Number (ISM 2.4.0.b or later)</td>
+  <td>Slot Number (ISM 3.0.0 or later)</td>
 </tr>
 <tr>
   <td>PortIndex</td>
   <td>integer</td>
   <td align="center">Yes</td>
   <td>Not omitted, but null is allowed.</td>
-  <td>Port Number (ISM 2.4.0.b or later)</td>
+  <td>Port Number (ISM 3.0.0 or later)</td>
 </tr>
 <tr>
   <td colspan="2">MACAddress</td>
   <td>string</td>
   <td align="center">Yes</td>
   <td>Not omitted, but null is allowed.</td>
-  <td>MAC address to use as the management LAN (ISM 2.4.0.b or later)</td>
+  <td>MAC address to use as the management LAN (ISM 3.0.0 or later)</td>
 </tr>
 <tr>
   <td colspan="3">RackInfo</td>
@@ -3328,7 +3334,7 @@ Therefore, any incorrect information specified in hostname does not affect the o
   <td>dict</td>
   <td align="center">Yes</td>
   <td>Not omitted, but null is allowed.</td>
-  <td>Internal Management Information (ISM 2.4.0.b or later)</td>
+  <td>Internal Management Information (ISM 3.0.0 or later)</td>
 </tr>
 <tr>
   <td colspan="3">UpdateDate</td>
@@ -3944,7 +3950,7 @@ A unique ID is output for each message.</td>
 * Sample playbook.  
   [examples/ism_get_report_info.yml](/examples/ism_get_report_info.yml)
 
-## <a name = "ism_backup"> ism_backup
+## <a name = "ism_backup"> ism_backup (This module is restricted.)
 
 Backing up ISM-VA
 
@@ -3954,9 +3960,9 @@ Perform a backup of ISM-VA.
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.7
-* pexpect >= 4.7 (Python Library)
+* Ansible >= 2.16
+* Python >= 3.10
+* pexpect >= 4.9 (Python Library)
 * ISM >= 3.0.0
 
 ### Options
@@ -4025,7 +4031,7 @@ Increase the timeout period and try again.
 * Sample playbook.  
   [examples/ism_backup.yml](/examples/ism_backup.yml)
 
-## <a name = "ism_copy_profile"> ism_copy_profile
+## <a name = "ism_copy_profile"> ism_copy_profile (This module is restricted.)
 
  Copying Profile
 
@@ -4035,8 +4041,8 @@ Increase the timeout period and try again.
 
 ### Requirements
 
-* Ansible >= 2.4.0.0
-* Python >= 2.6
+* Ansible >= 2.16
+* Python >= 3.10
 * ISM >= 3.0.0
 
 ### Options
