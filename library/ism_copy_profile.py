@@ -205,6 +205,7 @@ class IsmCopyProfile():
 
         # delete create profile REST-API not supported keys
         not_supported_keys = ['ProfileId',
+                              'CategoryName',
                               'PathName',
                               'AssignedNodeId',
                               'Status',

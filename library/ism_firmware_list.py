@@ -38,7 +38,7 @@ class IsmFirmwareList():
         argument_spec=dict(
             config=dict(required=True),
             hostname=dict(required=True),
-            firmware_type=dict(required=False, choices=['BIOS','iRMC','FC','CNA','ETERNUS DX','LAN Switch','ETERNUS AF','PRIMEQUEST'])
+            firmware_type=dict(required=False, choices=['BIOS','iRMC','FC','CNA','SAS','ETERNUS DX','LAN Switch','ETERNUS AF','PRIMEQUEST'])
         )
     )
     
@@ -161,7 +161,7 @@ class IsmFirmwareList():
                     self.module.log("Response Code=" + exec_firmwarelist_result.group(2) + ", stdout=" + stdout + ", stderr=" + stderr + ", exec_command=" + exec_command)
                     self.module.fail_json(msg=exec_firmwarelist_result.group(1))
                 
-            if self.module.params['firmware_type'] != None:
+            if self.module.params['firmware_type'] != str(None):
                 list_firmware_type = copy.deepcopy(json_data)
                 del list_firmware_type["IsmBody"]["FirmwareList"]
                 list_firmware_type["IsmBody"]["FirmwareList"] = []
