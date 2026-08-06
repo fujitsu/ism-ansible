@@ -12,9 +12,7 @@ This is the modules to manage Infrastructure Manager using Ansible playbooks.
 
 ### Restriction Modules and Playbooks
 
-* ism_firmware_list
-* ism_backup
-* ism_copy_profile
+N/A
 
 ## Examples
 

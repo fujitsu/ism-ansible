@@ -2,7 +2,7 @@
 
 ## Modules
 
-* [ism_firmware_list - List Applicable Firmware. This module is restricted.](#ism_firmware_list)
+* [ism_firmware_list - List Applicable Firmware.](#ism_firmware_list)
 * [ism_firmware_update - Firmware Updates.](#ism_firmware_update)
 * [ism_maintenance_mode_setting - Changing from/to Maintenance Mode.](#ism_maintenance_mode_setting)
 * [ism_profile_assignment - Assigning Profiles to Nodes.](#ism_profile_assignment)
@@ -15,10 +15,10 @@
 * [ism_get_download_firmware_list - Retrieving Download Firmware List.](#ism_get_download_firmware_list)
 * [ism_download_firmware - Downloading Firmware.](#ism_download_firmware)
 * [ism_get_report_info - Retrieving Report Information.](#ism_get_report_info)
-* [ism_backup - Backing up ISM-VA. This module is restricted.](#ism_backup)
-* [ism_copy_profile - Copying Profile. This module is restricted.](#ism_copy_profile)
+* [ism_backup - Backing up ISM-VA.](#ism_backup)
+* [ism_copy_profile - Copying Profile.](#ism_copy_profile)
 
-## <a name="ism_firmware_list">ism_firmware_list (This module is restricted.)
+## <a name="ism_firmware_list">ism_firmware_list
 
 List Applicable Firmware
 
@@ -32,12 +32,6 @@ The list of retrieved information is specified for the parameter of firmware upd
 * Ansible >= 2.16
 * Python >= 3.10
 * Infrastructure Manager >= 3.0.0
-
-### Restrictions
-
-* ism_firmware_list
-* ism_backup
-* ism_copy_profile
 
 ### Options
 
@@ -3950,7 +3944,7 @@ A unique ID is output for each message.</td>
 * Sample playbook.  
   [examples/ism_get_report_info.yml](/examples/ism_get_report_info.yml)
 
-## <a name = "ism_backup"> ism_backup (This module is restricted.)
+## <a name = "ism_backup"> ism_backup
 
 Backing up ISM-VA
 
@@ -4031,7 +4025,7 @@ Increase the timeout period and try again.
 * Sample playbook.  
   [examples/ism_backup.yml](/examples/ism_backup.yml)
 
-## <a name = "ism_copy_profile"> ism_copy_profile (This module is restricted.)
+## <a name = "ism_copy_profile"> ism_copy_profile
 
  Copying Profile
 

@@ -118,10 +118,10 @@ class IsmBackup():
     FTP_MSG_CONNECT_HEADER = "FTP connection error: {0}"
     FTP_MSG_OPERATION_HEADER = "FTP operation error: {0}"
 
-    RE_CONNECT_ERROR = re.compile(r'^could not set shell prompt')
-    RE_START_BACKUP = re.compile(r'^Start backup process\? \[y/n\]: ', re.MULTILINE)
-    RE_ERROR = re.compile(r'^(ERROR:\d+:.+)$', re.MULTILINE)
-    RE_OUTPUT_FILE = re.compile(r'^Output file: (ism.+\.gz)', re.MULTILINE)
+    RE_CONNECT_ERROR = re.compile(r'could not set shell prompt')
+    RE_START_BACKUP = re.compile(r'Start backup process\? \[y/n\]: ')
+    RE_ERROR = re.compile(r'(ERROR:\d+:.+)')
+    RE_OUTPUT_FILE = re.compile(r'Output file: (ism.+\.gz)')
 
     FTP_DIR = "/Administrator/ftp/"
 
@@ -226,7 +226,10 @@ class IsmBackup():
 
             if index == 1:
                 # error message
-                msg = ssh.match.group(1).rstrip()
+                msg = ssh.match.group(1)
+                if isinstance(msg, bytes):
+                    msg = msg.decode('utf-8', errors='ignore')
+                msg = msg.rstrip()
                 self.module.log(msg)
                 self.module.fail_json(msg=msg)
             elif index == 2:
@@ -243,6 +246,8 @@ class IsmBackup():
             ssh.expect(ssh.PROMPT, timeout=self.timeout)
 
             output = ssh.before
+            if isinstance(output, bytes):
+                output = output.decode('utf-8', errors='ignore')
 
             match = self.RE_ERROR.search(output)
             if match:
